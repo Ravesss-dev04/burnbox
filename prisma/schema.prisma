@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id         Int      @id @default(autoincrement())
+  email      String?  @unique(map: "email") @db.VarChar(255)
+  password   String?  @db.VarChar(255)
+  role       UserRole @default(STAFF)
+  position   String?  @db.VarChar(255)
+  name       String?  @db.VarChar(255)
+  image      String?  @db.Text
+  bio        String?  @db.Text
+  created_at DateTime @default(now()) @map("created_at")
+}
+
+
+enum UserRole {
+  ADMIN
+  STAFF
+}
+
+model gallery {
+  id         Int      @id @default(autoincrement())
+  imageUrl   String   @db.Text
+  title      String?  @db.VarChar(255)
+  altText    String?  @db.VarChar(255)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Inquiry {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  product   String   @db.VarChar(255)
+  price     String   @db.VarChar(255)
+  message   String   @db.Text
+  imageUrl  String?  @db.Text
+  status    String   @default("New") @db.VarChar(50)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OTP {
+  id        Int      @id @default(autoincrement())
+  email     String   @db.VarChar(255)
+  code      String   @db.VarChar(6)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  @@unique([email])
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique @db.VarChar(255) 
+  price       Float
+  imageUrl    String   @db.Text
+  description String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  price       Float
+  image       String   
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Feedback {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  message   String   @db.Text
+  rating    Int?     // Optional rating from 1-5
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Visitor {,,,
+  id        Int      @id @default(autoincrement())
+  ipAddress String   @db.VarChar(45) // IPv6 can be up to 45 chars
+  location  String   @db.VarChar(255) // Country/Region
+  city      String?  @db.VarChar(255) // City name
+  latitude  Float?   // Latitude coordinate
+  longitude Float?   // Longitude coordinate
+  status    String   @default("Active") @db.VarChar(50)
+  inquiryId Int?     // Link to inquiry if visitor made an inquiry
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([ipAddress])
+  @@index([status])
+  @@index([createdAt])
+}
+
+
+model SiteConfig {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+
+
+
+model Lead {
+  id            String   @id @default(cuid())
+  contactNumber String   @map("contact_number")
+  email         String
+  companyName   String   @map("company_name")
+  inquiry       String?
+  status        Status   @default(PENDING)
+  quotationSent Boolean  @default(false) @map("quotation_sent")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  @@map("leads")
+}
+
+
+
+enum Status {
+  PENDING
+  PROCESSING
+  COMPLETED
+  REJECTED
+}
+
+

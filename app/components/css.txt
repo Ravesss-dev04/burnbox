@@ -1,0 +1,13 @@
+
+<div class="bg-gradient-to-b from-[rgba(51,51,51,0.6)] to-[#999999] h-64 w-full">
+</div>
+
+
+bg-gradient-to-t	bottom → top
+bg-gradient-to-b	top → bottom
+bg-gradient-to-r	left → right
+bg-gradient-to-l	right → left
+bg-gradient-to-tr	bottom-left → top-right
+bg-gradient-to-bl	top-right → bottom-left
+bg-gradient-to-tl	bottom-right → top-left
+bg-gradient-to-br	top-left → bottom-right

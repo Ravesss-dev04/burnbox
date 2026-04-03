@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/page-flip/dist/css/page-flip.css" />
+</head>
+<body>
+
+<div class="container">
+  
+  <div class="flip-book" id="demoBookExample">
+    <div class="page page-cover page-cover-top" data-density="hard">
+      <div class="page-content">
+        <div class="page-image" style="background-image: url(/1.png); background-size: cover;"></div>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="page-content">
+        <div class="page-image" style="background-image: url(/2.png); background-size: cover;"></div>
+      </div>
+    </div>
+  
+    <!-- PAGES .... -->
+    <div class="page">
+      <div class="page-content">
+        <div class="page-image" style="background-image: url(/3.png); background-size: cover;"></div>
+      </div>
+    </div>
+
+
+    <div class="page">
+      <div class="page-content">
+        <div class="page-image" style="background-image: url(/4.png); background-size: cover;"></div>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="page-content">
+        <div class="page-image" style="background-image: url(/5.png); background-size: cover;"></div>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="page-content">
+        <div class="page-image" style="background-image: url(/6.png); background-size: cover;"></div>
+      </div>
+    </div>
+
+
+    <div class="page">
+      <div class="page-content">
+        <div class="page-image" style="background-image: url(/7.png); background-size: cover;"></div>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="page-content">
+        <div class="page-image" style="background-image: url(/8.png); background-size: cover;"></div>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="page-content">
+        <div class="page-image" style="background-image: url(/9.png); background-size: cover;"></div>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="page-content">
+        <div class="page-image" style="background-image: url(/10.png); background-size: cover;"></div>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="page-content">
+        <div class="page-image" style="background-image: url(/11.png); background-size: cover;"></div>
+      </div>
+    </div>
+
+    <!-- <div class="page">
+      <div class="page-content">
+        <div class="page-image" style="background-image: url(/page22.png); background-size: cover;"></div>
+      </div>
+    </div> -->
+    <div class="page page-cover page-cover-top" data-density="hard">
+      <div class="page-content">
+        <div class="page-image" style="background-image: url(/12.png); background-size: cover;"></div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+<div class="navbuttons">
+<button class="btn-prev">← Prev</button>
+  <span class="page-info"><span class="page-current">1</span> / <span class="page-total">--</span></span>
+  <button class="btn-next">Next →</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const book = new St.PageFlip(
+      document.getElementById("demoBookExample"),
+      {
+        width: 550,     // base page width
+        height: 733,    // base page height
+        size: "stretch",
+        minWidth: 315,
+        maxWidth: 1000,
+        minHeight: 420,
+        maxHeight: 1350,
+        maxShadowOpacity: 0.5,
+        showCover: true,
+        mobileScrollSupport: false
+      }
+    );
+    // Load all pages into the flipbook
+    book.loadFromHTML(document.querySelectorAll(".page"));
+
+    // Handle navigation
+    document.querySelector(".btn-prev").addEventListener("click", () => book.flipPrev());
+    document.querySelector(".btn-next").addEventListener("click", () => book.flipNext());
+
+    // Update page numbers
+    book.on("flip", (e) => {
+      document.querySelector(".page-current").textContent = e.data + 1;
+    });
+
+    // Set total pages
+    document.querySelector(".page-total").textContent = book.getPageCount();
+  });
+</script>
+
+</body>
+</html>
