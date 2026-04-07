@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { z } from 'zod';
+import { corsHeaders } from '@/lib/corsHeaders';
 
 const leadSchema = z.object({
   contactNumber: z.string().min(10),
@@ -32,7 +33,7 @@ export async function POST(request: NextRequest) {
       success: true, 
       message: 'Quotation request submitted successfully',
       data: lead 
-    }, { status: 201 });
+    }, { status: 201, headers: corsHeaders });
 
   } catch (error) {
     console.error('Error creating lead:', error);
@@ -41,12 +42,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ 
         error: 'Validation error', 
         details: error.issues 
-      }, { status: 400 });
+      }, { status: 400, headers: corsHeaders });
     }
 
     return NextResponse.json({ 
       error: 'Internal server error' 
-    }, { status: 500 });
+    }, { status: 500, headers: corsHeaders   });
   }
 }
 
@@ -59,9 +60,9 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    return NextResponse.json(leads);
+    return NextResponse.json(leads, { headers: corsHeaders });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch leads' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch leads' }, { status: 500, headers: corsHeaders });
   }
 }
 

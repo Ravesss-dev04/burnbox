@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { z } from 'zod';
+import { corsHeaders } from '@/lib/corsHeaders';
 
 const updateLeadSchema = z.object({
   status: z.enum(['PENDING', 'PROCESSING', 'COMPLETED', 'REJECTED']).optional(),
@@ -28,16 +29,16 @@ export async function GET(
     if (!lead) {
       return NextResponse.json(
         { error: 'Lead not found' },
-        { status: 404 }
+        { status: 404, headers: corsHeaders }
       );
     }
 
-    return NextResponse.json(lead);
+    return NextResponse.json(lead, { headers: corsHeaders });
   } catch (error) {
     console.error('Error fetching lead:', error);
     return NextResponse.json(
       { error: 'Failed to fetch lead' },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
@@ -62,7 +63,7 @@ export async function PATCH(
     if (!existingLead) {
       return NextResponse.json(
         { error: 'Lead not found' },
-        { status: 404 }
+        { status: 404, headers: corsHeaders }
       );
     }
 
@@ -76,7 +77,7 @@ export async function PATCH(
       success: true,
       message: 'Lead updated successfully',
       data: updatedLead,
-    });
+    }, { headers: corsHeaders });
   } catch (error) {
     console.error('Error updating lead:', error);
 
@@ -86,13 +87,13 @@ export async function PATCH(
           error: 'Validation error',
           details: error.issues,
         },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       );
     }
 
     return NextResponse.json(
       { error: 'Failed to update lead' },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
@@ -113,7 +114,7 @@ export async function DELETE(
     if (!existingLead) {
       return NextResponse.json(
         { error: 'Lead not found' },
-        { status: 404 }
+        { status: 404, headers: corsHeaders }
       );
     }
 
@@ -124,12 +125,12 @@ export async function DELETE(
     return NextResponse.json({
       success: true,
       message: 'Lead deleted successfully',
-    });
+    }, { headers: corsHeaders });
   } catch (error) {
     console.error('Error deleting lead:', error);
     return NextResponse.json(
       { error: 'Failed to delete lead' },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }

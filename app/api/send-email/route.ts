@@ -14,7 +14,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
     // Validate email format
     if (!validator.isEmail(email)) {
       return NextResponse.json(
