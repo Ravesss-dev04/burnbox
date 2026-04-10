@@ -7,6 +7,7 @@ import { corsHeaders } from '@/lib/corsHeaders';
 const updateLeadSchema = z.object({
   status: z.enum(['PENDING', 'PROCESSING', 'COMPLETED', 'REJECTED']).optional(),
   quotationSent: z.boolean().optional(),
+  fullName: z.string().min(2).optional(),
   contactNumber: z.string().min(10).optional(),
   email: z.string().email().optional(),
   companyName: z.string().min(2).optional(),
@@ -134,3 +135,5 @@ export async function DELETE(
     );
   }
 }
+
+

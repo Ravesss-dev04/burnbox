@@ -7,11 +7,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { toast } from 'sonner';
 
-// Form validation schema
+// Form validation schema with updated contact number validation
 const quotationSchema = z.object({
+  fullName: z.string().min(2, 'Full name must be at least 2 characters').regex(/^[a-zA-Z\s]+$/, 'Full name can only contain letters and spaces'),
   contactNumber: z.string()
     .min(10, 'Contact number must be at least 10 digits')
-    .regex(/^[0-9+\-\s]+$/, 'Invalid contact number format'),
+    .max(11, 'Contact number must not exceed 11 digits')
+    .regex(/^9\d{9,10}$/, 'Contact number must start with 9 and contain only numbers (e.g., 9123456789)'),
   email: z.string()
     .email('Invalid email address'),
   companyName: z.string()
@@ -37,6 +39,8 @@ export default function QuotationModal({ config }: QuotationModalProps) {
     handleSubmit,
     reset,
     formState: { errors },
+    setValue,
+    trigger,
   } = useForm<QuotationFormData>({
     resolver: zodResolver(quotationSchema),
   });
@@ -72,6 +76,27 @@ export default function QuotationModal({ config }: QuotationModalProps) {
     }
   };
 
+  // Handle contact number input - only allow numbers and enforce starting with 9
+  const handleContactNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    
+    // Remove any non-digit characters
+    value = value.replace(/\D/g, '');
+    
+    // If value is not empty and first character is not '9', clear it or set to '9'
+    if (value.length > 0 && value[0] !== '9') {
+      value = '9' + value.slice(1);
+    }
+    
+    // Limit to 11 digits (Philippine mobile number length)
+    if (value.length > 11) {
+      value = value.slice(0, 11);
+    }
+    
+    setValue('contactNumber', value);
+    trigger('contactNumber');
+  };
+
   const primaryColor = config?.primaryColor || 'var(--color-pink, #ff0060)';
 
   return (
@@ -97,11 +122,26 @@ export default function QuotationModal({ config }: QuotationModalProps) {
               Tell us what you need and our sales team will contact you shortly.
             </p>
           </div>
-
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              {/* Contact Number */}
+              {/* Full Name */}
+              <div>
+                <label className="mb-1 block text-sm font-medium text-zinc-200">
+                  Full Name *
+                </label>
+                <input 
+                  type="text"
+                  {...register('fullName')}
+                  className={`w-full rounded-xl border bg-white/5 px-4 py-3 text-white placeholder:text-zinc-500 outline-none transition-all duration-200 focus:border-pink-500/70 focus:ring-2 focus:ring-pink-500/30 ${errors.fullName ? 'border-red-500/80' : 'border-white/15'}`}
+                  placeholder="John Doe"
+                />
+                {errors.fullName && (
+                  <p className="mt-1 text-sm text-red-400">{errors.fullName.message}</p>
+                )}
+              </div>
+              
+              {/* Contact Number - Updated with validation */}
               <div>
                 <label className="mb-1 block text-sm font-medium text-zinc-200">
                   Contact Number *
@@ -110,6 +150,9 @@ export default function QuotationModal({ config }: QuotationModalProps) {
                   type="tel"
                   placeholder="+63 912 345 6789"
                   {...register('contactNumber')}
+                  onChange={handleContactNumberChange}
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   className={`w-full rounded-xl border bg-white/5 px-4 py-3 text-white placeholder:text-zinc-500 outline-none transition-all duration-200 focus:border-pink-500/70 focus:ring-2 focus:ring-pink-500/30 ${
                     errors.contactNumber ? 'border-red-500/80' : 'border-white/15'
                   }`}
@@ -117,31 +160,31 @@ export default function QuotationModal({ config }: QuotationModalProps) {
                 {errors.contactNumber && (
                   <p className="mt-1 text-sm text-red-400">{errors.contactNumber.message}</p>
                 )}
+               
               </div>
-
-              {/* Email */}
-              <div>
-                <label className="mb-1 block text-sm font-medium text-zinc-200">
-                  Email Address *
-                </label>
-                <input
-                  type="email"
-                  placeholder="company@example.com"
-                  {...register('email')}
-                  className={`w-full rounded-xl border bg-white/5 px-4 py-3 text-white placeholder:text-zinc-500 outline-none transition-all duration-200 focus:border-pink-500/70 focus:ring-2 focus:ring-pink-500/30 ${
-                    errors.email ? 'border-red-500/80' : 'border-white/15'
-                  }`}
-                />
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
-                )}
-              </div>
+            </div>
+            {/* Email */}
+            <div>
+              <label className="mb-1 block text-sm font-medium text-zinc-200">
+                Email Address *
+              </label>
+              <input
+                type="email"
+                placeholder="company@example.com"
+                {...register('email')}
+                className={`w-full rounded-xl border bg-white/5 px-4 py-3 text-white placeholder:text-zinc-500 outline-none transition-all duration-200 focus:border-pink-500/70 focus:ring-2 focus:ring-pink-500/30 ${
+                  errors.email ? 'border-red-500/80' : 'border-white/15'
+                }`}
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+              )}
             </div>
 
             {/* Company Name */}
             <div>
               <label className="mb-1 block text-sm font-medium text-zinc-200">
-                Company Name 
+                Company Name *
               </label>
               <input
                 type="text"
@@ -155,6 +198,7 @@ export default function QuotationModal({ config }: QuotationModalProps) {
                 <p className="mt-1 text-sm text-red-400">{errors.companyName.message}</p>
               )}
             </div>
+
             {/* Inquiry */}
             <div>
               <label className="mb-1 block text-sm font-medium text-zinc-200">
@@ -167,6 +211,7 @@ export default function QuotationModal({ config }: QuotationModalProps) {
                 className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-white placeholder:text-zinc-500 outline-none transition-all duration-200 focus:border-pink-500/70 focus:ring-2 focus:ring-pink-500/30"
               />
             </div>
+
             {/* Submit Button */}
             <button
               type="submit"

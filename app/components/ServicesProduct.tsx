@@ -41,7 +41,6 @@ const ProductImageSlider = ({
     }, 3000);
     return () => clearInterval(interval);
   }, [filledImages.length]);
-
   return (
     <div className="relative w-full md:w-full h-full bg-black/50 rounded-md overflow-hidden">
       {/* main image */}
@@ -104,15 +103,12 @@ const ProductImageSlider = ({
 const ServicesProduct = () => {
   const { searchValue, selectedProduct, setSelectedProduct, products } =
     useHeaderContext();
-
   // Use products from context
   const allProducts = products;
-
   // Filter products based on search
   const filteredProducts = allProducts.filter((p) =>
     p.name.toLowerCase().includes(searchValue.toLowerCase())
   );
-
   const [page, setPage] = useState(1);
   const itemsPerPage = 12;
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -121,15 +117,12 @@ const ServicesProduct = () => {
     startIndex,
     startIndex + itemsPerPage
   );
-
   const [showRelated, setShowRelated] = useState(true);
-
   // Randomize related products (except current one)
   const getRandomRelated = (excludeId: number) => {
     const others = allProducts.filter((p) => p.id !== excludeId);
     return [...others].sort(() => 0.5 - Math.random()).slice(0, 6);
   };
-
   const [showInquiry, setShowInquiry] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isOld, setIsOld] = useState(false);
@@ -139,11 +132,9 @@ const ServicesProduct = () => {
   // Generate Gravatar URL from email (requires proper MD5 hash)
   const getGravatarUrl = (email: string, size: number = 64) => {
     if (!email) return null;
-
     // Use a simple approach: create MD5 hash using crypto API or fallback
     // For Gravatar, we need MD5 hash of lowercase email
     const emailLower = email.trim().toLowerCase();
-
     // Simple hash function (not true MD5, but works for basic use)
     // For production, consider using crypto-js library: npm install crypto-js
     const simpleHash = (str: string): string => {
@@ -156,11 +147,9 @@ const ServicesProduct = () => {
       // Convert to hex and pad to 32 chars (MD5-like length)
       return Math.abs(hash).toString(16).padStart(32, "0").substring(0, 32);
     };
-
     // Try to use Web Crypto API for proper MD5 if available (async)
     // For now, use simple hash - Gravatar will handle invalid hashes gracefully
     const emailHash = simpleHash(emailLower);
-
     // Gravatar URL format: https://www.gravatar.com/avatar/{hash}?d=404&s={size}
     // d=404 means return 404 if no image exists (so we can fallback to initials)
     return `https://www.gravatar.com/avatar/${emailHash}?d=404&s=${size}`;
@@ -170,7 +159,6 @@ const ServicesProduct = () => {
   // Get initials from email address (uses the part before @)
   const getInitials = (email: string) => {
     if (!email) return "U";
-
     // Extract the part before @ from email
     const emailPrefix = email.split("@")[0];
     if (!emailPrefix) return "U";
@@ -183,20 +171,16 @@ const ServicesProduct = () => {
     if (parts.length >= 2) {
       return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
-
-
     // If single part (e.g., "animateevi"), use only first letter
 
     return emailPrefix.charAt(0).toUpperCase();
   };
-
-
   // Fetch feedback from API
   useEffect(() => {
     const fetchFeedbacks = async () => {
       setLoadingFeedbacks(true);
       try {
-        const response = await fetch("/api/feedback");
+        const response = await fetch("https://burnbox.vercel.app/api/feedback");
         if (response.ok) {
           const data = await response.json();
           if (data.success && data.feedbacks) {

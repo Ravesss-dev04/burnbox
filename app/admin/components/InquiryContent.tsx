@@ -80,7 +80,6 @@ export default function InquiryContent() {
   if (loading) {
     return <div className="p-6">Loading inquiries...</div>;
   }
-
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
@@ -89,7 +88,6 @@ export default function InquiryContent() {
           Total: {inquiries.length} inquiries
         </div>
       </div>
-
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">

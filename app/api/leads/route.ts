@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { corsHeaders } from '@/lib/corsHeaders';
 
 const leadSchema = z.object({
+  fullName: z.string().min(2),
   contactNumber: z.string().min(10),
   email: z.string().email(),
   companyName: z.string().min(2),
@@ -19,6 +20,7 @@ export async function POST(request: NextRequest) {
     // Save to database
     const lead = await prisma.lead.create({
       data: {
+        fullName: validatedData.fullName,
         contactNumber: validatedData.contactNumber,
         email: validatedData.email,
         companyName: validatedData.companyName,

@@ -30,7 +30,6 @@ function FeedbackForm() {
     e.preventDefault();
     setError('');
     setIsSubmitting(true);
-
     try {
       const response = await fetch('/api/feedback', {
         method: 'POST',
@@ -44,13 +43,10 @@ function FeedbackForm() {
           rating,
         }),
       });
-
       const data = await response.json();
-
       if (!response.ok) {
         throw new Error(data.error || 'Failed to submit feedback');
       }
-
       setIsSubmitted(true);
       // Reset form
       setName('');
@@ -108,7 +104,6 @@ function FeedbackForm() {
             Help us improve by sharing your experience with Burnbox Printing
           </p>
         </div>
-
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Name Field */}
           <div>

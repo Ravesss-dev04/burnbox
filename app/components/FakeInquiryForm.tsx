@@ -20,11 +20,9 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [otpMessage, setOtpMessage] = useState("");
   const [message, setMessage] = useState("");
-
   // New state for OTP popup
   const [showOtpPopup, setShowOtpPopup] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-
   // Convert file to base64
   const toBase64 = (file: File) =>
     new Promise<string>((resolve, reject) => {
@@ -33,7 +31,6 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
       reader.onload = () => resolve(reader.result as string);
       reader.onerror = reject;
     });
-
   // Detect blur
   const detectBlur = (file: File) =>
     new Promise<boolean>((resolve) => {
@@ -46,7 +43,6 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
-
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const pixels = imageData.data;
         const gray: number[] = [];
@@ -105,14 +101,11 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
       setLoading(false);
     }
   };
-
-
   const handleFiles = (files: FileList) => {
     const newFiles = Array.from(files);
     setImages(newFiles);
     if (newFiles[0]) checkModeration(newFiles[0]);
   };
-
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
@@ -309,9 +302,9 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
           ipAddress: publicIp
         }),
       });
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to send inquiry");
-      
       resetForm();
       setIsSuccess(true);
       setTimeout(() => setIsSuccess(false), 2000);

@@ -53,9 +53,7 @@ const EmailPopup = ({ setShowEmailPopup }: EmailPopupProps) => {
       alert('Please enter a valid email address');
       return;
     }
-
     setIsLoading(true);
-
     try {
       const response = await fetch('/api/send-email', {
         method: 'POST',
@@ -69,13 +67,10 @@ const EmailPopup = ({ setShowEmailPopup }: EmailPopupProps) => {
           source: 'website-contact-form' // Identify the source
         }),
       });
-
       const result = await response.json();
-
       if (response.ok) {
         // Show sent animation
         setIsSent(true);
-        
         // Close popup after 2 seconds
         setTimeout(() => {
           setFormData({ email: '', message: '' });

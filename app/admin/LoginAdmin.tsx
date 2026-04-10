@@ -279,7 +279,6 @@ const LoginAdmin = () => {
                       </div>
                     </div>
                   )}
-
                   {/* Forgot Password Link */}
                   {view === 'login' && (
                     <div className="flex justify-end">

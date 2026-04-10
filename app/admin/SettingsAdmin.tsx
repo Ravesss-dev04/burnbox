@@ -40,7 +40,6 @@ const SettingsAdmin = () => {
       setLoadingUsers(false)
     }
   }
-
   useEffect(() => {
     fetchUsers()
   }, [])

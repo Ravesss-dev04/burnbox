@@ -47,11 +47,9 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
       setSelectedFiles(Array.from(e.target.files));
     }
   };
-
   // Upload images
   const handleUpload = async () => {
     if (selectedFiles.length === 0) return;
-
     setUploading(true);
     try {
       // Convert files to base64
@@ -69,9 +67,7 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
           reader.readAsDataURL(file);
         });
       });
-
       const imagesData = await Promise.all(imagePromises);
-
       // Upload to GitHub
       const uploadResponse = await fetch('/api/uploadimages', {
         method: 'POST',
@@ -103,7 +99,6 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
         setSelectedFiles([]);
         setShowUploadModal(false);
         alert('Images uploaded successfully!');
-        
       } else {
         throw new Error(uploadResult.message);
       }
@@ -114,16 +109,13 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
       setUploading(false);
     }
   };
-
   // Delete image
   const handleDelete = async (id: number) => {
     if (!confirm('Are you sure you want to delete this image?')) return;
-
     try {
       const response = await fetch(`/api/gallery/${id}`, {
         method: 'DELETE',
       });
-
       if (response.ok) {
         setImages(images.filter(img => img.id !== id));
       } else {
@@ -134,12 +126,10 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
       alert('Failed to delete image');
     }
   };
-
   const filteredImages = images.filter(img => 
     img.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
     img.altText?.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
   if (loading) {
     return (
       <div className='flex flex-col items-center justify-center h-full text-white'>
@@ -148,7 +138,6 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
       </div>
     );
   }
-
   return (
     <div className='flex flex-col h-full'>
       {/* Header Section */}
@@ -159,7 +148,6 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
           </h2>
           <p className="text-gray-400 text-sm mt-1">Manage your gallery images and portfolio</p>
         </div>
-        
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <div className="relative flex-1 sm:w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
@@ -178,15 +166,12 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
             <Plus size={18} /> <span className='text-sm font-semibold whitespace-nowrap'>Add Images</span>
           </button>
         </div>
-        
       </div>
-
       {/* Gallery Grid */}
       <div className='flex-1 bg-[#0a0a0a]/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6 overflow-y-auto'>
         <div className="mb-4 flex items-center justify-between">
             <h3 className="text-lg font-semibold text-white">Current Gallery <span className="text-pink-500">({filteredImages.length})</span></h3>
         </div>
-
         {filteredImages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-64 text-gray-500">
             <ImageIcon size={48} className="mb-4 opacity-20" />
@@ -211,7 +196,6 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
                       alt={image.altText || 'Gallery Image'}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
-                    
                     {/* Overlay Actions */}
                     <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
                       <button 
@@ -223,7 +207,6 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
                       </button>
                     </div>
                   </div>
-
                   {/* Content */}
                   <div className="p-4 bg-[#151515] border-t border-white/5">
                     <div className="flex items-center justify-between">
@@ -234,7 +217,6 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
                                 day: 'numeric'
                             })}
                         </span>
-                      
                     </div>
                   </div>
                 </motion.div>
@@ -243,7 +225,6 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
           </div>
         )}
       </div>
-
       {/* Upload Modal */}
       <AnimatePresence>
         {showUploadModal && (
@@ -256,7 +237,6 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
             >
               {/* Modal Background Glow */}
               <div className="absolute top-0 right-0 w-64 h-64 bg-pink-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-              
               <div className="relative z-10">
                 <div className="flex justify-between items-center mb-6">
                   <div>
@@ -300,7 +280,6 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
                       </div>
                     </div>
                   </div>
-
                   {selectedFiles.length > 0 && (
                     <div className="bg-white/5 rounded-lg p-4 max-h-40 overflow-y-auto custom-scrollbar">
                         <h4 className="text-sm font-medium text-gray-300 mb-2">Selected Files ({selectedFiles.length})</h4>
@@ -314,7 +293,6 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
                         </div>
                     </div>
                   )}
-
                   <div className="flex gap-3 pt-4 border-t border-white/5 mt-2">
                     <button
                       onClick={() => {
@@ -349,3 +327,4 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
     </div>
   );
 }
+
