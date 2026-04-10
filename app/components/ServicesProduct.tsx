@@ -180,7 +180,7 @@ const ServicesProduct = () => {
     const fetchFeedbacks = async () => {
       setLoadingFeedbacks(true);
       try {
-        const response = await fetch("https://burnbox.vercel.app/api/feedback");
+        const response = await fetch("/api/feedback");
         if (response.ok) {
           const data = await response.json();
           if (data.success && data.feedbacks) {
