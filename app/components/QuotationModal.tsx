@@ -166,7 +166,7 @@ export default function QuotationModal({ config }: QuotationModalProps) {
             {/* Email */}
             <div>
               <label className="mb-1 block text-sm font-medium text-zinc-200">
-                Email Address *
+                Email Address 
               </label>
               <input
                 type="email"

@@ -29,7 +29,9 @@ const SettingsAdmin = () => {
   const fetchUsers = async () => {
     setLoadingUsers(true)
     try {
-      const res = await fetch('/api/auth/admin/users')
+      const res = await fetch('/api/auth/admin/users', {
+        credentials: 'include',
+      })
       const data = await res.json()
       if (res.ok) {
         setUsers(data.users)
@@ -52,6 +54,7 @@ const SettingsAdmin = () => {
       const res = await fetch('/api/auth/admin/create-user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email, password, position, role, name, image, bio })
       })
       const data = await res.json()
@@ -77,6 +80,7 @@ const SettingsAdmin = () => {
       const res = await fetch('/api/auth/admin/update-role', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email: userEmail, role: newRole })
       })
       const data = await res.json()
@@ -100,6 +104,7 @@ const SettingsAdmin = () => {
     try {
       const res = await fetch(`/api/auth/admin/users?id=${id}`, {
         method: 'DELETE',
+        credentials: 'include',
       })
       const data = await res.json()
       if (res.ok) {

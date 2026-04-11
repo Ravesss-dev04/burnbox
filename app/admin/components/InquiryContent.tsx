@@ -21,7 +21,7 @@ export default function InquiryContent() {
 
   const fetchInquiries = async () => {
     try {
-      const res = await fetch('/api/inquiries');
+      const res = await fetch('https://burnbox.vercel.app/api/inquiries');
       const data = await res.json();
       setInquiries(data);
     } catch (error) {

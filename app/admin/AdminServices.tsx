@@ -97,7 +97,7 @@ const AdminServices: React.FC<DarkModeServices> = ({darkMode = false}) => {
           const base64 = e.target?.result as string;
           const base64Content = base64.split(',')[1];
 
-          const response = await fetch('/api/uploadimages', {
+          const response = await fetch('https://burnbox.vercel.app/api/uploadimages', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
