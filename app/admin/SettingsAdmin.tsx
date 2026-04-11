@@ -31,7 +31,6 @@ const SettingsAdmin = () => {
     try {
       const res = await fetch('/api/auth/admin/users', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
       })
       const data = await res.json()
