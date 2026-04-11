@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { verifyPassword } from '@/lib/auth-utils';
 import { createHmac } from 'crypto';
-import { corsHeaders } from '@/lib/corsHeaders';
+import { getCorsHeaders } from '@/lib/corsHeaders';
 
 function generateToken(userId: string | number) {
   const uid = String(userId);
@@ -19,18 +19,20 @@ const prisma = new PrismaClient();
 
 
 
-export async function OPTIONS() {
-  return NextResponse.json({}, { headers: corsHeaders });
+export async function OPTIONS(request: NextRequest) {
+  return NextResponse.json({}, { headers: getCorsHeaders(request.headers.get('origin')) });
 }
 
 export async function POST(request: NextRequest) {
+  const headers = getCorsHeaders(request.headers.get('origin'));
+
   try {
     const { email, password } = await request.json();
 
     if (!email || !password) {
       return NextResponse.json(
         { error: 'Email and password are required' },
-        { status: 400, headers: corsHeaders }
+        { status: 400, headers }
       );
     }
 
@@ -42,7 +44,7 @@ export async function POST(request: NextRequest) {
     if (!user) {
       return NextResponse.json(
         { error: 'Invalid credentials' },
-        { status: 401, headers: corsHeaders }
+        { status: 401, headers }
       );
     }
 
@@ -51,7 +53,7 @@ export async function POST(request: NextRequest) {
       console.error('User has no password hash:', user.id);
       return NextResponse.json(
         { error: 'Invalid credentials' },
-        { status: 401, headers: corsHeaders }
+        { status: 401, headers }
       );
     }
 
@@ -60,7 +62,7 @@ export async function POST(request: NextRequest) {
     if (!isValidPassword) {
       return NextResponse.json(
         { error: 'Invalid credentials' },
-        { status: 401, headers: corsHeaders }
+        { status: 401, headers }
       );
     }
 
@@ -68,7 +70,7 @@ export async function POST(request: NextRequest) {
     if (!['ADMIN', 'STAFF'].includes((user as any).role)) {
       return NextResponse.json(
         { error: 'Unauthorized role' },
-        { status: 403, headers: corsHeaders }
+        { status: 403, headers }
       );
     }
 
@@ -79,14 +81,15 @@ export async function POST(request: NextRequest) {
       message: 'Login successful',
       user: { id: user.id, email: user.email, role: (user as any).role }
     },
-    { headers: corsHeaders}
+    { headers }
   );
 
     // Set cookie
     response.cookies.set('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      path: '/',
       maxAge: 7 * 24 * 60 * 60 // 7 days
     });
 
@@ -96,7 +99,7 @@ export async function POST(request: NextRequest) {
     console.error('Login error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500, headers: corsHeaders }
+      { status: 500, headers }
     );
   }
 }

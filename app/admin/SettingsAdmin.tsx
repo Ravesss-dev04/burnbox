@@ -55,6 +55,7 @@ const SettingsAdmin = () => {
       const res = await fetch('/api/auth/admin/create-user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email, password, position, role, name, image, bio })
       })
       const data = await res.json()
@@ -80,6 +81,7 @@ const SettingsAdmin = () => {
       const res = await fetch('/api/auth/admin/update-role', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email: userEmail, role: newRole })
       })
       const data = await res.json()

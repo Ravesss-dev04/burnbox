@@ -79,7 +79,7 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
       const base64 = await toBase64(file);
       setImageBase64(base64);
 
-      const res = await fetch("https://burnbox.vercel.app/api/moderate", {
+      const res = await fetch("/api/moderate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ imageBase64: base64 }),

@@ -43,7 +43,7 @@ const Register = () => {
 
       if (response.ok) {
         alert('Admin account created successfully! Please login.')
-        router.push('/admin') // Redirect to admin login
+        router.push('https://burnbox.vercel.app/admin') // Redirect to admin login
       } else {
         setError(data.error || 'Registration failed')
       }
