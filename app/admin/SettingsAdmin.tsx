@@ -30,7 +30,6 @@ const SettingsAdmin = () => {
     setLoadingUsers(true)
     try {
       const res = await fetch('/api/auth/admin/users', {
-        method: 'POST',
         credentials: 'include',
       })
       const data = await res.json()
