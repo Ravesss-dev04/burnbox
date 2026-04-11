@@ -29,9 +29,7 @@ const SettingsAdmin = () => {
   const fetchUsers = async () => {
     setLoadingUsers(true)
     try {
-      const res = await fetch('/api/auth/admin/users', {
-        credentials: 'include',
-      })
+      const res = await fetch('/api/auth/admin/users')
       const data = await res.json()
       if (res.ok) {
         setUsers(data.users)

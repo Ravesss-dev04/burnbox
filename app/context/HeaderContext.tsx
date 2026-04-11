@@ -51,7 +51,6 @@ export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({
           const transformedProducts: Product[] = services.map((service: any) => ({
             id: service.id,
             name: service.name,
-
             // Convert imageUrl string to array of images (handle null/undefined)
             image: service.imageUrl 
               ? (typeof service.imageUrl === 'string' 
@@ -61,7 +60,6 @@ export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({
             price: service.price || 0,
             description: service.description || ""
           }));
-          
           setProducts(transformedProducts);
         } else {
           const errorText = await response.text().catch(() => 'Unknown error');
@@ -73,10 +71,8 @@ export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({
         setLoading(false);
       }
     };
-    
     fetchProducts();
   }, []);
-
   // Service name mapping (keep this for header navigation)
   const serviceNameMap: Record<string, string> = {
     "Digital & Offset Printing": "Digital Offset Printing",
@@ -102,13 +98,11 @@ export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({
       .filter((p) => p.name.toLowerCase().includes(q))
       .sort((a, b) => a.name.localeCompare(b.name));
   }, [searchValue, products]);
-
   // Function to select a product by ID
   const selectProductById = (id: number) => {
     const p = products.find((x) => x.id === id) ?? null;
     setSelectedProduct(p);
   };
-
   // Function to select a product by service name
   const selectProductByName = (serviceName: string) => {
     const productName = serviceNameMap[serviceName] || serviceName;
@@ -116,7 +110,6 @@ export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({
     const product = products.find(
       (p) => p.name.toLowerCase() === productName.toLowerCase()
     );
-    
     if (product) {
       setSelectedProduct(product);
       setSelectedServiceFromHeader(serviceName);

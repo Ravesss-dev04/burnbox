@@ -34,7 +34,7 @@ export default function VisitorTracker() {
         }
 
         // Call the API to track this visitor
-        const response = await fetch('https://burnbox.vercel.app/api/visitors', {
+        const response = await fetch('/api/visitors', {
           method: 'POST',
           headers: {  
             'Content-Type': 'application/json',
@@ -44,9 +44,6 @@ export default function VisitorTracker() {
             pagePath: currentPath, // Track which page was visited
             ipAddress: publicIp // Send the detected public IP
           }),
-
-
-
         });
         if (response.ok) {
           const data = await response.json();

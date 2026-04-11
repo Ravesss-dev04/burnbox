@@ -184,7 +184,7 @@ export default function QuotationModal({ config }: QuotationModalProps) {
             {/* Company Name */}
             <div>
               <label className="mb-1 block text-sm font-medium text-zinc-200">
-                Company Name *
+                Company Name <span className='text-sm'>(Optional)</span>
               </label>
               <input
                 type="text"

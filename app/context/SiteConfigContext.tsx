@@ -43,7 +43,7 @@ export const SiteConfigProvider = ({
 
   const fetchConfig = async () => {
     try {
-      const res = await fetch("https://burnbox.vercel.app/api/site-config");
+      const res = await fetch("/api/site-config");
       if (res.ok) {
         const data = await res.json();
         setConfig(data);

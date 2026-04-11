@@ -34,8 +34,9 @@ async function verifyAdmin(request: NextRequest) {
 
   const adminUser = await prisma.user.findUnique({ where: { id: Number(requesterId) } });
   if (!adminUser || (adminUser as any).role !== 'ADMIN') return null;
-
+ 
   return adminUser;
+
 }
 
 export async function GET(request: NextRequest) {
@@ -45,7 +46,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized: Admin access required' }, { status: 403, headers: corsHeaders });
     }
 
-    const users = await prisma.user.findMany({
+     const users = await prisma.user.findMany({
+      
       select: {
         id: true,
         email: true,

@@ -53,7 +53,6 @@ export default function SalesLead() {
     if (!confirm(`Are you sure you want to delete the lead from ${fullName} (${companyName})?`)) {
       return;
     }
-
     setDeletingId(id);
     try {
       const response = await fetch(`/api/leads/${id}`, {
