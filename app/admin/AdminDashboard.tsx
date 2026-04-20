@@ -35,6 +35,15 @@ interface AdminDashboardProps {
   children?: ReactNode;
 }
 
+interface NotificationItem {
+  id: number;
+  type: string;
+  message: string;
+  relatedId: string | null;
+  isRead: boolean;
+  createdAt: string;
+}
+
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ userMail, userRole = 'STAFF', onLogout }) => {
   // Role must reflect server-authenticated user role.
   const effectiveRole = userRole === 'ADMIN' ? 'ADMIN' : 'STAFF';
@@ -43,6 +52,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userMail, userRole = 'S
   const [activeSection, setActiveSection] = useState("dashboard");
   const [mounted, setMounted] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
+  const [loadingNotifications, setLoadingNotifications] = useState(false);
   
   const sectionMap: Record<string, React.ReactElement> = {
     dashboard: React.createElement(DashboardContent as any, { userMail, onLogout, darkMode: true }),
@@ -66,6 +79,75 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userMail, userRole = 'S
       setActiveSection('dashboard');
     }
   }, [effectiveRole, activeSection]);
+
+  const fetchNotifications = async () => {
+    setLoadingNotifications(true);
+    try {
+      const response = await fetch('/api/auth/notifications', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        setNotifications([]);
+        setUnreadNotificationCount(0);
+        return;
+      }
+
+      const data = await response.json();
+      setNotifications(Array.isArray(data.notifications) ? data.notifications : []);
+      setUnreadNotificationCount(Number(data.unreadCount || 0));
+    } catch (error) {
+      console.error('Notification fetch error:', error);
+      setNotifications([]);
+      setUnreadNotificationCount(0);
+    } finally {
+      setLoadingNotifications(false);
+    }
+  };
+
+  const markAllNotificationsAsRead = async () => {
+    try {
+      await fetch('/api/auth/notifications', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({}),
+      });
+
+      setNotifications((previous) =>
+        previous.map((item) => ({
+          ...item,
+          isRead: true,
+        }))
+      );
+      setUnreadNotificationCount(0);
+    } catch (error) {
+      console.error('Notification mark-read error:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (!mounted) {
+      return;
+    }
+
+    void fetchNotifications();
+    const intervalId = window.setInterval(() => {
+      void fetchNotifications();
+    }, 30000);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
+  }, [mounted]);
+
+  useEffect(() => {
+    if (isNotificationOpen && unreadNotificationCount > 0) {
+      void markAllNotificationsAsRead();
+    }
+  }, [isNotificationOpen, unreadNotificationCount]);
 
   const getAvatarLetter = (email: string) => {
     const localPart = email?.split('@')[0] || ''
@@ -342,10 +424,67 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userMail, userRole = 'S
 
             {/* Actions */}
             <div className="flex items-center gap-4">
-              <button className="relative p-2 text-gray-400 hover:text-white transition-colors">
-                <Bell size={20} />
-                <span className="absolute top-2 right-2 w-2 h-2 bg-pink-500 rounded-full" />
-              </button>
+              <div className="relative">
+                <button
+                  onClick={() => {
+                    const nextOpen = !isNotificationOpen;
+                    setIsNotificationOpen(nextOpen);
+                    if (nextOpen) {
+                      void fetchNotifications();
+                    }
+                  }}
+                  className="relative p-2 text-gray-400 hover:text-white transition-colors"
+                >
+                  <Bell size={20} />
+                  {unreadNotificationCount > 0 && (
+                    <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1.5 rounded-full bg-pink-500 text-white text-[10px] font-bold flex items-center justify-center">
+                      {unreadNotificationCount > 9 ? '9+' : unreadNotificationCount}
+                    </span>
+                  )}
+                </button>
+
+                <AnimatePresence>
+                  {isNotificationOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute right-0 top-full mt-2 w-[360px] max-w-[92vw] bg-[#0a0a0a] border border-white/10 rounded-xl shadow-xl overflow-hidden z-50"
+                    >
+                      <div className="px-4 py-3 border-b border-white/10">
+                        <p className="text-sm font-semibold text-white">Notifications</p>
+                        <p className="text-xs text-gray-400">Quotation submissions for Sales and Admin</p>
+                      </div>
+
+                      <div className="max-h-80 overflow-y-auto">
+                        {loadingNotifications ? (
+                          <div className="px-4 py-4 text-sm text-gray-400">Loading notifications...</div>
+                        ) : notifications.length === 0 ? (
+                          <div className="px-4 py-4 text-sm text-gray-400">No notifications yet.</div>
+                        ) : (
+                          notifications.map((notification) => (
+                            <button
+                              key={notification.id}
+                              onClick={() => {
+                                setActiveSection('leads');
+                                setIsNotificationOpen(false);
+                              }}
+                              className={`w-full text-left px-4 py-3 border-b border-white/5 hover:bg-white/5 transition-colors ${
+                                notification.isRead ? 'bg-transparent' : 'bg-pink-500/10'
+                              }`}
+                            >
+                              <p className="text-sm text-white">{notification.message}</p>
+                              <p className="text-xs text-gray-400 mt-1">
+                                {new Date(notification.createdAt).toLocaleString()}
+                              </p>
+                            </button>
+                          ))
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               
               <div className="relative">
                 <button 

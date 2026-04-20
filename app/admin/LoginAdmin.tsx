@@ -74,7 +74,7 @@ const LoginAdmin = () => {
             throw new Error('Passwords do not match');
           }
           endpoint = '/api/auth/reset-password';
-          body = { token: searchParams.get('token'), password };
+          body = { token: searchParams.get('token'), newPassword: password };
           break;
       }
 
@@ -97,9 +97,9 @@ const LoginAdmin = () => {
           setUserRole(role)
           router.refresh()
         } else if (view === 'forgot') {
-          setSuccessMessage('Reset link sent to your email.')
+          setSuccessMessage(data.message || 'Reset link sent to your email.')
         } else if (view === 'reset') {
-          setSuccessMessage('Password reset successfully! Please login.')
+          setSuccessMessage(data.message || 'You have successfully changed your password.')
           setTimeout(() => setView('login'), 2000);
         }
       } else {
