@@ -50,9 +50,15 @@ const SettingsAdmin = () => {
       const data = await res.json()
       if (res.ok) {
         setUsers(data.users)
+      } else if (res.status === 401 || res.status === 403) {
+        setUsers([])
+        setStatus('Admin authorization required. Please sign in with an ADMIN account.')
+      } else {
+        setStatus(data.error || 'Failed to fetch users')
       }
     } catch (error) {
       console.error('Error fetching users:', error)
+      setStatus('Error fetching users')
     } finally {
       setLoadingUsers(false)
     }

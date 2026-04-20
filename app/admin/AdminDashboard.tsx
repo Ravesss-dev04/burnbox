@@ -36,8 +36,8 @@ interface AdminDashboardProps {
 }
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ userMail, userRole = 'STAFF', onLogout }) => {
-  // Failsafe: If email is the known admin email, force ADMIN role
-  const effectiveRole = (userMail === 'admin@example.com' || userRole === 'ADMIN') ? 'ADMIN' : 'STAFF';
+  // Role must reflect server-authenticated user role.
+  const effectiveRole = userRole === 'ADMIN' ? 'ADMIN' : 'STAFF';
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -62,10 +62,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userMail, userRole = 'S
 
   // Prevent direct navigation to settings by URL state if not admin
   useEffect(() => {
-    if (userRole !== 'ADMIN' && activeSection === 'settings') {
+    if (effectiveRole !== 'ADMIN' && activeSection === 'settings') {
       setActiveSection('dashboard');
     }
-  }, [userRole, activeSection]);
+  }, [effectiveRole, activeSection]);
 
   const getAvatarLetter = (email: string) => {
     const localPart = email?.split('@')[0] || ''

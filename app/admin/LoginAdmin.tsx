@@ -42,13 +42,8 @@ const LoginAdmin = () => {
         const userData = JSON.parse(savedUser)
         setIsLoggedIn(true)
         setUserEmail(userData.email)
-        
-        // Determine role with fallback
-        let role = userData.role || 'STAFF';
-        if (userData.email === 'admin@example.com') {
-          role = 'ADMIN';
-        }
-        setUserRole(role);
+        // Trust server-provided role only.
+        setUserRole(userData.role || 'STAFF');
       } catch (e) {
         console.error("Error parsing user data", e);
       }
@@ -60,19 +55,6 @@ const LoginAdmin = () => {
     setIsLoading(true)
     setError('')
     setSuccessMessage('')
-
-    // Demo Admin Login
-    if (view === 'login' && email === 'admin@example.com' && password === 'admin123') {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      const userData = { email: 'admin@example.com', role: 'ADMIN' }
-      localStorage.setItem('adminUser', JSON.stringify(userData))
-      setIsLoggedIn(true)
-      setUserEmail('admin@example.com')
-      setUserRole('ADMIN')
-      setIsLoading(false)
-      return
-    }
 
     try {
       let endpoint = '';
