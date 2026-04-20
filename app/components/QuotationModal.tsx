@@ -160,13 +160,12 @@ export default function QuotationModal({ config }: QuotationModalProps) {
                 {errors.contactNumber && (
                   <p className="mt-1 text-sm text-red-400">{errors.contactNumber.message}</p>
                 )}
-               
               </div>
             </div>
             {/* Email */}
             <div>
               <label className="mb-1 block text-sm font-medium text-zinc-200">
-                Email Address 
+                Email Address <span className='text-sm '>(optional)</span>
               </label>
               <input
                 type="email"

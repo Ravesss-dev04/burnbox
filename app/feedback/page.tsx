@@ -4,7 +4,6 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { FaStar, FaCheckCircle, FaSpinner } from 'react-icons/fa';
-
 // Separate component that uses useSearchParams
 function FeedbackForm() {
   const searchParams = useSearchParams();

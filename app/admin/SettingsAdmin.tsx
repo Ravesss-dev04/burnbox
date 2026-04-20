@@ -2,6 +2,19 @@
 import React, { useState, useEffect } from 'react'
 import { Trash2, Shield, ShieldOff, User, RefreshCw } from 'lucide-react'
 
+const PREDEFINED_POSITIONS = [
+  'Sales',
+  'Graphic Design',
+  'Web Developer',
+  'Admin Support',
+  'Marketing',
+  'Customer Support',
+  'Finance',
+  'Human Resources',
+]
+
+const CUSTOM_POSITION_VALUE = '__custom__'
+
 interface UserData {
   id: number;
   email: string;
@@ -16,7 +29,8 @@ interface UserData {
 const SettingsAdmin = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [position, setPosition] = useState('')
+  const [positionSelection, setPositionSelection] = useState('')
+  const [customPosition, setCustomPosition] = useState('')
   const [name, setName] = useState('')
   const [image, setImage] = useState('')
   const [bio, setBio] = useState('')
@@ -49,6 +63,16 @@ const SettingsAdmin = () => {
 
   const createUser = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    const normalizedPosition = positionSelection === CUSTOM_POSITION_VALUE
+      ? customPosition.trim()
+      : positionSelection.trim()
+
+    if (!normalizedPosition) {
+      setStatus('Position / Title is required')
+      return
+    }
+
     setLoading(true)
     setStatus('')
     try {
@@ -56,12 +80,12 @@ const SettingsAdmin = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ email, password, position, role, name, image, bio })
+        body: JSON.stringify({ email, password, position: normalizedPosition, role, name, image, bio })
       })
       const data = await res.json()
       if (res.ok) {
-        setStatus(`User created: ${data.user.email} (${data.user.role})`)
-        setEmail(''); setPassword(''); setPosition(''); setRole('STAFF'); setName(''); setImage(''); setBio('');
+        setStatus(`Invitation sent: ${data.user.email} (${data.user.role}) - email verification required before dashboard access.`)
+        setEmail(''); setPassword(''); setPositionSelection(''); setCustomPosition(''); setRole('STAFF'); setName(''); setImage(''); setBio('');
         fetchUsers() // Refresh list
       } else {
         setStatus(data.error || 'Failed to create user')
@@ -272,16 +296,43 @@ const SettingsAdmin = () => {
               placeholder="••••••••"
               required 
             />
+            <p className="text-xs text-zinc-500">This password becomes active only after invitation email verification.</p>
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-zinc-400">Position / Title</label>
-            <input 
-              className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-pink-500/50 focus:ring-1 focus:ring-pink-500/50 transition-all duration-200" 
-              type="text" 
-              value={position} 
-              onChange={e => setPosition(e.target.value)} 
-              placeholder="e.g. Operations Manager" 
-            />
+            <div className="relative">
+              <select
+                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-pink-500/50 focus:ring-1 focus:ring-pink-500/50 transition-all duration-200 appearance-none cursor-pointer"
+                value={positionSelection}
+                onChange={e => {
+                  const nextValue = e.target.value
+                  setPositionSelection(nextValue)
+                  if (nextValue !== CUSTOM_POSITION_VALUE) {
+                    setCustomPosition('')
+                  }
+                }}
+                required
+              >
+                <option value="" disabled>Select a position</option>
+                {PREDEFINED_POSITIONS.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+                <option value={CUSTOM_POSITION_VALUE}>Other (please specify)</option>
+              </select>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </div>
+            </div>
+            {positionSelection === CUSTOM_POSITION_VALUE && (
+              <input
+                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-pink-500/50 focus:ring-1 focus:ring-pink-500/50 transition-all duration-200"
+                type="text"
+                value={customPosition}
+                onChange={e => setCustomPosition(e.target.value)}
+                placeholder="Enter custom position title"
+                required
+              />
+            )}
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-zinc-400">Profile Image URL</label>
