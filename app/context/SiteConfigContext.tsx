@@ -73,7 +73,6 @@ export const SiteConfigProvider = ({
       return newConfig;
     });
   };
-
   const undo = () => {
     if (historyIndex > 0) {
       setHistoryIndex(historyIndex - 1);

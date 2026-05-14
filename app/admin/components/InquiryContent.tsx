@@ -30,14 +30,11 @@ export default function InquiryContent() {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchInquiries();
   }, []);
-
   const deleteInquiry = async (id: number) => {
     if (!confirm('Are you sure you want to delete this inquiry?')) return;
-
     try {
       const res = await fetch(`/api/inquiries/${id}`, {
         method: 'DELETE',

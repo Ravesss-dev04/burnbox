@@ -36,11 +36,9 @@ export default function GalleryManager({darkMode = false}: GalleryManagerProps) 
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchImages();
   }, []);
-
   // Handle file selection
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {

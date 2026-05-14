@@ -11,10 +11,10 @@ const Footer = () => {
   return (
     <footer className="bg-zinc-950 text-white px-6 sm:px-10 py-10 border-t border-white/5">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-sm font-extralight w-full">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 text-sm font-extralight w-full">
           {/* Column 1: Quick Links */}
           <div>
-            <Editable 
+            <Editable  
               name="footerQuickLinksTitle" 
               as="h4" 
               type="text"
@@ -27,7 +27,6 @@ const Footer = () => {
             <Editable name="footerLink3" as="p" type="text" defaultValue="Stickers & Labels" />
             <Editable name="footerLink4" as="p" type="text" defaultValue="Signage" />
           </div>
-
           {/* Column 2 */}
           <div>
             <h4 className="text-lg font-semibold mb-2 invisible">Spacer</h4>
@@ -70,6 +69,26 @@ const Footer = () => {
                 />
               </a>
             </div>
+          </div>
+          {/* Column 5: Other Links */}
+          <div>
+            <Editable 
+              name="footerOtherLinksTitle" 
+              as="h4" 
+              type="text"
+              defaultValue="Other Links"
+              className="text-lg font-semibold mb-2"
+              style={{ color: config.primaryColor || '#f472b6' }}
+            />
+            <a href="https://www.refrens.com/en/free-accounting-software" target="_blank" rel="noopener noreferrer" className="inline-block hover:opacity-80 transition-opacity">
+              <Image
+                height={500}
+                width={500}
+                alt="Refresh"
+                src="/refresh.png"
+                className="h-[40px] w-[100px] object-contain cursor-pointer"
+              />
+            </a>
           </div>
         </div>
       </div>

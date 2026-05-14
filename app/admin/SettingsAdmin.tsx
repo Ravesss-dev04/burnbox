@@ -169,7 +169,6 @@ const SettingsAdmin = () => {
           {status}
         </div>
       )}
-
       {/* User Management List */}
       <div className="bg-zinc-900/50 backdrop-blur-md border border-white/5 rounded-2xl p-8 relative overflow-hidden">
         <div className="flex items-center justify-between mb-6">

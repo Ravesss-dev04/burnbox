@@ -30,14 +30,12 @@ export async function POST(req: Request) {
         { status: 400,  headers: corsHeaders }
       )
     }
-
     if (typeof newPassword !== 'string' || newPassword.length < 6) {
       return NextResponse.json(
         { error: 'New password must be at least 6 characters' },
         { status: 400, headers: corsHeaders }
       )
     }
-
     const payload = verifyResetToken(token)
     if (!payload) {
       return NextResponse.json(
@@ -45,7 +43,6 @@ export async function POST(req: Request) {
         { status: 400, headers: corsHeaders }
       )
     }
-
     const userId = Number(payload.sub)
     if (!Number.isFinite(userId)) {
       return NextResponse.json(
@@ -53,7 +50,6 @@ export async function POST(req: Request) {
         { status: 400, headers: corsHeaders }
       )
     }
-
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: {
