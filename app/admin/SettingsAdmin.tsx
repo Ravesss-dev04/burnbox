@@ -1,6 +1,6 @@
 "use client"
-import React, { useState, useEffect } from 'react'
-import { Trash2, Shield, ShieldOff, User, RefreshCw } from 'lucide-react'
+import React, { useState, useEffect, useRef } from 'react'
+import { Trash2, Shield, ShieldOff, User, RefreshCw, Camera } from 'lucide-react'
 
 const PREDEFINED_POSITIONS = [
   'Sales',
@@ -33,6 +33,8 @@ const SettingsAdmin = () => {
   const [customPosition, setCustomPosition] = useState('')
   const [name, setName] = useState('')
   const [image, setImage] = useState('')
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const imageInputRef = useRef<HTMLInputElement>(null)
   const [bio, setBio] = useState('')
   const [role, setRole] = useState<'ADMIN' | 'STAFF'>('STAFF')
   const [status, setStatus] = useState<string>('')
@@ -67,6 +69,23 @@ const SettingsAdmin = () => {
     fetchUsers()
   }, [])
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        setStatus('Image must be less than 2MB')
+        return
+      }
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        const base64 = reader.result as string
+        setImage(base64)
+        setImagePreview(base64)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
   const createUser = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -91,7 +110,7 @@ const SettingsAdmin = () => {
       const data = await res.json()
       if (res.ok) {
         setStatus(`Invitation sent: ${data.user.email} (${data.user.role}) - email verification required before dashboard access.`)
-        setEmail(''); setPassword(''); setPositionSelection(''); setCustomPosition(''); setRole('STAFF'); setName(''); setImage(''); setBio('');
+        setEmail(''); setPassword(''); setPositionSelection(''); setCustomPosition(''); setRole('STAFF'); setName(''); setImage(''); setBio(''); setImagePreview(null);
         fetchUsers() // Refresh list
       } else {
         setStatus(data.error || 'Failed to create user')
@@ -340,14 +359,36 @@ const SettingsAdmin = () => {
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-400">Profile Image URL</label>
-            <input 
-              className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-pink-500/50 focus:ring-1 focus:ring-pink-500/50 transition-all duration-200" 
-              type="text" 
-              value={image} 
-              onChange={e => setImage(e.target.value)} 
-              placeholder="https://example.com/image.jpg" 
-            />
+            <label className="text-sm font-medium text-zinc-400">Profile Image</label>
+            <div className="flex items-center gap-4">
+              <div 
+                onClick={() => imageInputRef.current?.click()}
+                className="relative w-16 h-16 rounded-xl overflow-hidden border-2 border-dashed border-white/10 hover:border-pink-500/50 cursor-pointer transition-colors bg-black/40 flex items-center justify-center group"
+              >
+                {imagePreview ? (
+                  <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
+                ) : (
+                  <Camera size={20} className="text-zinc-600 group-hover:text-pink-500 transition-colors" />
+                )}
+              </div>
+              <div className="flex-1">
+                <button
+                  type="button"
+                  onClick={() => imageInputRef.current?.click()}
+                  className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-zinc-300 hover:bg-white/10 hover:text-white transition-colors"
+                >
+                  {imagePreview ? 'Change Image' : 'Upload Image'}
+                </button>
+                <p className="text-xs text-zinc-500 mt-1">Max 2MB. JPG, PNG, or WebP.</p>
+              </div>
+              <input
+                ref={imageInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+            </div>
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-zinc-400">Access Role</label>

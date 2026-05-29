@@ -63,7 +63,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userMail, userRole = 'S
     leads: <SalesLead userRole={effectiveRole}/>,
     gallery: <GalleryManager darkMode={true} />,
     Feedback: <FeedbackContent />,
-    profile: <ProfileInfo/>,
+    profile: <ProfileInfo userRole={effectiveRole} userMail={userMail}/>,
     settings: <SettingsAdmin/>,
     customize: <Customize userRole={effectiveRole}/>,
   }

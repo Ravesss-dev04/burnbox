@@ -55,6 +55,9 @@ export async function GET(request: NextRequest) {
         email: true,
         role: true,
         position: true,
+        name: true,
+        image: true,
+        bio: true,
         created_at: true
       },
       orderBy: {
