@@ -5,8 +5,80 @@ import validator from 'validator';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, message, timestamp, source } = await request.json();
+    const { email, message, timestamp, source, type, to, clientName, companyName, inquiry, contactNumber } = await request.json();
 
+    // Handle quotation email to client
+    if (type === 'quotation' && to) {
+      if (!validator.isEmail(to)) {
+        return NextResponse.json(
+          { message: 'Invalid recipient email format' },
+          { status: 400 }
+        );
+      }
+
+      if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+        return NextResponse.json(
+          { message: 'Email service not configured properly' },
+          { status: 500 }
+        );
+      }
+
+      const transporter = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+        port: parseInt(process.env.EMAIL_PORT || '465'),
+        secure: true,
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
+
+      await transporter.verify();
+
+      const recipientName = clientName || companyName || 'Valued Client';
+      const inquiryDetails = inquiry || 'General quotation request';
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://burnboxadvertising.com';
+
+      const mailOptions = {
+        from: `"Burnbox Printing" <${process.env.BUSINESS_EMAIL || process.env.EMAIL_USER}>`,
+        to: to,
+        subject: `Your Quotation Request - Burnbox Printing`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background: linear-gradient(135deg, #F43C6D, #9333ea); padding: 30px; text-align: center; color: white; border-radius: 10px 10px 0 0;">
+              <h1 style="margin: 0; font-size: 24px;">Quotation Request Received</h1>
+              <p style="margin: 8px 0 0 0; opacity: 0.9;">Thank you for your interest in our services</p>
+            </div>
+            <div style="padding: 30px; background: #f9f9f9; border-radius: 0 0 10px 10px;">
+              <p style="margin: 0 0 16px 0;">Dear <strong>${recipientName}</strong>,</p>
+              <p style="margin: 0 0 16px 0;">Thank you for reaching out to Burnbox Printing! We have received your quotation request and our sales team is reviewing the details.</p>
+              
+              <div style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb; margin: 20px 0;">
+                <h3 style="margin: 0 0 12px 0; color: #333;">Request Summary</h3>
+                <p style="margin: 4px 0;"><strong>Name:</strong> ${clientName || 'N/A'}</p>
+                <p style="margin: 4px 0;"><strong>Company:</strong> ${companyName || 'N/A'}</p>
+                <p style="margin: 4px 0;"><strong>Contact:</strong> ${contactNumber || 'N/A'}</p>
+                <p style="margin: 4px 0;"><strong>Details:</strong> ${inquiryDetails}</p>
+              </div>
+
+              <p style="margin: 16px 0;">Our team will prepare a detailed quotation and get back to you within <strong>24 hours</strong>. If you have any urgent questions, feel free to reply to this email.</p>
+              
+              <div style="text-align: center; margin: 25px 0;">
+                <a href="${appUrl}" style="display: inline-block; background: linear-gradient(135deg, #F43C6D, #9333ea); color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">Visit Our Website</a>
+              </div>
+            </div>
+            <div style="text-align: center; padding: 15px; font-size: 12px; color: #666;">
+              <p style="margin: 0;">&copy; ${new Date().getFullYear()} Burnbox Printing. All rights reserved.</p>
+            </div>
+          </div>
+        `,
+      };
+
+      await transporter.sendMail(mailOptions);
+      return NextResponse.json({ message: 'Quotation email sent successfully', success: true });
+    }
+
+    // Original contact form email logic below
     // Validate input
     if (!email || !message) {
       return NextResponse.json(

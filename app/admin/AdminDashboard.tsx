@@ -60,7 +60,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userMail, userRole = 'S
   const sectionMap: Record<string, React.ReactElement> = {
     dashboard: React.createElement(DashboardContent as any, { userMail, onLogout, darkMode: true }),
     services: <AdminServices/>,
-    leads: <SalesLead/>,
+    leads: <SalesLead userRole={effectiveRole}/>,
     gallery: <GalleryManager darkMode={true} />,
     Feedback: <FeedbackContent />,
     profile: <ProfileInfo/>,

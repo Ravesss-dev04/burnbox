@@ -29,7 +29,6 @@ import Globe3D from "./components/Globe3D";
 interface DashboardDarkMod {
   darkMode?: boolean;
 }
-
 interface Inquiry {
   id: number;
   name: string;
@@ -41,7 +40,6 @@ interface Inquiry {
   status: string;
   createdAt: string;
 }
-
 interface Visitors {
   id: number;
   ipAddress: string;
@@ -53,14 +51,12 @@ interface Visitors {
   createdAt: string;
   updatedAt: string;
 }
-
 const DashboardContent = ({ darkMode = false }: DashboardDarkMod) => {
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [visitors, setVisitors] = useState<Visitors[]>([]);
   const [visitorsLoading, setVisitorsLoading] = useState(true);
-
   // Calculate product data for chart from actual inquiries
   const productData = inquiries.reduce((acc, inquiry) => {
     const existing = acc.find((item) => item.name === inquiry.product);

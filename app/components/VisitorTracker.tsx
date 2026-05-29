@@ -32,16 +32,16 @@ export default function VisitorTracker() {
             }
           } catch {}
         }
-        // Call the API to track this visitor
-        const response = await fetch('/api/visitors', {
+
+        const response = await fetch('api/visitors', {
           method: 'POST',
           headers: {  
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             trackVisit: true, // Flag to indicate this is a page visit, not an inquiry
-            pagePath: currentPath, // Track which page was visited
-            ipAddress: publicIp // Send the detected public IP
+            pagePath: currentPath, 
+            ipAddress: publicIp 
           }),
         });
         if (response.ok) {

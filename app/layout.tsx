@@ -11,6 +11,7 @@ import { Suspense } from "react";
 import HeaderWrapper from "./components/HeaderWrapper";
 import VisitorTracker from "./components/VisitorTracker";
 import GlobalStyleInjector from "./components/GlobalStyleInjector";
+import { Toaster } from "sonner";
 
 const outfit = Outfit({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body className={`${outfit.variable} antialiased h-[100vh] max-w-[100vw] relative`}>
         <TooltipProvider>
           <SiteConfigProvider>
+            <Toaster position="top-right" richColors closeButton />
             <GlobalStyleInjector />
             <HeaderProvider>
               <Suspense fallback={<div></div>}>

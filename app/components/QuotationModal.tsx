@@ -60,7 +60,7 @@ export default function QuotationModal({ config }: QuotationModalProps) {
       const result = await response.json();
 
       if (response.ok) {
-        toast.success('Quotation request submitted!', {
+        toast.success('Successfully submitted the request.', {
           description: 'Our sales team will contact you shortly.',
         });
         reset();
