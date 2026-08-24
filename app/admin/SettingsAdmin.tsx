@@ -45,7 +45,7 @@ const SettingsAdmin = () => {
   const fetchUsers = async () => {
     setLoadingUsers(true)
     try {
-      const res = await fetch('/api/auth/admin/users', {
+      const res = await fetch('https://burnbox.vercel.app/api/auth/admin/users', {
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
       })
@@ -101,7 +101,7 @@ const SettingsAdmin = () => {
     setLoading(true)
     setStatus('')
     try {
-      const res = await fetch('/api/auth/admin/create-user', {
+      const res = await fetch('https://burnbox.vercel.app/api/auth/admin/create-user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -127,7 +127,7 @@ const SettingsAdmin = () => {
     
     setLoading(true)
     try {
-      const res = await fetch('/api/auth/admin/update-role', {
+      const res = await fetch('https://burnbox.vercel.app/api/auth/admin/update-role', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -152,7 +152,7 @@ const SettingsAdmin = () => {
 
     setLoading(true)
     try {
-      const res = await fetch(`/api/auth/admin/users?id=${id}`, {
+      const res = await fetch(`https://burnbox.vercel.app/api/auth/admin/users?id=${id}`, {
         method: 'DELETE',
         credentials: 'include',
       })

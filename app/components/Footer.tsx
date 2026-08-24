@@ -1,89 +1,238 @@
-import { FaPaypal, FaFacebook } from "react-icons/fa";
-import { FaSquareInstagram } from "react-icons/fa6";
-import React from 'react';
+"use client";
+
+import { FaFacebook } from "react-icons/fa";
+import React from "react";
 import Image from "next/image";
 import { useSiteConfig } from "../context/SiteConfigContext";
 import Editable from "./Editable";
 
 const Footer = () => {
   const { config } = useSiteConfig();
+  const headingAccent = "#C9B896";
 
   return (
-    <footer className="bg-zinc-950 text-white px-6 sm:px-10 py-10 border-t border-white/5">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 text-sm font-extralight w-full">
-          {/* Column 1: Quick Links */}
-          <div>
-            <Editable  
-              name="footerQuickLinksTitle" 
-              as="h4" 
-              type="text"
-              defaultValue="Quick Links"
-              className="text-lg font-semibold mb-2"
-              style={{ color: config.primaryColor || '#f472b6' }}
-            />
-            <Editable name="footerLink1" as="p" type="text" defaultValue="Offset Printing / Forms & Receipt" />
-            <Editable name="footerLink2" as="p" type="text" defaultValue="Corporate Giveaways" />
-            <Editable name="footerLink3" as="p" type="text" defaultValue="Stickers & Labels" />
-            <Editable name="footerLink4" as="p" type="text" defaultValue="Signage" />
-          </div>
-          {/* Column 2 */}
-          <div>
-            <h4 className="text-lg font-semibold mb-2 invisible">Spacer</h4>
-            <Editable name="footerLink5" as="p" type="text" defaultValue="Marketing Collaterals" />
-            <Editable name="footerLink6" as="p" type="text" defaultValue="Wall Mural" />
-            <Editable name="footerLink7" as="p" type="text" defaultValue="Glass/Frosted Sticker" />
-            <Editable name="footerLink8" as="p" type="text" defaultValue="Transit Ads / Vehicle Warpping" />
-          </div>
-          {/* Column 3 */}
-          <div>
-            <h4 className="text-lg font-semibold mb-2 invisible">Spacer</h4>
-            <Editable name="footerLink9" as="p" type="text" defaultValue="Graphic Design" />
-            <Editable name="footerLink10" as="p" type="text" defaultValue="Logo Design" />
-            <Editable name="footerLink11" as="p" type="text" defaultValue="Light Box" />
-            <Editable name="footerLink12" as="p" type="text" defaultValue="Other Services" />
-          </div>
+    <footer className="bg-[#171414] text-[#B7AFA6] px-6 sm:px-10 pt-14 pb-7 text-[13.5px] border-t border-white/5">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.6fr_repeat(4,1fr)] gap-8 lg:gap-8 mb-12">
+          {/* Brand + Contact */}
+          <div className="sm:col-span-2 lg:col-span-1">
+            <div className="text-white text-xl font-black uppercase tracking-tight mb-3.5">
+              BURNBOX
+            </div>
+            <p className="max-w-[240px] leading-relaxed mb-6 text-[#B7AFA6]">
+              Helping business owners grow through offline and online advertising — since 2015.
+            </p>
 
-          
-          {/* Column 4: Follow Us */}
-          <div>
-            <Editable 
-              name="footerFollowUsTitle" 
-              as="h4" 
-              type="text"
-              defaultValue="Follow Us"
-              className="text-lg font-semibold"
-              style={{ color: config.primaryColor || '#f472b6' }}
-            />
-            <div className="flex space-x-4 text-2xl mt-2">
-              <a href={config.facebookUrl || "https://www.facebook.com/photo/?fbid=1237045431770415&set=a.469292898545676"} target="_blank" rel="noopener noreferrer">
-                <FaFacebook className="bg-[#1877F2] rounded-full w-6 h-6" />
-              </a>
-              <a href={config.instagramUrl || "#"} target="_blank" rel="noopener noreferrer">
-                <Image
-                  height={500}
-                  width={500}
-                  alt="Instagram"
-                  src="/instagram.png"
-                  className="h-6 w-6 object-contain"
-                />
-              </a>
+            <h5
+              className="text-[11px] uppercase tracking-[0.08em] font-medium mb-4"
+              style={{ color: headingAccent }}
+            >
+              Contact
+            </h5>
+            <ul className="space-y-2.5 text-white/90">
+              <li>
+                <a href="tel:+639177008364" className="hover:opacity-80 transition-opacity">
+                  +63 917 700 8364
+                </a>
+              </li>
+              <li>
+                <a href="tel:+63270072412" className="hover:opacity-80 transition-opacity">
+                  (02) 7007 2412
+                </a>
+              </li>
+              <li>
+                <a
+                  href={
+                    config.facebookUrl ||
+                    "https://www.facebook.com/burnboxprinting"
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:opacity-80 transition-opacity"
+                >
+                  facebook.com/burnboxprinting
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://burnboxadvertising.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:opacity-80 transition-opacity"
+                >
+                  burnboxadvertising.com
+                </a>
+              </li>
+            </ul>
+
+            {/* Existing Follow Us social icons — preserved */}
+            <div className="mt-5">
+              <Editable
+                name="footerFollowUsTitle"
+                as="h5"
+                type="text"
+                defaultValue="Follow Us"
+                className="text-[11px] uppercase tracking-[0.08em] font-medium mb-3"
+                style={{ color: headingAccent }}
+              />
+              <div className="flex space-x-4 text-2xl">
+                <a
+                  href={
+                    config.facebookUrl ||
+                    "https://www.facebook.com/photo/?fbid=1237045431770415&set=a.469292898545676"
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                >
+                  <FaFacebook className="bg-[#1877F2] rounded-full w-6 h-6" />
+                </a>
+                <a
+                  href={config.instagramUrl || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                >
+                  <Image
+                    height={24}
+                    width={24}
+                    alt="Instagram"
+                    src="/instagram.png"
+                    className="h-6 w-6 object-contain"
+                  />
+                </a>
+              </div>
             </div>
           </div>
-          {/* Column 5: Other Links */}
+
+          {/* Print & Signage — existing Editable link fields */}
           <div>
-            <Editable 
-              name="footerOtherLinksTitle" 
-              as="h4" 
+            <Editable
+              name="footerQuickLinksTitle"
+              as="h5"
+              type="text"
+              defaultValue="Print & Signage"
+              className="text-[11px] uppercase tracking-[0.08em] font-medium mb-4"
+              style={{ color: headingAccent }}
+            />
+            <ul className="space-y-2.5 text-white/85">
+              <li>
+                <Editable name="footerLink1" as="span" type="text" defaultValue="Large Format Printing" />
+              </li>
+              <li>
+                <Editable name="footerLink2" as="span" type="text" defaultValue="Custom Signage" />
+              </li>
+              <li>
+                <Editable name="footerLink3" as="span" type="text" defaultValue="Wall Stickers" />
+              </li>
+              <li>
+                <Editable name="footerLink4" as="span" type="text" defaultValue="Corporate Giveaways" />
+              </li>
+            </ul>
+          </div>
+
+          {/* Digital & Ecommerce */}
+          <div>
+            <h5
+              className="text-[11px] uppercase tracking-[0.08em] font-medium mb-4"
+              style={{ color: headingAccent }}
+            >
+              Digital & Ecommerce
+            </h5>
+            <ul className="space-y-2.5 text-white/85">
+              <li>
+                <Editable name="footerLink5" as="span" type="text" defaultValue="Social Media Mgmt." />
+              </li>
+              <li>
+                <Editable name="footerLink6" as="span" type="text" defaultValue="Meta & Google Ads" />
+              </li>
+              <li>
+                <Editable name="footerLink7" as="span" type="text" defaultValue="Online Store Setup" />
+              </li>
+              <li>
+                <Editable name="footerLink8" as="span" type="text" defaultValue="Graphic Design" />
+              </li>
+            </ul>
+          </div>
+
+          {/* 3D & Fabrication */}
+          <div>
+            <h5
+              className="text-[11px] uppercase tracking-[0.08em] font-medium mb-4"
+              style={{ color: headingAccent }}
+            >
+              3D & Fabrication
+            </h5>
+            <ul className="space-y-2.5 text-white/85">
+              <li>
+                <Editable name="footerLink9" as="span" type="text" defaultValue="3D Printing" />
+              </li>
+              <li>
+                <Editable name="footerLink10" as="span" type="text" defaultValue="Custom Prototypes" />
+              </li>
+              <li>
+                <Editable name="footerLink11" as="span" type="text" defaultValue="Gondolas" />
+              </li>
+              <li>
+                <Editable name="footerLink12" as="span" type="text" defaultValue="Kiosks" />
+              </li>
+            </ul>
+          </div>
+
+          {/* Also Available + Other Links (kept) */}
+          <div>
+            <h5
+              className="text-[11px] uppercase tracking-[0.08em] font-medium mb-4"
+              style={{ color: headingAccent }}
+            >
+              Also Available
+            </h5>
+            <ul className="space-y-2.5 text-white/85 mb-6">
+              <li>
+                <a href="/services" className="hover:text-white transition-colors">
+                  Airport Advertising
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://ontap.ph"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  On Tap Creatives
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://ontap.ph"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  ontap.ph
+                </a>
+              </li>
+            </ul>
+
+            {/* Existing Other Links — preserved */}
+            <Editable
+              name="footerOtherLinksTitle"
+              as="h5"
               type="text"
               defaultValue="Other Links"
-              className="text-lg font-semibold mb-2"
-              style={{ color: config.primaryColor || '#f472b6' }}
+              className="text-[11px] uppercase tracking-[0.08em] font-medium mb-3"
+              style={{ color: headingAccent }}
             />
-            <a href="https://www.refrens.com/en/free-accounting-software" target="_blank" rel="noopener noreferrer" className="inline-block hover:opacity-80 transition-opacity">
+            <a
+              href="https://www.refrens.com/en/free-accounting-software"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block hover:opacity-80 transition-opacity"
+            >
               <Image
-                height={500}
-                width={500}
+                height={40}
+                width={100}
                 alt="Refresh"
                 src="/refresh.png"
                 className="h-[40px] w-[100px] object-contain cursor-pointer"
@@ -91,17 +240,18 @@ const Footer = () => {
             </a>
           </div>
         </div>
-      </div>
 
-      {/* Bottom */}
-      <div className="border-t border-white/10 mt-8 pt-4 flex justify-center items-center text-sm text-gray-400">
-        <Editable 
-          name="footerCopyright" 
-          as="p" 
-          type="text"
-          defaultValue="Privacy Policy | Terms of Service | Contact info@burnbox.com | @ 2025 burnbox Printing company"
-          className="text-center"
-        />
+        {/* Bottom bar */}
+        <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs text-[#7A736D]">
+          <Editable
+            name="footerCopyright"
+            as="p"
+            type="text"
+            defaultValue="© 2026 Burnbox Advertising Solution. All rights reserved."
+            className="text-[#7A736D]"
+          />
+          <p className="text-[#7A736D]">Privacy Policy - Terms of Service</p>
+        </div>
       </div>
     </footer>
   );

@@ -64,10 +64,9 @@ const MissionVission = () => {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.8 }}
-      className='relative bg-[#050505] z-[1] mt-10 md:mt-20 w-full min-h-[100vh] overflow-hidden flex flex-col items-center pb-10 py-16 gap-8 md:gap-12 px-4 md:px-8'
+      className='relative bg-[#F7F1EA] z-[1] mt-10 md:mt-20 w-full min-h-[100vh] overflow-hidden flex flex-col items-center pb-10 py-16 gap-8 md:gap-12 px-4 md:px-8'
     >
-      {/* Dark background with grid pattern matching MainPage */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] opacity-20"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(35,31,32,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(35,31,32,0.04)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
       
       {/* Background image overlay */}
       <div 
@@ -81,8 +80,14 @@ const MissionVission = () => {
       />
       {/* Subtle decorative background elements */}
       <div className='absolute inset-0 overflow-hidden pointer-events-none'>
-        <div className='absolute top-20 left-10 w-64 h-64 bg-pink-500/5 rounded-full blur-[100px]'></div>
-        <div className='absolute bottom-20 right-10 w-80 h-80 bg-purple-500/5 rounded-full blur-[100px]'></div>
+        <div className='absolute top-20 left-10 w-64 h-64 bg-[#FF0060]/10 rounded-full blur-[100px]'></div>
+        <div className='absolute bottom-20 right-10 w-80 h-80 bg-[#FFC93C]/15 rounded-full blur-[100px]'></div>
+      </div>
+
+      <div className='relative z-10 w-full max-w-7xl text-center mb-2 md:mb-4'>
+        <span className="block uppercase tracking-[0.12em] text-xs text-[#FF0060] mb-2 font-medium">
+          04 / Purpose
+        </span>
       </div>
 
       {/* Mission section */}
@@ -96,10 +101,10 @@ const MissionVission = () => {
         <motion.div
           variants={itemVariants}
           whileHover={{ scale: 1.01, transition: { duration: 0.3 } }}
-          className='flex flex-col md:flex-row justify-between items-center bg-black/40 backdrop-blur-md rounded-3xl p-6 md:p-10 lg:p-12 shadow-[0_0_30px_rgba(236,72,153,0.1)] border border-white/10 hover:border-pink-500/30 transition-all duration-500 overflow-hidden group'
+          className='flex flex-col md:flex-row justify-between items-center bg-[#F7F1EA] rounded-sm p-6 md:p-10 lg:p-12 shadow-[0_8px_32px_rgba(35,31,32,0.06)] border-[1.5px] border-[#231F20]/15 hover:border-[#FF0060]/40 transition-all duration-500 overflow-hidden group'
         >
           {/* Subtle glow effect */}
-          <div className='absolute inset-0 bg-gradient-to-r from-pink-500/0 via-pink-500/5 to-pink-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500'></div>
+          <div className='absolute inset-0 bg-[#FF0060]/[0.04] opacity-0 group-hover:opacity-100 transition-opacity duration-500'></div>
           
           {/* Text content */}
           <motion.div
@@ -116,11 +121,11 @@ const MissionVission = () => {
                 <motion.div
                   whileHover={{ rotate: 360, scale: 1.1 }}
                   transition={{ duration: 0.6 }}
-                  className='p-3 bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl shadow-lg'
+                  className='p-3 bg-[#FF0060] rounded-sm shadow-md'
                 >
                   <Target className='w-6 h-6 md:w-8 md:h-8 text-white' />
                 </motion.div>
-                <h2 className='text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-white via-pink-200 to-white bg-clip-text text-transparent'>
+                <h2 className='text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight text-[#231F20]'>
                   Our Mission
                 </h2>
               </div>
@@ -138,7 +143,7 @@ const MissionVission = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={missionInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className='text-gray-300 leading-relaxed text-base md:text-lg lg:text-xl font-light'
+              className='text-[#7A736D] leading-relaxed text-base md:text-lg lg:text-xl'
             >
               To exceed client expectations by delivering innovative printing
               solutions, exceptional services, and continuous improvement in
@@ -156,7 +161,7 @@ const MissionVission = () => {
               className='relative'
             >
               {/* Subtle glow behind image */}
-              <div className='absolute inset-0 bg-gradient-to-br from-pink-500/10 to-pink-600/5 blur-xl rounded-full scale-105'></div>
+              <div className='absolute inset-0 bg-[#FF0060]/10 blur-xl rounded-full scale-105'></div>
               <img
                 src="/mission.png"
                 alt="Mission"
@@ -166,7 +171,7 @@ const MissionVission = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={missionInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: 0.8, duration: 0.5 }}
-                className='absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-gradient-to-t from-[#333333]/80 to-transparent blur-xl rounded-full'
+                className='absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-gradient-to-t from-[#231F20]/20 to-transparent blur-xl rounded-full'
               ></motion.div>
             </motion.div>
           </motion.div>
@@ -184,10 +189,10 @@ const MissionVission = () => {
         <motion.div
           variants={itemVariants}
           whileHover={{ scale: 1.01, transition: { duration: 0.3 } }}
-          className='flex flex-col md:flex-row-reverse justify-between items-center bg-black/40 backdrop-blur-md rounded-3xl p-6 md:p-10 lg:p-12 shadow-[0_0_30px_rgba(168,85,247,0.1)] border border-white/10 hover:border-purple-500/30 transition-all duration-500 overflow-hidden group'
+          className='flex flex-col md:flex-row-reverse justify-between items-center bg-[#F7F1EA] rounded-sm p-6 md:p-10 lg:p-12 shadow-[0_8px_32px_rgba(35,31,32,0.06)] border-[1.5px] border-[#231F20]/15 hover:border-[#FF0060]/40 transition-all duration-500 overflow-hidden group'
         >
           {/* Subtle glow effect */}
-          <div className='absolute inset-0 bg-gradient-to-l from-purple-500/0 via-purple-500/5 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500'></div>
+          <div className='absolute inset-0 bg-[#FFC93C]/[0.08] opacity-0 group-hover:opacity-100 transition-opacity duration-500'></div>
 
           {/* Text content */}
           <motion.div
@@ -204,11 +209,11 @@ const MissionVission = () => {
                 <motion.div
                   whileHover={{ rotate: -360, scale: 1.1 }}
                   transition={{ duration: 0.6 }}
-                  className='p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg'
+                  className='p-3 bg-[#FFC93C] rounded-sm shadow-md'
                 >
-                  <Eye className='w-6 h-6 md:w-8 md:h-8 text-white' />
+                  <Eye className='w-6 h-6 md:w-8 md:h-8 text-[#231F20]' />
                 </motion.div>
-                <h2 className='text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent'>
+                <h2 className='text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight text-[#231F20]'>
                   Our Vision
                 </h2>
               </div>
@@ -226,7 +231,7 @@ const MissionVission = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={visionInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className='text-gray-300 leading-relaxed text-base md:text-lg lg:text-xl font-light'
+              className='text-[#7A736D] leading-relaxed text-base md:text-lg lg:text-xl'
             >
               To become the go-to creative printing partner for businesses
               nationwide, recognized for reliability, creativity, and quality that
@@ -245,7 +250,7 @@ const MissionVission = () => {
               className='relative'
             >
               {/* Subtle glow behind image */}
-              <div className='absolute inset-0 bg-gradient-to-bl from-purple-500/10 to-purple-600/5 blur-xl rounded-full scale-105'></div>
+              <div className='absolute inset-0 bg-[#FFC93C]/20 blur-xl rounded-full scale-105'></div>
               <img
                 src="/visionimg.png"
                 alt="Vision"
@@ -255,7 +260,7 @@ const MissionVission = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={visionInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: 0.8, duration: 0.5 }}
-                className='absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-gradient-to-t from-[#333333]/80 to-transparent blur-xl rounded-full'
+                className='absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-gradient-to-t from-[#231F20]/20 to-transparent blur-xl rounded-full'
               ></motion.div>
             </motion.div>
           </motion.div>

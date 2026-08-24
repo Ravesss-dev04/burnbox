@@ -39,14 +39,14 @@ const AboutTooltip: React.FC<AboutTooltipProps> = ({ aboutus }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3 }}
-      className="absolute top-full left-0 mt-2 w-48 bg-black border border-gray-700 rounded-md shadow-lg z-50"
+      className="absolute top-full left-0 mt-2 w-52 bg-[#F7F1EA] border-[1.5px] border-[#231F20] rounded-sm shadow-[3px_3px_0_0_#231F20] z-50 overflow-hidden"
     >
-      <ul>
+      <ul className="text-sm text-[#231F20]">
         {aboutus.map((item, index) => (
           <li
             key={index}
             onClick={() => handleClick(item)}
-            className="px-4 py-2 hover:bg-pink-500 hover:text-white cursor-pointer transition-colors duration-200"
+            className="px-4 py-2.5 hover:bg-[#FF0060] hover:text-white cursor-pointer transition-colors duration-200"
           >
             {item}
           </li>

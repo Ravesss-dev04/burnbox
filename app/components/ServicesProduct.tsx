@@ -42,7 +42,7 @@ const ProductImageSlider = ({
     return () => clearInterval(interval);
   }, [filledImages.length]);
   return (
-    <div className="relative w-full md:w-full h-full bg-black/50 rounded-md overflow-hidden">
+    <div className="relative w-full md:w-full h-full bg-[#EFE6DB] rounded-sm overflow-hidden">
       {/* main image */}
       <AnimatePresence mode="wait">
         <motion.img
@@ -63,7 +63,7 @@ const ProductImageSlider = ({
           <motion.div
             key={i}
             className={`h-1 rounded-full ${
-              i === currentIndex ? "bg-pink-500" : "bg-gray-400/50"
+              i === currentIndex ? "bg-[#FF0060]" : "bg-[#231F20]/20"
             }`}
             initial={{ width: i === currentIndex ? 20 : 8 }}
             animate={{ width: i === currentIndex ? 20 : 8 }}
@@ -80,8 +80,8 @@ const ProductImageSlider = ({
             onClick={() => setCurrentIndex(i)}
             className={`relative h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 cursor-pointer rounded-md overflow-hidden border-2 transition-all duration-300 ${
               i === currentIndex
-                ? "border-pink-500 bg-pink-500/20 shadow-lg shadow-pink-500/50"
-                : "border-gray-400/50 bg-gray-400/20 hover:border-pink-400/70"
+                ? "border-[#FF0060] bg-[#FF0060]/15 shadow-lg shadow-[#FF0060]/25"
+                : "border-[#231F20]/20 bg-[#F7F1EA] hover:border-[#FF0060]/50"
             }`}
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.95 }}
@@ -310,38 +310,27 @@ const ServicesProduct = () => {
       <div
         id="products-section"
         ref={sectionRef}
-        className="relative w-full min-h-screen flex flex-col items-center py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-[#030303] overflow-hidden"
+        className="relative w-full min-h-screen flex flex-col items-center py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-[#F7F1EA] text-[#231F20] overflow-hidden"
       >
-        {/* Professional Background */}
+        {/* Paper-theme depth */}
         <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-          {/* Subtle Grid Pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:32px_32px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(35,31,32,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(35,31,32,0.04)_1px,transparent_1px)] bg-[size:32px_32px]" />
+          <div className="absolute -top-24 left-1/4 w-[500px] h-[500px] bg-[#FF0060]/[0.07] rounded-full blur-[120px]" />
+          <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#231F20]/[0.05] rounded-full blur-[120px] translate-y-1/3" />
+        </div>
 
-          {/* Radial Gradient Overlay for depth */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_50%_200px,#1a1a1a,transparent)] opacity-40" />
-
-          {/* Animated Ambient Glows */}
-          <motion.div
-            animate={{
-              opacity: [0.15, 0.25, 0.15],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-900/20 rounded-full blur-[120px] -translate-y-1/2"
-          />
-          <motion.div
-            animate={{
-              opacity: [0.1, 0.2, 0.1],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-            className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-pink-900/10 rounded-full blur-[120px] translate-y-1/2"
-          />
+        <div className="relative z-10 w-full max-w-7xl mb-12 md:mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div className="max-w-xl">
+            <span className="block uppercase tracking-[0.12em] text-xs text-[#FF0060] mb-3.5 font-medium">
+              01 / Services
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-black uppercase leading-[1.05] tracking-tight text-[#231F20]">
+              Products &amp; services
+            </h2>
+          </div>
+          <p className="text-[#7A736D] text-[15px] md:text-base max-w-sm leading-relaxed md:text-right">
+            Browse our catalog — tap a product for details, pricing, and a quick inquiry.
+          </p>
         </div>
 
         <motion.div
@@ -354,18 +343,18 @@ const ServicesProduct = () => {
             <motion.div
               key={item.id}
               variants={cardVariants}
-              className="group relative bg-[#0a0a0a] border border-white/5 rounded-2xl overflow-hidden cursor-pointer"
+              className="group relative bg-[#F7F1EA] border-[1.5px] border-[#231F20]/15 rounded-sm overflow-hidden cursor-pointer hover:border-[#FF0060]/50 hover:bg-[#F0E6DA] transition-colors duration-300"
               onClick={() => handleProductSelect(item)}
               whileHover={{ y: -5 }}
             >
-              {/* Animated Border Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              {/* Hover wash */}
+              <div className="absolute inset-0 bg-[#FF0060]/[0.04] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
               {/* Card Content */}
-              <div className="relative h-full flex flex-col bg-[#0a0a0a]/90 backdrop-blur-xl m-[1px] rounded-2xl overflow-hidden">
+              <div className="relative h-full flex flex-col bg-transparent m-0 rounded-sm overflow-hidden">
                 {/* Image Container */}
-                <div className="relative w-full h-64 overflow-hidden bg-[#111] p-6 flex items-center justify-center">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-pink-900/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative w-full h-64 overflow-hidden bg-[#EFE6DB] p-6 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#FF0060]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <motion.img
                     src={item.image[0]}
                     alt={item.name}
@@ -377,20 +366,20 @@ const ServicesProduct = () => {
                 </div>
 
                 {/* Text Content */}
-                <div className="p-5 flex flex-col gap-3 border-t border-white/5">
-                  <h3 className="font-bold text-gray-200 text-lg truncate group-hover:text-pink-400 transition-colors duration-300">
+                <div className="p-5 flex flex-col gap-3 border-t border-[#231F20]/10">
+                  <h3 className="font-bold text-[#231F20] text-lg truncate group-hover:text-[#FF0060] transition-colors duration-300">
                     {item.name}
                   </h3>
 
                   <div className="flex items-center justify-between mt-auto">
-                    <span className="text-sm text-gray-500 font-medium group-hover:text-gray-300 transition-colors">
+                    <span className="text-sm text-[#7A736D] font-medium group-hover:text-[#231F20] transition-colors">
                       View Details
                     </span>
                     <motion.div
-                      className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-pink-500 transition-all duration-300"
+                      className="w-8 h-8 rounded-full bg-[#231F20]/5 flex items-center justify-center group-hover:bg-[#FF0060] transition-all duration-300"
                       whileHover={{ scale: 1.1 }}
                     >
-                      <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-white" />
+                      <ArrowRight className="w-4 h-4 text-[#7A736D] group-hover:text-white" />
                     </motion.div>
                   </div>
                 </div>
@@ -407,7 +396,7 @@ const ServicesProduct = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 pt-16 sm:pt-20 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:p-6"
+              className="fixed inset-0 pt-16 sm:pt-20 bg-[#171414]/70 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:p-6"
               onClick={handleBackdropClick}
             >
               <motion.div
@@ -415,19 +404,19 @@ const ServicesProduct = () => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                 transition={{ duration: 0.4, ease: [0.6, -0.05, 0.01, 0.99] }}
-                className="bg-gradient-to-br from-[#211F1F] via-[#1a1a1a] to-[#211F1F] h-full sm:h-[95vh] lg:h-[90vh] px-4 sm:px-6 md:px-8 text-white rounded-lg sm:rounded-xl lg:rounded-2xl w-full lg:w-4/5 md:w-5/6 relative overflow-y-auto shadow-2xl border border-pink-500/20"
+                className="bg-[#F7F1EA] h-full sm:h-[95vh] lg:h-[90vh] px-4 sm:px-6 md:px-8 text-[#231F20] rounded-sm sm:rounded-md w-full lg:w-4/5 md:w-5/6 relative overflow-y-auto shadow-[0_20px_60px_rgba(35,31,32,0.25)] border-[1.5px] border-[#231F20]/15"
                 onClick={(e) => e.stopPropagation()}
               >
                 <motion.button
                   onClick={handleCloseModal}
                   whileHover={{ scale: 1.1, x: 5 }}
                   whileTap={{ scale: 0.9 }}
-                  className="absolute top-4 sm:top-6 right-4 sm:right-6 flex items-center gap-2 bg-black/50 hover:bg-black/70 px-3 py-2 rounded-lg transition-colors duration-200 z-10"
+                  className="absolute top-4 sm:top-6 right-4 sm:right-6 flex items-center gap-2 bg-[#EFE6DB] hover:bg-[#231F20] hover:text-[#F7F1EA] text-[#231F20] px-3 py-2 rounded-sm border-[1.5px] border-[#231F20]/15 transition-colors duration-200 z-10"
                 >
                   <span className="font-medium text-sm sm:text-base">
                     Go back
                   </span>
-                  <ArrowRight className="text-pink hover:text-pink-300 cursor-pointer w-4 h-4 sm:w-5 sm:h-5" />
+                  <ArrowRight className="text-[#FF0060] group-hover:text-[#FF0060] cursor-pointer w-4 h-4 sm:w-5 sm:h-5" />
                 </motion.button>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 w-full p-4 sm:p-6 lg:p-8 pt-12 sm:pt-16">
@@ -438,7 +427,7 @@ const ServicesProduct = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
                   >
-                    <div className="relative w-full h-48 sm:h-64 md:h-72 lg:h-80 bg-black/50 rounded-lg overflow-hidden flex items-center justify-center shadow-xl">
+                    <div className="relative w-full h-48 sm:h-64 md:h-72 lg:h-80 bg-[#EFE6DB] rounded-sm overflow-hidden flex items-center justify-center border-[1.5px] border-[#231F20]/10">
                       <ProductImageSlider
                         images={selectedProduct.image}
                         name={selectedProduct.name}
@@ -453,14 +442,14 @@ const ServicesProduct = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                   >
-                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-center md:text-left bg-gradient-to-r from-pink-300 to-pink-500 bg-clip-text text-transparent">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tight mb-2 text-center md:text-left text-[#231F20]">
                       {selectedProduct.name}
                     </h2>
-                    <p className="text-gray-300 text-sm sm:text-base mt-2 leading-relaxed">
+                    <p className="text-[#7A736D] text-sm sm:text-base mt-2 leading-relaxed">
                       {selectedProduct.description}
                     </p>
                     <motion.p
-                      className="text-pink/70 text-3xl sm:text-4xl font-bold mt-3 pb-4"
+                      className="text-[#FF0060] text-3xl sm:text-4xl font-black mt-3 pb-4"
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ delay: 0.4 }}
@@ -475,7 +464,7 @@ const ServicesProduct = () => {
                     <div className="flex flex-col gap-3">
                       <motion.button
                         onClick={() => setShowInquiry(true)}
-                        className="bg-gradient-to-r from-pink/60 to-pink/70 hover:from-pink/70 hover:to-pink/80 lg:w-full text-white py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl hover:shadow-pink-500/30 transition-all duration-300"
+                        className="bg-[#FF0060] hover:bg-[#231F20] lg:w-full text-white py-[13px] px-[22px] rounded-sm font-bold uppercase tracking-[0.06em] text-xs border-[1.5px] border-[#FF0060] hover:border-[#231F20] transition-colors duration-200"
                         whileHover={{ scale: 1.02, y: -2 }}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -483,7 +472,7 @@ const ServicesProduct = () => {
                       </motion.button>
                       <div className="relative c">
                         <button
-                          className="border border-pink/60 text-pink/60 hover:bg-pink/10 w-full hover:text-white rounded transition py-2  cursor-not-allowed opacity-50"
+                          className="border-[1.5px] border-[#231F20]/25 text-[#7A736D] w-full rounded-sm py-2 cursor-not-allowed opacity-50"
                           title="Not allowed"
                           style={{
                             cursor: "not-allowed",
@@ -494,7 +483,7 @@ const ServicesProduct = () => {
                         </button>
 
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <span className="bg-red-500 w-full opacity-30 text-white py-3 text-center rounded text-xs font-bold">
+                          <span className="bg-[#FF0060]/15 w-full text-[#FF0060] py-3 text-center rounded-sm text-xs font-bold uppercase tracking-wider">
                             not applicable
                           </span>
                         </div>
@@ -503,19 +492,19 @@ const ServicesProduct = () => {
                   </motion.div>
                   {/* Feedback Section */}
                   <motion.div
-                    className="col-span-1 flex flex-col justify-between bg-gradient-to-br from-[#1a1a1a] via-[#151515] to-[#1a1a1a] rounded-lg p-3 sm:p-4 w-full max-w-md h-full border border-pink-500/20 shadow-xl"
+                    className="col-span-1 flex flex-col justify-between bg-[#EFE6DB] rounded-sm p-3 sm:p-4 w-full max-w-md h-full border-[1.5px] border-[#231F20]/15"
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
                   >
                     <div className="flex justify-between items-center mb-3">
-                      <h3 className="text-pink-400 font-bold text-base sm:text-lg">
+                      <h3 className="text-[#FF0060] font-black uppercase tracking-tight text-base sm:text-lg">
                         Feedback
                       </h3>
                       <span className="relative">
                         <motion.button
                           onClick={handleButtonClick}
-                          className="bg-gradient-to-r from-black/30 via-pink/60 to-pink/70 border border-pink/70 text-pink-200 font-bold text-xs px-3 py-1.5 rounded-lg shadow-md"
+                          className="bg-[#F7F1EA] border-[1.5px] border-[#FF0060]/40 text-[#FF0060] font-bold uppercase tracking-wider text-xs px-3 py-1.5 rounded-sm"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
@@ -528,7 +517,7 @@ const ServicesProduct = () => {
                               animate={{ opacity: 1, y: 0, scale: 1 }}
                               exit={{ opacity: 0, y: -10, scale: 0.9 }}
                               onClick={handlePopupClick}
-                              className="absolute text-center justify-center top-full left-0 mt-2 bg-gradient-to-r from-black/30 via-pink/60 to-pink/70 border border-pink/70 text-pink-200 font-bold text-xs px-3 py-1.5 rounded-lg shadow-lg cursor-pointer z-20"
+                              className="absolute text-center justify-center top-full left-0 mt-2 bg-[#F7F1EA] border-[1.5px] border-[#231F20] text-[#231F20] font-bold uppercase tracking-wider text-xs px-3 py-1.5 rounded-sm shadow-[3px_3px_0_0_#231F20] cursor-pointer z-20"
                             >
                               {isOld ? "Latest" : "Old"}
                             </motion.div>
@@ -536,15 +525,15 @@ const ServicesProduct = () => {
                         </AnimatePresence>
                       </span>
                     </div>
-                    <div className="flex flex-col gap-2 sm:gap-3 overflow-y-auto max-h-[250px] sm:max-h-[300px] bg-[#121212] p-2 sm:p-3 rounded-lg scrollbar-thin">
+                    <div className="flex flex-col gap-2 sm:gap-3 overflow-y-auto max-h-[250px] sm:max-h-[300px] bg-[#F7F1EA] p-2 sm:p-3 rounded-sm scrollbar-thin border border-[#231F20]/10">
                       {loadingFeedbacks ? (
                         <motion.div
-                          className="text-center text-gray-400 py-6"
+                          className="text-center text-[#7A736D] py-6"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                         >
                           <motion.div
-                            className="animate-spin rounded-full h-6 w-6 border-b-2 border-pink-500 mx-auto"
+                            className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#FF0060] mx-auto"
                             animate={{ rotate: 360 }}
                             transition={{
                               duration: 1,
@@ -556,7 +545,7 @@ const ServicesProduct = () => {
                         </motion.div>
                       ) : displayedFeedbacks.length === 0 ? (
                         <motion.div
-                          className="text-center text-gray-400 py-6"
+                          className="text-center text-[#7A736D] py-6"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                         >
@@ -583,7 +572,7 @@ const ServicesProduct = () => {
                           return (
                             <motion.div
                               key={feedback.id}
-                              className="bg-[#181818] p-2 sm:p-3 rounded-lg text-gray-300 text-sm flex flex-col gap-1 border border-gray-800/50 hover:border-pink-500/30 transition-colors duration-300"
+                              className="bg-[#EFE6DB] p-2 sm:p-3 rounded-sm text-[#231F20] text-sm flex flex-col gap-1 border border-[#231F20]/10 hover:border-[#FF0060]/40 transition-colors duration-300"
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ delay: idx * 0.05 }}
@@ -592,7 +581,7 @@ const ServicesProduct = () => {
                               <div className="flex items-start gap-2 sm:gap-3">
                                 {/* Avatar with Gravatar fallback to initials */}
                                 <motion.div
-                                  className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-pink-600 text-white font-semibold text-xs flex-shrink-0 overflow-hidden relative shadow-lg"
+                                  className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-[#FF0060] text-white font-semibold text-xs flex-shrink-0 overflow-hidden relative"
                                   whileHover={{ scale: 1.1, rotate: 5 }}
                                   transition={{ duration: 0.2 }}
                                 >
@@ -621,14 +610,14 @@ const ServicesProduct = () => {
                                 </motion.div>
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-semibold text-pink-200 text-xs sm:text-sm">
+                                    <span className="font-semibold text-[#231F20] text-xs sm:text-sm">
                                       {feedback.name}
                                     </span>
                                   </div>
-                                  <p className="text-gray-300 text-xs sm:text-sm break-words leading-relaxed">
+                                  <p className="text-[#7A736D] text-xs sm:text-sm break-words leading-relaxed">
                                     {feedback.message}
                                   </p>
-                                  <span className="text-xs text-gray-500 mt-1.5 block">
+                                  <span className="text-xs text-[#7A736D]/80 mt-1.5 block">
                                     {feedbackDate}
                                   </span>
                                 </div>
@@ -642,13 +631,13 @@ const ServicesProduct = () => {
                 </div>
                 {/* Related Products Section */}
                 <motion.div
-                  className="relative mt-8 lg:absolute bottom-0 left-0 w-full flex flex-col items-center bg-gradient-to-r from-black/50 via-black/70 to-black/50 backdrop-blur-sm border-t border-pink-500/20 pt-6 pb-4"
+                  className="relative mt-8 lg:absolute bottom-0 left-0 w-full flex flex-col items-center bg-[#EFE6DB] border-t-[1.5px] border-[#231F20]/15 pt-6 pb-4"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
                 >
                   <motion.h3
-                    className="text-lg sm:text-xl md:text-2xl uppercase font-bold text-pink-400 mb-4 sm:mb-6"
+                    className="text-lg sm:text-xl md:text-2xl uppercase font-black tracking-tight text-[#231F20] mb-4 sm:mb-6"
                     whileHover={{ scale: 1.05 }}
                   >
                     You Might Also Like
@@ -666,7 +655,7 @@ const ServicesProduct = () => {
                             whileHover={{ scale: 1.05, y: -5 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={() => handleProductSelect(item)}
-                            className="relative w-32 h-40 sm:w-40 sm:h-48 md:w-48 md:h-56 lg:w-56 lg:h-64 bg-gray-800 rounded-lg flex-shrink-0 overflow-hidden cursor-pointer group shadow-lg hover:shadow-xl hover:shadow-pink-500/30 transition-all duration-300"
+                            className="relative w-32 h-40 sm:w-40 sm:h-48 md:w-48 md:h-56 lg:w-56 lg:h-64 bg-[#F7F1EA] border-[1.5px] border-[#231F20]/15 rounded-sm flex-shrink-0 overflow-hidden cursor-pointer group hover:border-[#FF0060]/50 transition-all duration-300"
                           >
                             <img
                               src={item.image[0]}
@@ -675,13 +664,13 @@ const ServicesProduct = () => {
                               draggable="false"
                             />
                             <motion.div
-                              className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-center p-3"
+                              className="absolute inset-0 bg-[#171414]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-center p-3"
                               initial={false}
                             >
-                              <h3 className="text-sm sm:text-base md:text-lg font-semibold text-white mb-1">
+                              <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#F7F1EA] mb-1">
                                 {item.name}
                               </h3>
-                              <p className="text-pink-400 text-sm sm:text-base md:text-lg font-bold">
+                              <p className="text-[#FF0060] text-sm sm:text-base md:text-lg font-bold">
                                 {item.price === 0
                                   ? ""
                                   : `₱ ${item.price.toLocaleString("en-US", {
@@ -707,7 +696,7 @@ const ServicesProduct = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+              className="fixed inset-0 bg-[#171414]/70 flex items-center justify-center z-50"
               onClick={() => setShowInquiry(false)}
             >
               <motion.div
@@ -715,19 +704,19 @@ const ServicesProduct = () => {
                 animate={{ scale: 1, opacity: 1, y: 0 }}
                 exit={{ scale: 0.8, opacity: 0, y: 30 }}
                 transition={{ duration: 0.4, ease: [0.6, -0.05, 0.01, 0.99] }}
-                className="bg-gradient-to-br from-[#1a1a1a] via-[#151515] to-[#1a1a1a] flex flex-col text-white p-4 sm:p-6 rounded-xl w-full max-h-[75vh] overflow-x-hidden max-w-md relative mt-12 sm:mt-16 shadow-2xl border border-pink-500/20"
+                className="bg-[#F7F1EA] flex flex-col text-[#231F20] p-4 sm:p-6 rounded-sm w-full max-h-[75vh] overflow-x-hidden max-w-md relative mt-12 sm:mt-16 shadow-[0_20px_60px_rgba(35,31,32,0.25)] border-[1.5px] border-[#231F20]/15"
                 onClick={(e) => e.stopPropagation()}
               >
                 <motion.button
                   onClick={() => setShowInquiry(false)}
-                  className="absolute top-3 right-4 sm:right-6 text-gray-400 hover:text-pink transition-colors duration-200 bg-black/30 hover:bg-black/50 p-2 rounded-lg"
+                  className="absolute top-3 right-4 sm:right-6 text-[#7A736D] hover:text-[#FF0060] transition-colors duration-200 bg-[#EFE6DB] hover:bg-[#231F20]/10 p-2 rounded-sm"
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   whileTap={{ scale: 0.9 }}
                 >
                   <ArrowBigRightDash className="w-5 h-5 sm:w-6 sm:h-6" />
                 </motion.button>
 
-                <h2 className="text-[22px] items-center justify-center text-center font-extrabold mt-4 text-pink-500 mb-4">
+                <h2 className="text-[22px] items-center justify-center text-center font-black uppercase tracking-tight mt-4 text-[#FF0060] mb-4">
                   Inquire Now
                 </h2>
                 <div>
@@ -739,10 +728,10 @@ const ServicesProduct = () => {
                     className="rounded-md object-contain ml-12 aspect-square max-h-40"
                   />
                   <div>
-                    <h3 className="text-lg font-medium">
+                    <h3 className="text-lg font-medium text-[#231F20]">
                       {selectedProduct.name}
                     </h3>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-[#7A736D]">
                       {selectedProduct.price === 0
                         ? ""
                         : `₱ ${selectedProduct.price.toLocaleString("en-US", {
@@ -778,10 +767,10 @@ const ServicesProduct = () => {
             <motion.button
               onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
               disabled={page === 1}
-              className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-all duration-300 ${
+              className={`px-4 py-2 rounded-sm flex items-center gap-2 transition-all duration-300 ${
                 page === 1
-                  ? "bg-white/5 text-gray-600 cursor-not-allowed"
-                  : "bg-[#0a0a0a] border border-pink-500/30 text-pink-500 hover:bg-pink-500 hover:text-white shadow-lg hover:shadow-pink-500/20"
+                  ? "bg-[#231F20]/5 text-[#7A736D]/60 cursor-not-allowed"
+                  : "bg-[#F7F1EA] border-[1.5px] border-[#FF0060]/40 text-[#FF0060] hover:bg-[#FF0060] hover:text-white"
               }`}
               whileHover={page !== 1 ? { scale: 1.05, x: -3 } : {}}
               whileTap={page !== 1 ? { scale: 0.95 } : {}}
@@ -790,15 +779,15 @@ const ServicesProduct = () => {
               <span className="hidden sm:inline font-medium">Previous</span>
             </motion.button>
 
-            <div className="flex gap-2 bg-[#0a0a0a] p-1 rounded-lg border border-white/5">
+            <div className="flex gap-2 bg-[#EFE6DB] p-1 rounded-sm border-[1.5px] border-[#231F20]/10">
               {[...Array(totalPages)].map((_, i) => (
                 <motion.button
                   key={i}
                   onClick={() => setPage(i + 1)}
-                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-md flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-sm flex items-center justify-center text-sm font-bold transition-all duration-300 ${
                     page === i + 1
-                      ? "bg-pink-500 text-white shadow-lg shadow-pink-500/30"
-                      : "text-gray-400 hover:text-white hover:bg-white/5"
+                      ? "bg-[#FF0060] text-white"
+                      : "text-[#7A736D] hover:text-[#231F20] hover:bg-[#231F20]/5"
                   }`}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
@@ -811,10 +800,10 @@ const ServicesProduct = () => {
             <motion.button
               onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={page === totalPages}
-              className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-all duration-300 ${
+              className={`px-4 py-2 rounded-sm flex items-center gap-2 transition-all duration-300 ${
                 page === totalPages
-                  ? "bg-white/5 text-gray-600 cursor-not-allowed"
-                  : "bg-[#0a0a0a] border border-pink-500/30 text-pink-500 hover:bg-pink-500 hover:text-white shadow-lg hover:shadow-pink-500/20"
+                  ? "bg-[#231F20]/5 text-[#7A736D]/60 cursor-not-allowed"
+                  : "bg-[#F7F1EA] border-[1.5px] border-[#FF0060]/40 text-[#FF0060] hover:bg-[#FF0060] hover:text-white"
               }`}
               whileHover={page !== totalPages ? { scale: 1.05, x: 3 } : {}}
               whileTap={page !== totalPages ? { scale: 0.95 } : {}}

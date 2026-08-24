@@ -1,203 +1,176 @@
-// app/components/Maps.tsx
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
-import StoreLocation from './StoreLocation';
-import StoreDetail from './StoreDetail';
-import { FaMap, FaSatellite, FaStreetView, FaCompass, FaTimes, FaExpand, FaCompress, FaCube, FaMoon } from "react-icons/fa";
-import { branches, Branch } from '@/data/branches';
+import React from "react";
+import {
+  FaFacebookF,
+  FaMapMarkerAlt,
+  FaClock,
+  FaMobileAlt,
+  FaPhoneAlt,
+} from "react-icons/fa";
+import Editable from "./Editable";
+
+const CONTACT_ROWS = [
+  {
+    label: "Address",
+    valueKey: "visitAddress",
+    value: "17 Vatican Bldg, BF Resort Village, Las Piñas City",
+    Icon: FaMapMarkerAlt,
+  },
+  {
+    label: "Hours",
+    valueKey: "visitHours",
+    value: "Mon – Sun, 9:00 AM – 6:00 PM",
+    Icon: FaClock,
+  },
+  {
+    label: "Mobile",
+    valueKey: "visitMobile",
+    value: "+63 917 700 8364",
+    Icon: FaMobileAlt,
+  },
+  {
+    label: "Landline",
+    valueKey: "visitLandline",
+    value: "(02) 7007 2412",
+    Icon: FaPhoneAlt,
+  },
+  {
+    label: "Facebook",
+    valueKey: "visitFacebook",
+    value: "facebook.com/burnboxprinting",
+    Icon: FaFacebookF,
+  },
+];
 
 const Maps = () => {
-  const [target, setTarget] = useState<[number, number] | undefined>(undefined);
-  const [isInView, setIsInView] = useState(false);
-  const [mapStyle, setMapStyle] = useState<'street' | 'dark' | 'satellite' | 'terrain'>('street');
-  const [showStreetView, setShowStreetView] = useState(false);
-  const [streetViewMode, setStreetViewMode] = useState<'split' | 'full'>('split');
-  const [selectedBranch, setSelectedBranch] = useState<Branch>(branches[0]);
-  const [is3DMode, setIs3DMode] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  // Auto-detect when section comes into view
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-        
-        if (entry.isIntersecting) {
-          flyToStore();
-        }
-      },
-      {
-        threshold: 0.3,
-        rootMargin: '0px'
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
-
-  const flyToStore = () => {
-    setTarget([selectedBranch.coordinates.lat, selectedBranch.coordinates.lng]);
+  const scrollToQuote = () => {
+    const el =
+      document.getElementById("quote") ||
+      document.getElementById("quotation") ||
+      document.getElementById("home");
+    el?.scrollIntoView({ behavior: "smooth" });
   };
-
-  // Update target when branch changes
-  useEffect(() => {
-    flyToStore();
-  }, [selectedBranch]);
-
-  const handleDirectionClick = () => {
-    console.log("Directions clicked - flying to store");
-    flyToStore();
-  };
-
-  const handleStreetViewClick = () => {
-    setShowStreetView(!showStreetView);
-  };
-
-  const toggleStreetViewMode = () => {
-    setStreetViewMode(streetViewMode === 'split' ? 'full' : 'split');
-  };
-  const closeStreetView = () => {
-    setShowStreetView(false);
-    setStreetViewMode('split');
-  };
-  const handleMapStyleChange = (style: 'street' | 'dark' | 'satellite' | 'terrain') => {
-    setMapStyle(style);
-  };
-  
-  // Map style configurations
-  const mapStyles = {
-    street: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', // Voyager (Light/Modern)
-    dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', // Dark Matter
-    satellite: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    terrain: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'
-  };
-
-  // Direct Google Street View URL
-  const streetViewUrl = `https://www.google.com/maps/embed?pb=!4v${Date.now()}!6m8!1m7!1s${selectedBranch.coordinates.lat},${selectedBranch.coordinates.lng}!2m2!1d${selectedBranch.coordinates.lat}!2d${selectedBranch.coordinates.lng}!3f0!4f0!5f0.7820865974627469`;
 
   return (
-    <section 
-      id='maps' 
-      ref={sectionRef}
-      className='min-h-screen w-full z-0 relative bg-[#050505] overflow-hidden'
+    <section
+      id="location"
+      className="relative w-full py-16 md:py-24 px-4 md:px-8 bg-[#F7F1EA] text-[#231F20] overflow-hidden"
     >
-      {/* Store Details Card */}
-      <div className={`rounded-xl p-5 h-auto absolute top-1/2 -translate-y-1/2 left-4 lg:left-8 z-[99999] bg-black/80 backdrop-blur-md border border-white/10 shadow-2xl transition-all duration-500 md:block ${
-        showStreetView && streetViewMode === 'split' ? 'sm:w-[280px] md:w-[320px]' : 'sm:w-[320px] md:w-[380px] lg:w-[420px]'
-      }`}>
-        <StoreDetail 
-          branch={selectedBranch}
-          onDirectionClick={handleDirectionClick} 
-        />
+      {/* Soft depth so the glass panel reads clearly */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        aria-hidden
+      >
+        <div className="absolute -top-24 -left-16 h-72 w-72 rounded-full bg-[#FF0060]/[0.07] blur-3xl" />
+        <div className="absolute top-1/3 -right-20 h-80 w-80 rounded-full bg-[#231F20]/[0.05] blur-3xl" />
+        <div className="absolute -bottom-16 left-1/3 h-64 w-64 rounded-full bg-[#FF0060]/[0.05] blur-3xl" />
       </div>
 
-      {/* Map Style Controls */}
-      <div className='absolute top-6 right-6 z-[999] flex flex-col gap-3'>
-        <div className="flex gap-2 bg-black/80 backdrop-blur-md rounded-xl p-2 border border-white/10 shadow-xl">
-          <button
-            onClick={() => handleMapStyleChange('street')}
-            className={`p-2.5 rounded-lg flex items-center gap-2 transition-all ${
-              mapStyle === 'street' ? 'bg-pink-600 text-white shadow-lg shadow-pink-900/20' : 'text-gray-400 hover:bg-white/10 hover:text-white'
-            }`}
-            title="Light Map"
-          >
-            <FaMap size={18} />
-          </button>
-          <button
-            onClick={() => handleMapStyleChange('dark')}
-            className={`p-2.5 rounded-lg flex items-center gap-2 transition-all ${
-              mapStyle === 'dark' ? 'bg-pink-600 text-white shadow-lg shadow-pink-900/20' : 'text-gray-400 hover:bg-white/10 hover:text-white'
-            }`}
-            title="Dark Map"
-          >
-            <FaMoon size={18} />
-          </button>
-          <button
-            onClick={() => handleMapStyleChange('satellite')}
-            className={`p-2.5 rounded-lg flex items-center gap-2 transition-all ${
-              mapStyle === 'satellite' ? 'bg-pink-600 text-white shadow-lg shadow-pink-900/20' : 'text-gray-400 hover:bg-white/10 hover:text-white'
-            }`}
-            title="Satellite"
-          >
-            <FaSatellite size={18} />
-          </button>
-          <button
-            onClick={() => setIs3DMode(!is3DMode)}
-            className={`p-2.5 rounded-lg flex items-center gap-2 transition-all ${
-              is3DMode ? 'bg-pink-600 text-white shadow-lg shadow-pink-900/20' : 'text-gray-400 hover:bg-white/10 hover:text-white'
-            }`}
-            title="3D Mode"
-          >
-            <FaCube size={18} />
-          </button>
-        </div>
-
-        <div className="bg-black/80 backdrop-blur-md rounded-xl p-2 border border-white/10 shadow-xl self-end">
-           <button
-            onClick={handleStreetViewClick}
-            className={`p-2.5 rounded-lg flex items-center gap-2 transition-all ${
-              showStreetView ? 'bg-pink-600 text-white shadow-lg shadow-pink-900/20' : 'text-gray-400 hover:bg-white/10 hover:text-white'
-            }`}
-            title="Street View"
-          >
-            <FaStreetView size={18} />
-          </button>
-        </div>
-      </div>
-
-      {/* Map Container */}
-      <div className='w-full h-screen relative z-0'>
-        <StoreLocation 
-          target={target} 
-          mapStyle={mapStyles[mapStyle]} 
-          branches={branches}
-          onSelectBranch={setSelectedBranch}
-          is3DMode={is3DMode}
-        />
-      </div>
-
-      {/* Street View Overlay */}
-      {showStreetView && (
-        <div className={`absolute z-[9999] transition-all duration-500 ease-in-out bg-black border-l border-white/10 shadow-2xl ${
-          streetViewMode === 'full' 
-            ? 'inset-0 w-full h-full' 
-            : 'top-6 right-6 bottom-6 w-[400px] rounded-2xl overflow-hidden'
-        }`}>
-          <div className="absolute top-4 right-4 z-10 flex gap-2">
-            <button 
-              onClick={toggleStreetViewMode}
-              className="bg-black/50 backdrop-blur-sm p-2 rounded-lg text-white hover:bg-pink-600 transition-colors"
-            >
-              {streetViewMode === 'full' ? <FaCompress /> : <FaExpand />}
-            </button>
-            <button 
-              onClick={closeStreetView}
-              className="bg-black/50 backdrop-blur-sm p-2 rounded-lg text-white hover:bg-red-600 transition-colors"
-            >
-              <FaTimes />
-            </button>
+      <div className="relative max-w-6xl mx-auto z-10">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 sm:gap-10 mb-8 md:mb-10">
+          <div className="max-w-lg">
+            <span className="block uppercase tracking-[0.14em] text-[11px] text-[#FF0060] mb-2.5 font-semibold">
+              06 / Visit Us
+            </span>
+            <Editable
+              name="visitTitle"
+              as="h2"
+              type="text"
+              defaultValue="BF Resort Branch"
+              className="text-3xl md:text-4xl lg:text-[2.75rem] font-black uppercase leading-[1.05] tracking-tight text-[#231F20]"
+            />
           </div>
-          <iframe
-            src={streetViewUrl}
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="w-full h-full"
-          ></iframe>
+          <Editable
+            name="visitIntro"
+            as="p"
+            type="text"
+            defaultValue="Drop by for a consultation, or reach out for a free site visit and quotation."
+            className="text-[#231F20] text-sm md:text-[15px] max-w-[280px] leading-relaxed sm:text-right"
+          />
         </div>
-      )}
+
+        {/* Frosted glass card */}
+        <div className="relative rounded-2xl overflow-hidden border border-white/60 bg-white/45 backdrop-blur-xl shadow-[0_8px_40px_rgba(35,31,32,0.1),inset_0_1px_0_rgba(255,255,255,0.7)]">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/50 via-transparent to-[#FF0060]/[0.03]" aria-hidden />
+
+          <div className="relative grid grid-cols-1 md:grid-cols-2">
+            {/* Get in touch */}
+            <div className="p-8 md:p-10 lg:p-12 md:border-r border-[rgba(35,31,32,0.1)]">
+              <span className="block uppercase tracking-[0.12em] text-[11px] text-[#FF0060] mb-3 font-semibold">
+                Studio & Production
+              </span>
+              <Editable
+                name="visitContactHeading"
+                as="h3"
+                type="text"
+                defaultValue="Get in touch"
+                className="text-xl md:text-2xl font-black uppercase tracking-tight text-[#231F20] mb-8"
+              />
+              <div className="flex flex-col gap-6">
+                {CONTACT_ROWS.map((row) => (
+                  <div key={row.label} className="flex gap-3.5 items-start">
+                    <row.Icon
+                      className="text-[#9A928A] mt-0.5 shrink-0"
+                      size={15}
+                      aria-hidden
+                    />
+                    <div className="min-w-0">
+                      <span className="block uppercase tracking-[0.1em] text-[10px] text-[#9A928A] mb-1 font-medium">
+                        {row.label}
+                      </span>
+                      <Editable
+                        name={row.valueKey}
+                        as="span"
+                        type="text"
+                        defaultValue={row.value}
+                        className="text-[#231F20] text-[14.5px] leading-snug"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Request a quote */}
+            <div className="p-8 md:p-10 lg:p-12 flex flex-col border-t md:border-t-0 border-[rgba(35,31,32,0.1)]">
+              <span className="block uppercase tracking-[0.12em] text-[11px] text-[#FF0060] mb-3 font-semibold">
+                Request A Quote
+              </span>
+              <Editable
+                name="visitQuoteHeading"
+                as="h3"
+                type="text"
+                defaultValue="Tell us what you're building"
+                className="text-xl md:text-2xl font-black uppercase tracking-tight text-[#231F20] mb-4"
+              />
+              <Editable
+                name="visitQuoteBody"
+                as="p"
+                type="text"
+                defaultValue="Signage, a digital campaign, an airport placement, or a 3D print — send us the details and we'll get back with a free quotation."
+                className="text-[#231F20] text-[14.5px] leading-relaxed mb-8 flex-1"
+              />
+              <button
+                type="button"
+                onClick={scrollToQuote}
+                className="w-full inline-flex flex-col items-center justify-center bg-[#FF0060]/90 backdrop-blur-sm text-white uppercase tracking-[0.08em] font-bold py-4 px-6 rounded-lg border border-white/25 shadow-[0_4px_0_#C4004A,0_8px_24px_rgba(255,0,96,0.25)] hover:bg-[#E60056] hover:shadow-[0_2px_0_#C4004A,0_4px_16px_rgba(255,0,96,0.2)] hover:translate-y-[2px] active:shadow-none active:translate-y-[4px] transition-all duration-150"
+              >
+                <span className="text-sm md:text-[15px] leading-tight">
+                  Request a Site Visit
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <div className="relative pb-5 pt-1 text-center" aria-hidden>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-[#231F20]/25 font-medium select-none">
+              Burnbox Studio
+            </span>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

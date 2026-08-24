@@ -4,20 +4,22 @@ import Editable from './Editable';
 
 const ContactBurnbox = () => {
   const { config } = useSiteConfig();
+  const pink = config.primaryColor || '#FF0060';
 
   return (
-    <section className='w-full py-20 md:py-32 relative overflow-hidden'>
-        <div className="absolute bottom-0 left-0 w-full h-[50%] bg-gradient-to-t from-[#ff0060]/10 to-transparent pointer-events-none"></div>
-        
+    <section className='w-full py-20 md:py-28 relative overflow-hidden bg-[#F7F1EA] text-[#231F20]'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center'>
-                <div className='flex flex-col justify-center order-1 lg:order-1'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center'>
+                <div className='flex flex-col justify-center order-1'>
+                <span className="uppercase tracking-[0.1em] text-xs text-[#FF0060] mb-3.5 font-medium">
+                  Visit / Contact
+                </span>
                 <Editable 
                     name="contactTitle" 
                     as="h1" 
                     type="text"
                     defaultValue="Contact Burnbox for\nYour Next Project"
-                    className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white mb-6 whitespace-pre-line"
+                    className="text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-tight text-[#231F20] mb-6 whitespace-pre-line tracking-tight"
                 />
                 
                 <Editable 
@@ -25,39 +27,38 @@ const ContactBurnbox = () => {
                     as="p" 
                     type="text"
                     defaultValue="Let's bring your vision to life. Request a site visit or contact us to discuss your project needs. Our team is ready to help you stand out."
-                    className="text-base md:text-lg text-gray-300 mb-8 max-w-xl leading-relaxed font-medium"
+                    className="text-base md:text-lg text-[#7A736D] mb-8 max-w-xl leading-relaxed"
                 />
                 
                 <div>
                   <button
                     style={{ 
-                      backgroundColor: config.primaryColor || '#ff0060',
-                      boxShadow: `0 0 20px ${config.primaryColor ? config.primaryColor + '4D' : 'rgba(255,0,96,0.3)'}`
+                      backgroundColor: pink,
+                      borderColor: pink,
                     }}
-                    className="hover:brightness-110 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 text-lg hover:-translate-y-1"
+                    className="hover:bg-[#231F20] hover:border-[#231F20] text-white font-bold uppercase tracking-[0.06em] text-xs py-[13px] px-[22px] border-[1.5px] rounded-sm transition-colors duration-200"
                   >
                     <Editable 
                         name="contactButtonText" 
                         as="span" 
                         type="text"
-                        defaultValue="Contact Us Now"
+                        defaultValue="Request a Site Visit"
                     />
                   </button>
                 </div>
             </div>
                
-                <div className='relative w-full h-full min-h-[300px] lg:min-h-[500px] order-2 lg:order-2'>
-                    <div className='w-full h-full rounded-2xl overflow-hidden shadow-2xl border border-white/10'>
+                <div className='relative w-full h-full min-h-[280px] lg:min-h-[420px] order-2'>
+                    <div className='relative w-full h-full min-h-[280px] lg:min-h-[420px] overflow-hidden border-[1.5px] border-[#231F20] rounded-sm'>
                         <Editable
                           name="contactImage"
                           type="image"
                           defaultValue="/aboutusimage.png" 
-                          className="w-full h-full rounded-2xl overflow-hidden"
+                          className="w-full h-full min-h-[280px] lg:min-h-[420px] overflow-hidden rounded-sm"
                         />
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
   )

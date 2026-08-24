@@ -51,6 +51,8 @@ export default function SalesLead({ userRole = 'STAFF' }: SalesLeadProps) {
     }
   };
 
+
+  
   const updateStatus = async (id: string, status: Lead['status']) => {
     try {
       await fetch(`/api/leads/${id}`, {
@@ -370,7 +372,6 @@ export default function SalesLead({ userRole = 'STAFF' }: SalesLeadProps) {
           </div>
         )}
       </div>
-
       {/* Add Quotation Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

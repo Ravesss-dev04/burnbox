@@ -67,7 +67,7 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
     });
 
   const checkModeration = async (file: File) => {
-    try {
+    try { 
       setLoading(true);
       const isBlurry = await detectBlur(file);
       if (isBlurry) {
@@ -79,7 +79,7 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
       const base64 = await toBase64(file);
       setImageBase64(base64);
 
-      const res = await fetch("/api/moderate", {
+      const res = await fetch("zapi/moderate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ imageBase64: base64 }),
@@ -325,10 +325,10 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/70 rounded-md flex flex-col items-center justify-center z-10"
+            className="absolute inset-0 bg-[#F7F1EA]/90 rounded-sm flex flex-col items-center justify-center z-10"
           >
-            <Loader2 className="w-10 h-10 text-pink animate-spin" />
-            <p className="mt-2 text-sm text-gray-300">
+            <Loader2 className="w-10 h-10 text-[#FF0060] animate-spin" />
+            <p className="mt-2 text-sm text-[#7A736D]">
               {isSubmitting ? "Sending inquiry..." : "Processing..."}
             </p>
           </motion.div>
@@ -343,7 +343,7 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0 bg-black/80 rounded-md flex flex-col items-center justify-center z-20 overflow-hidden"
+            className="absolute inset-0 bg-[#F7F1EA]/95 rounded-sm flex flex-col items-center justify-center z-20 overflow-hidden"
           >
             <motion.img
               src="/inquiry.gif"
@@ -357,7 +357,7 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
               initial={{ opacity: 1, y: 0 }}
               animate={{ opacity: 0, y: -30 }}
               transition={{ delay: 1.3, duration: 0.8 }}
-              className="text-white font-medium"
+              className="text-[#231F20] font-medium"
             >
               Inquiry Sent!
             </motion.p>
@@ -371,7 +371,7 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 bg-[#171414]/60 flex items-center justify-center z-50 p-4"
             onClick={closeOtpPopup}
           >
             <motion.div
@@ -379,27 +379,27 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: "spring", damping: 20 }}
-              className="bg-[#1A1A1A] border border-pink/40 rounded-lg p-6 max-w-sm w-full"
+              className="bg-[#F7F1EA] border-[1.5px] border-[#231F20]/15 rounded-sm p-6 max-w-sm w-full"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-6">
                 <button
                   type="button"
                   onClick={closeOtpPopup}
-                  className="text-gray-400 hover:text-white transition"
+                  className="text-[#7A736D] hover:text-[#231F20] transition"
                 >
                   <X size={20} />
                 </button>
               </div>
               {/* Check your email text */}
               <div className="text-center mb-6">
-                <p className="text-white text-[20px]  font-medium mb-2">
+                <p className="text-[#231F20] text-[20px]  font-medium mb-2">
                   check your email
                 </p>
-                <p className="text-gray-300 text-sm mb-4">
+                <p className="text-[#7A736D] text-sm mb-4">
                   to continue to inquire
                 </p>
-                <p className="text-pink text-sm font-medium">
+                <p className="text-[#FF0060] text-sm font-medium">
                   {formEmail}
                 </p>
               </div>
@@ -417,7 +417,7 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
                     onChange={(e) => handleOtpChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
                     onPaste={handlePaste}
-                    className="w-full lg:w-12  h-10 lg:h-12  bg-black/30 border border-pink/40 rounded-md text-center text-white text-xl font-semibold focus:ring-2 focus:ring-pink outline-none transition-colors"
+                    className="w-full lg:w-12  h-10 lg:h-12  bg-[#EFE6DB] border-[1.5px] border-[#231F20]/20 rounded-sm text-center text-[#231F20] text-xl font-semibold focus:ring-2 focus:ring-[#FF0060] outline-none transition-colors"
                   />
                 ))}
               </div>
@@ -426,19 +426,19 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
                 type="button"
                 onClick={verifyOtp}
                 disabled={loading || otp.join("").length !== 6}
-                className="w-full bg-pink text-white py-3 rounded-md font-medium hover:bg-pink/80 transition disabled:opacity-50 disabled:cursor-not-allowed mb-4"
+                className="w-full bg-[#FF0060] text-white py-3 rounded-sm font-bold uppercase tracking-[0.06em] text-xs hover:bg-[#231F20] transition disabled:opacity-50 disabled:cursor-not-allowed mb-4"
               >
                 {loading ? "Verifying..." : "Verify OTP"}
               </button>
               {/* Resend OTP */}
               <div className="text-center">
-                <p className="text-gray-400 text-sm">
+                <p className="text-[#7A736D] text-sm">
                   didn't receive the code?{" "}
                   <button
                     type="button"
                     onClick={sendOtp}
                     disabled={loading}
-                    className="text-pink hover:text-pink/80 transition disabled:opacity-50"
+                    className="text-[#FF0060] hover:text-[#c40049] transition disabled:opacity-50"
                   >
                     Resend
                   </button>
@@ -461,26 +461,26 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
       {/* Rest of your form remains the same */}
       {/* Name */}
       <div className="relative">
-        <User2Icon className="text-pink absolute left-3 top-2.5" size={18} />
+        <User2Icon className="text-[#FF0060] absolute left-3 top-2.5" size={18} />
         <input
           type="text"
           placeholder="Your Name"
           value={formName}
           onChange={(e) => setFormName(e.target.value)}
-          className="bg-black/50 border border-pink/40 rounded-md pl-10 pr-3 py-2 w-full text-sm text-gray-200 focus:ring-1 focus:ring-pink/70 outline-none"
+          className="bg-[#EFE6DB] border-[1.5px] border-[#231F20]/15 rounded-sm pl-10 pr-3 py-2 w-full text-sm text-[#231F20] placeholder:text-[#7A736D] focus:ring-1 focus:ring-[#FF0060]/70 focus:border-[#FF0060] outline-none"
           disabled={isSubmitting}
           required
         />
       </div>
       {/* Email */}
       <div className="relative">
-        <MailIcon className="text-pink absolute left-3 top-2.5" size={18} />
+        <MailIcon className="text-[#FF0060] absolute left-3 top-2.5" size={18} />
         <input
           type="email"
           value={formEmail}
           placeholder="Your Email"
           onChange={(e) => setFormEmail(e.target.value)}
-          className="bg-black/50 border border-pink/40 rounded-md pl-10 pr-3 py-2 w-full text-sm text-gray-200 focus:ring-1 focus:ring-pink/70 outline-none"
+          className="bg-[#EFE6DB] border-[1.5px] border-[#231F20]/15 rounded-sm pl-10 pr-3 py-2 w-full text-sm text-[#231F20] placeholder:text-[#7A736D] focus:ring-1 focus:ring-[#FF0060]/70 focus:border-[#FF0060] outline-none"
           disabled={isSubmitting}
           required
         />
@@ -493,7 +493,7 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
             type="button"
             onClick={sendOtp}
             disabled={loading || !formEmail}
-            className="bg-pink text-white text-sm px-4 py-2 rounded hover:bg-pink/80 transition disabled:opacity-50 w-full"
+            className="bg-[#FF0060] text-white text-sm px-4 py-2 rounded-sm font-bold uppercase tracking-[0.06em] hover:bg-[#231F20] transition disabled:opacity-50 w-full"
           >
             {loading ? "Sending..." : "Send OTP"}
           </button>
@@ -507,7 +507,7 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="bg-green-500/10 border border-green-600 text-green-300 text-sm p-2 rounded-lg text-center overflow-hidden"
+            className="bg-[#EFE6DB] border-[1.5px] border-[#231F20]/20 text-[#231F20] text-sm p-2 rounded-sm text-center overflow-hidden"
           >
             ✓ Email verified successfully
           </motion.div>
@@ -520,7 +520,7 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
         rows={4}
         value={formMessage}
         onChange={(e) => setFormMessage(e.target.value)}
-        className="bg-black/50 border border-pink/40 rounded-md px-3 py-2 text-sm text-gray-200 focus:ring-1 focus:ring-pink outline-none resize-none"
+        className="bg-[#EFE6DB] border-[1.5px] border-[#231F20]/15 rounded-sm px-3 py-2 text-sm text-[#231F20] placeholder:text-[#7A736D] focus:ring-1 focus:ring-[#FF0060] focus:border-[#FF0060] outline-none resize-none"
         disabled={isSubmitting}
         required
       />
@@ -534,7 +534,7 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
         className={`border-2 border-dashed rounded-md p-4 text-center transition-all cursor-pointer ${
-          isDragging ? "border-pink/10" : "border-pink/40 bg-black/40 hover:bg-black/60"
+          isDragging ? "border-[#FF0060]/40 bg-[#FF0060]/5" : "border-[#231F20]/20 bg-[#EFE6DB] hover:bg-[#E8DDD0]"
         }`}
       >
         <input
@@ -548,8 +548,8 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
           required
         />
         <label htmlFor="imageUpload" className="cursor-pointer flex flex-col items-center">
-          <ImageIcon className="w-6 h-6 text-pink mb-2" />
-          <p className="text-sm text-gray-500">Drop your sample layout</p>
+          <ImageIcon className="w-6 h-6 text-[#FF0060] mb-2" />
+          <p className="text-sm text-[#7A736D]">Drop your sample layout</p>
         </label>
 
         {images.length > 0 && (
@@ -557,15 +557,15 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
             {images.map((file, index) => (
               <div
                 key={index}
-                className="relative group w-20 min-h-20 aspect-square border border-pink/30 rounded-md"
+                className="relative group w-20 min-h-20 aspect-square border border-[#231F20]/15 rounded-sm"
               >
                 <img src={URL.createObjectURL(file)} alt="preview" className="w-full h-full object-cover" />
                 <button
                   type="button"
                   onClick={() => removeImage(index)}
-                  className="absolute top-1 right-1 bg-black/70 rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
+                  className="absolute top-1 right-1 bg-[#171414]/70 rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
                 >
-                  <X size={12} className="text-pink" />
+                  <X size={12} className="text-[#FF0060]" />
                 </button>
               </div>
             ))}
@@ -574,7 +574,7 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
       </div>
       
       {isBlock && (
-        <div className="bg-red-500/10 border border-red-600 text-red-300 text-sm p-2 rounded-lg">
+        <div className="bg-[#FF0060]/10 border border-[#FF0060]/40 text-[#c40049] text-sm p-2 rounded-sm">
           {blockReason}
         </div>
       )}
@@ -585,16 +585,16 @@ function FakeInquiryForm({ product }: { product: { name: string; price: string }
         whileTap={{ scale: isSubmitting || isBlock ? 1 : 0.95 }}
         type="submit"
         disabled={isSubmitting || isBlock || !isVerified}
-        className={`bg-pink/70 hover:bg-pink transition-all text-white py-2 rounded-md font-medium ${
+        className={`bg-[#FF0060] hover:bg-[#231F20] transition-all text-white py-[13px] rounded-sm font-bold uppercase tracking-[0.06em] text-xs ${
           (isSubmitting || isBlock || !isVerified) && "cursor-not-allowed opacity-70"
         }`}
       >
         {isSubmitting ? "Submitting..." : !isVerified ? "Verify Email to Send" : "Send Inquiry"}
       </motion.button>
 
-      {message && <p className="text-sm text-gray-500 mt-2">{message}</p>}
+      {message && <p className="text-sm text-[#7A736D] mt-2">{message}</p>}
       
-      <p className="text-xs text-gray-400 text-center mt-3">
+      <p className="text-xs text-[#7A736D] text-center mt-3">
         We'll get back to you within hours via email.
       </p>
     </form>

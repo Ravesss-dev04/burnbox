@@ -1,25 +1,24 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { ComprehensiveServices, EmailPopup, Maps } from "../components";
-import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
+import { ComprehensiveServices, Maps } from "../components";
+import { motion } from "framer-motion";
 import Footer from "../components/Footer";
 import WhyChooseBurnboxPage from "../components/WhyChooseBurnBox";
 // import GalleryPhotos from "../components/GalleryPhotos";
 import BrandPage from "../components/BrandPage";
 // import WelcomeScreen from './WelcomeScreen';
-import CreativePage from "./CreativePage";
 import BurnboxIdeal from "./BurnboxIdeal";
 import SeamlessProcess from "./SeamlessProcess";
 import QuotationPage from "./QuotationPage";
-import ContactBurnbox from "./ContactBurnbox";
 import QuestionAsk from "./QuestionAsk";
 import ScrollReveal, { ScrollScale } from "./ScrollReveal";
 import { useHeaderContext } from "../context/HeaderContext";
+import { FaFacebookMessenger } from "react-icons/fa";
 
 import GlobalElementsRenderer from "./GlobalElementsRenderer";
 
+const MESSENGER_URL = "https://www.facebook.com/burnboxprinting";
+
 const MainPage = () => {
-  const [showEmailPopup, setShowEmailPopup] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
   const { setIsHeaderVisible } = useHeaderContext();
 
@@ -39,59 +38,28 @@ const MainPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-zinc-950 relative overflow-x-hidden text-white selection:bg-pink-500/30">
+    <div className="min-h-screen w-full bg-[var(--paper,#F7F1EA)] relative overflow-x-hidden text-[var(--ink,#231F20)] selection:bg-[rgba(255,0,96,0.25)]">
       <GlobalElementsRenderer />
-      {/* Global Background Effects - Matches the "Levitating Aura" theme */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        {/* Radial Gradient for depth - "Less Dark" center */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-zinc-950 to-black opacity-80"></div>
 
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] opacity-10"></div>
-
-        {/* Ambient Pink Glows */}
-        <div
-          className="absolute top-[-10%] left
-        
-        -[-10%] w-[40%] h-[40%] bg-pink-500/5 blur-[120px] rounded-full animate-pulse"
-        ></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/5 blur-[120px] rounded-full animate-pulse delay-1000"></div>
-      </div>
-
-      {/* Content Wrapper with z-index to sit above background */}
-
-      <div className="relative z-10 flex flex-col gap-12 sm:gap-20">
+      <div className="relative z-10 flex flex-col gap-0">
         {/* Welcome Screen - Shows first */}
         {/* {showWelcome && <WelcomeScreen onComplete={handleWelcomeComplete} />} */}
 
-        <AnimatePresence mode="wait">
-          {showEmailPopup && (
-            <EmailPopup setShowEmailPopup={setShowEmailPopup} />
-          )}
-        </AnimatePresence>
-        {/* Email Button */}
-        <AnimatePresence mode="wait">
-          {!showEmailPopup && !showWelcome && (
-            <motion.button
-              type="button"
-              className="fixed bottom-8 right-8 z-50 p-4 rounded-full shadow-[0_0_20px_rgba(236,72,153,0.3)] bg-white/10 backdrop-blur-md border border-white/20 hover:bg-pink-500 hover:border-pink-500 transition-colors duration-300 group"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-              whileHover={{ scale: 1.1, y: -5 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => setShowEmailPopup(true)}
-            >
-              <Image
-                height={500}
-                width={500}
-                alt="gmail icon"
-                src={"/gmail.png"}
-                className="h-6 w-6 object-contain opacity-80 group-hover:opacity-100"
-              />
-            </motion.button>
-          )}
-        </AnimatePresence>
+        {!showWelcome && (
+          <motion.a
+            href={MESSENGER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit us on Facebook"
+            className="fixed bottom-8 right-8 z-50 p-4 shadow-[0_0_20px_rgba(255,0,96,0.25)] bg-[#FF0060] border-[1.5px] border-[#FF0060] hover:bg-[#231F20] hover:border-[#231F20] transition-colors duration-300 group rounded-full text-white"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.1, y: -5 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <FaFacebookMessenger className="h-6 w-6 opacity-90 group-hover:opacity-100" />
+          </motion.a>
+        )}
 
         {/* Main Content - Static Layout */}
 
@@ -103,15 +71,11 @@ const MainPage = () => {
         </ScrollReveal> */}
 
         <ScrollReveal direction="up" delay={0.1} duration={0.8}>
-          <CreativePage />
+          <ComprehensiveServices />
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={0.1} duration={0.8}>
           <BurnboxIdeal />
-        </ScrollReveal>
-
-        <ScrollReveal direction="up" delay={0.1} duration={0.8}>
-          <ComprehensiveServices />
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={0.1} duration={0.8}>
@@ -131,19 +95,14 @@ const MainPage = () => {
               <GalleryPhotos/>
           </section>
         </ScrollScale> */}
-        <ScrollReveal direction="flipUp" delay={0.1} duration={0.8}>
-          <div className="relative border-t border-white/5 bg-black/40 backdrop-blur-sm">
-            <Maps />
-          </div>
+        <ScrollReveal direction="up" delay={0.1} duration={0.8}>
+          <Maps />
         </ScrollReveal>
         <ScrollReveal direction="up" delay={0.1}>
           <QuotationPage />
         </ScrollReveal>
         <ScrollReveal direction="up" delay={0.1}>
           <QuestionAsk />
-        </ScrollReveal>
-        <ScrollReveal direction="up" delay={0.1}>
-          <ContactBurnbox />
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={0.1}>

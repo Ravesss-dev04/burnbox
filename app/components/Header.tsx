@@ -246,13 +246,13 @@ const Header: React.FC = () => {
     }, 200);
   };
   return (
-    <div className="h-20 w-full flex items-center justify-between px-5 py-3 text-white font-extralight text-lg z-100 bg-zinc-950/90 backdrop-blur-md fixed border-b border-white/5">
+    <div className="h-20 w-full flex items-center justify-between px-5 py-3 text-[#231F20] font-extralight text-lg z-100 bg-[#F7F1EA]/95 backdrop-blur-md fixed border-b-[1.5px] border-[#231F20]">
       {/* Logo */}
       <a href="#home" className="h-20 py-3 px-1 block relative w-auto">
         <Editable
             name="headerLogo"
             type="image"
-            defaultValue="/burnboxlogo.png"
+            defaultValue="/finallogo.png"
             className="h-full w-auto object-contain object-left"
         />
       </a>
@@ -606,7 +606,7 @@ const Header: React.FC = () => {
                         className="overflow-hidden"
                       >
                         <motion.div
-                          className="ml-4 mt-3 space-y-2 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 rounded-lg p-4 w-[280px] border border-pink-500/20 shadow-xl"
+                          className="ml-4 mt-3 space-y-1 bg-[#F7F1EA] rounded-sm p-3 w-[280px] border-[1.5px] border-[#231F20] shadow-[3px_3px_0_0_#231F20]"
                           initial={{ scale: 0.95 }}
                           animate={{ scale: 1 }}
                           transition={{ delay: 0.1 }}
@@ -644,9 +644,9 @@ const Header: React.FC = () => {
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: idx * 0.05 + 0.15 }}
-                                whileHover={{ x: 5, color: "#ec4899" }}
+                                whileHover={{ x: 4 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="block text-sm text-left hover:text-pink transition-colors duration-200 py-2 px-2 rounded-md hover:bg-pink/10 w-full"
+                                className="block text-sm text-left text-[#231F20] hover:text-white hover:bg-[#FF0060] transition-colors duration-200 py-2.5 px-3 rounded-sm w-full"
                                 onClick={() => handleAboutNavigation(label)}
                               >
                                 {label}
@@ -673,7 +673,7 @@ const Header: React.FC = () => {
                         className="overflow-hidden"
                       >
                         <motion.div
-                          className="ml-4 mt-3 space-y-2 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 rounded-lg p-4 w-[280px] border border-pink-500/20 shadow-xl max-h-[400px] overflow-y-auto"
+                          className="ml-4 mt-3 space-y-1 bg-[#F7F1EA] rounded-sm p-3 w-[280px] border-[1.5px] border-[#231F20] shadow-[3px_3px_0_0_#231F20] max-h-[400px] overflow-y-auto"
                           initial={{ scale: 0.95 }}
                           animate={{ scale: 1 }}
                           transition={{ delay: 0.1 }}
@@ -684,9 +684,9 @@ const Header: React.FC = () => {
                               initial={{ opacity: 0, x: -20 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: idx * 0.03 + 0.15 }}
-                              whileHover={{ x: 5, color: "#ec4899" }}
+                              whileHover={{ x: 4 }}
                               whileTap={{ scale: 0.95 }}
-                              className="block text-sm hover:text-pink transition-colors duration-200 w-full text-left py-2 px-2 rounded-md hover:bg-pink/10"
+                              className="block text-sm text-[#231F20] hover:text-white hover:bg-[#FF0060] transition-colors duration-200 w-full text-left py-2.5 px-3 rounded-sm"
                               onClick={() =>
                                 handleMobileServiceClick(service.name)
                               } // UPDATED: Use new function

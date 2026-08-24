@@ -10,10 +10,10 @@ const page = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className='relative min-h-screen bg-[#050505]'
+      className='relative min-h-screen bg-[#F7F1EA]'
     >
       {/* Grid Pattern matching MainPage */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] opacity-20"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(35,31,32,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(35,31,32,0.04)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
       
       {/* Background with overlay */}
       <div 

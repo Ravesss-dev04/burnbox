@@ -1,75 +1,101 @@
-import React from 'react';
-import { Lightbulb, Clock, Headphones } from 'lucide-react';
-import Editable from './Editable';
+"use client";
+
+import React from "react";
+import Editable from "./Editable";
+
+const PROCESS_STEPS = [
+  {
+    num: "01",
+    titleKey: "processStepTitle_0",
+    title: "Consultation & Planning",
+    descKey: "processStepDesc_0",
+    desc: "We listen to your goals, then recommend the right mix of offline and online solutions for your brand and budget.",
+  },
+  {
+    num: "02",
+    titleKey: "processStepTitle_1",
+    title: "Design",
+    descKey: "processStepDesc_1",
+    desc: "Our creative team crafts bold, effective designs — from tarpaulin layouts to ad creatives — that reflect your brand and reach your audience.",
+  },
+  {
+    num: "03",
+    titleKey: "processStepTitle_2",
+    title: "Production",
+    descKey: "processStepDesc_2",
+    desc: "Advanced equipment and quality materials produce durable prints and precise 3D models, while our team builds and schedules your digital campaigns.",
+  },
+  {
+    num: "04",
+    titleKey: "processStepTitle_3",
+    title: "Installation & Launch",
+    descKey: "processStepDesc_3",
+    desc: "Signage installed safely and on-site, ads placed at your chosen locations, and campaigns launched — with after-sales support throughout.",
+  },
+];
 
 const BurnboxIdeal = () => {
-  const features = [
-    {
-      title: "Creative Excellence",
-      description: "Our team brings bold ideas and expert craftsmanship to every project, ensuring your brand stands out with style",
-      icon: <Lightbulb size={40} />
-    },
-    {
-      title: "On-Time Delivery",
-      description: "We value your time. Our streamlined process guarantees your signage and prints are delivered when you need them- no delays",
-      icon: <Clock size={40} />
-    },
-    
-    {
-      title: "Reliable Support",
-      description: "We value your time. Our streamlined process guarantees your signage and prints are delivered when you need them- no delays",
-      icon: <Headphones size={40} />
-    }
-  ];
-
   return (
-    <section className="w-full py-16 px-4 md:px-8 lg:px-16 relative">
-      {/* Pink Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-pink-500/5 blur-[100px] rounded-full pointer-events-none"></div>
-      
-      <div className="max-w-7xl mx-auto relative z-10">
-        <Editable 
-          name="idealTitle" 
-          as="h2" 
-          type="text"
-          defaultValue="Why burnbox is your ideal advertising Partner"
-          className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12 md:mb-16 text-[#ff0060]"
-        />
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {features.map((feature, index) => (
-            <div 
-              key={index}
-              className="bg-zinc-900/40 backdrop-blur-sm border border-white/5 p-8 md:p-10 flex flex-col items-center text-center hover:bg-zinc-900/60 hover:shadow-[0_0_30px_rgba(255,0,96,0.1)] hover:border-pink-500/20 transition-all duration-300 group rounded-2xl"
+    <section
+      id="process"
+      className="w-full py-12 md:py-16 px-4 md:px-8 bg-[#FDF6EE] text-[#231F20]"
+    >
+      <div className="max-w-5xl mx-auto">
+        {/* Header — tighter, balanced */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 sm:gap-6 mb-8 md:mb-10">
+          <div className="max-w-md">
+            <span className="block uppercase tracking-[0.1em] text-[11px] text-[#FF0060] mb-2.5 font-medium">
+              04 / Process
+            </span>
+            <Editable
+              name="processTitle"
+              as="h2"
+              type="text"
+              defaultValue="Our Seamless Process"
+              className="text-2xl md:text-3xl lg:text-[2.25rem] font-black uppercase leading-[1.05] tracking-tight text-[#231F20]"
+            />
+          </div>
+          <Editable
+            name="processIntro"
+            as="p"
+            type="text"
+            defaultValue="From first consultation to final installation — or campaign launch — we keep every step visible to you."
+            className="text-[#7A736D] text-sm max-w-xs leading-relaxed sm:text-right"
+          />
+        </div>
+
+        {/* Process rows — number + title grouped, desc capped */}
+        <div className="border-t border-[#231F20]/80">
+          {PROCESS_STEPS.map((step) => (
+            <div
+              key={step.num}
+              className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-6 py-5 md:py-6 border-b border-[#231F20]/80"
             >
-              {/* Icon */}
-              <div className="text-[#ff0060] mb-6 transform group-hover:scale-110 transition-transform duration-300 bg-pink-500/10 p-4 rounded-full">
-                {feature.icon}
-              </div>
-              
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-6">
-                <Editable 
-                  name={`idealTitle_${index}`}
-                  as="span"
+              <div className="flex items-baseline gap-4 min-w-0 sm:max-w-[48%]">
+                <span className="text-xl md:text-2xl font-black text-[#FF0060] tracking-tight leading-none shrink-0">
+                  {step.num}
+                </span>
+                <Editable
+                  name={step.titleKey}
+                  as="h3"
                   type="text"
-                  defaultValue={feature.title}
-                />
-              </h3>
-              
-              <div className="text-gray-300 leading-relaxed text-sm md:text-base font-medium">
-                <Editable 
-                  name={`idealDesc_${index}`}
-                  as="p"
-                  type="text"
-                  defaultValue={feature.description}
+                  defaultValue={step.title}
+                  className="text-base md:text-lg font-black uppercase tracking-tight text-[#231F20]"
                 />
               </div>
+              <Editable
+                name={step.descKey}
+                as="p"
+                type="text"
+                defaultValue={step.desc}
+                className="text-[#7A736D] text-sm leading-relaxed sm:max-w-[46%] sm:text-right"
+              />
             </div>
           ))}
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
 export default BurnboxIdeal;

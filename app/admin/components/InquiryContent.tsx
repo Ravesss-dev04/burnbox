@@ -1,7 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { Trash2, Eye, Mail } from 'lucide-react';
-
 interface Inquiry {
   id: number;
   name: string;
@@ -18,7 +17,6 @@ export default function InquiryContent() {
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
-
   const fetchInquiries = async () => {
     try {
       const res = await fetch('/api/inquiries');
@@ -30,6 +28,7 @@ export default function InquiryContent() {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchInquiries();
   }, []);
@@ -51,7 +50,6 @@ export default function InquiryContent() {
       alert('Failed to delete inquiry');
     }
   };
-
   const updateStatus = async (id: number, status: string) => {
     try {
       const res = await fetch(`/api/inquiries/${id}`, {

@@ -130,10 +130,11 @@ const Editable = ({
     document.addEventListener('mouseup', handleMouseUp);
   };
 
-  // Combined styles
+  // Combined styles — explicit style.color wins over saved CMS color
   const finalStyle = {
     ...style,
     ...customStyles,
+    ...(style.color ? { color: style.color } : {}),
     cursor: isEditing ? (isSelected ? 'move' : 'pointer') : 'inherit',
     outline: isEditing && isSelected && !isInlineEditing ? '2px solid #ec4899' : isEditing && isHovered && !isInlineEditing ? '1px dashed #ec4899' : 'none',
     position: (style.position || 'relative') as any,

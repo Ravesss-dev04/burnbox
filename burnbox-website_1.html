@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Burnbox Advertising Solution — Offline & Online Advertising Partner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#FF0060;
+    --pink-dim:#c40049;
+    --ink:#231F20;
+    --charcoal:#171414;
+    --paper:#F7F1EA;
+    --paper-2:#EFE6DB;
+    --signal:#FFC93C;
+    --grey:#7A736D;
+    --line: rgba(35,31,32,0.14);
+    --line-light: rgba(247,241,234,0.22);
+    --radius: 2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Archivo Black', sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:-0.01em;
+    line-height:1.02;
+  }
+
+  .mono{
+
+    font-family:'JetBrains Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+
+  }
+
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  @media(max-width:640px){.wrap{padding:0 18px;}}
+
+  /* Crop-mark signature element */
+  .crop{position:relative;}
+  .crop::before, .crop::after,
+  .crop .cm-tl, .crop .cm-tr, .crop .cm-bl, .crop .cm-br{content:'';}
+  .crop-marks{position:absolute; inset:0; pointer-events:none;}
+  .crop-marks span{
+    position:absolute; width:14px; height:14px;
+  }
+  .crop-marks span::before, .crop-marks span::after{
+    content:''; position:absolute; background:var(--ink);
+  }
+  .crop-marks span::before{width:14px; height:1.5px; top:50%; left:0; transform:translateY(-50%);}
+  .crop-marks span::after{height:14px; width:1.5px; left:50%; top:0; transform:translateX(-50%);}
+  .crop-marks .tl{top:-7px; left:-7px;}
+  .crop-marks .tr{top:-7px; right:-7px;}
+  .crop-marks .bl{bottom:-7px; left:-7px;}
+  .crop-marks .br{bottom:-7px; right:-7px;}
+  .on-dark .crop-marks span::before, .on-dark .crop-marks span::after{background:var(--paper);}
+  .on-pink .crop-marks span::before, .on-pink .crop-marks span::after{background:var(--paper);}
+
+  /* NAV */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--paper); border-bottom:1.5px solid var(--ink);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px; max-width:1180px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Archivo Black', sans-serif; font-size:20px; letter-spacing:-0.02em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo .dot{width:10px; height:10px; background:var(--pink); display:inline-block;}
+  .nav-links{display:flex; gap:32px; align-items:center;}
+  .nav-links a{
+    font-family:'JetBrains Mono', monospace; font-size:12px;
+    text-transform:uppercase; letter-spacing:0.08em;
+    padding-bottom:2px; border-bottom:1.5px solid transparent;
+    transition:border-color .2s;
+  }
+  .nav-links a:hover{border-color:var(--pink);}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.06em;
+    padding:13px 22px; border:1.5px solid var(--ink); background:var(--ink); color:var(--paper);
+    cursor:pointer; transition:all .18s ease;
+  }
+  .btn:hover{background:var(--pink); border-color:var(--pink);}
+  .btn-outline{background:transparent; color:var(--ink);}
+  .btn-outline:hover{background:var(--ink); color:var(--paper);}
+  .btn-pink{background:var(--pink); border-color:var(--pink); color:#fff;}
+  .btn-pink:hover{background:var(--ink); border-color:var(--ink);}
+  .nav-cta{display:none;}
+  @media(min-width:900px){.nav-cta{display:inline-flex;}}
+  .burger{display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none;}
+  .burger span{width:24px; height:2px; background:var(--ink);}
+  @media(max-width:899px){
+    .nav-links{display:none;}
+    .burger{display:flex;}
+  }
+  .mobile-menu{
+    display:none; flex-direction:column; padding:0 28px 20px; gap:16px;
+    border-bottom:1.5px solid var(--ink);
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{font-family:'JetBrains Mono',monospace; text-transform:uppercase; font-size:13px; letter-spacing:.06em;}
+
+  /* HERO */
+  .hero{
+    position:relative; padding:90px 0 0; overflow:hidden;
+  }
+  .hero-single{max-width:640px; padding-bottom:56px;}
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:.1em;
+    color:var(--pink); text-transform:uppercase; margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:26px; height:1.5px; background:var(--pink);}
+  .hero h1{
+    font-size:clamp(40px, 6vw, 72px);
+    margin-bottom:24px;
+  }
+  .hero h1 .accent{color:var(--pink);}
+  .hero p.lede{
+    font-size:18px; color:var(--ink); max-width:480px; margin-bottom:32px; opacity:.82;
+  }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+
+  .job-ticket{
+    background:var(--ink); color:var(--paper); padding:26px 26px 22px; position:relative;
+    border:1.5px solid var(--ink);
+  }
+  .job-ticket .tt{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.1em; color:var(--signal); display:flex; justify-content:space-between; margin-bottom:18px; text-transform:uppercase;}
+  .job-ticket .visual{
+    aspect-ratio:4/3; background:
+      repeating-linear-gradient(45deg, rgba(255,0,96,0.14) 0 2px, transparent 2px 14px),
+      linear-gradient(150deg, var(--pink) 0%, var(--pink-dim) 100%);
+    position:relative; margin-bottom:18px; display:flex; align-items:flex-end; padding:16px;
+  }
+  .job-ticket .visual .tag{
+    font-family:'Archivo Black', sans-serif; font-size:15px; color:#fff; text-transform:uppercase; line-height:1.1;
+  }
+  .specs{display:grid; grid-template-columns:1fr 1fr; gap:12px 20px;}
+  .specs div{border-top:1px solid var(--line-light); padding-top:8px;}
+  .specs .k{font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--signal); letter-spacing:.08em; text-transform:uppercase; display:block; margin-bottom:4px;}
+  .specs .v{font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--paper);}
+
+  .ticker{
+    border-top:1.5px solid var(--ink); border-bottom:1.5px solid var(--ink);
+    background:var(--ink); color:var(--paper); overflow:hidden; margin-top:70px;
+  }
+  .ticker-inner{display:flex; white-space:nowrap; animation:scroll 26s linear infinite;}
+  .ticker-inner span{
+    font-family:'JetBrains Mono', monospace; font-size:13px; letter-spacing:.08em; text-transform:uppercase;
+    padding:14px 32px; display:inline-flex; align-items:center; gap:32px;
+  }
+  .ticker-inner span::after{content:'✕'; color:var(--pink);}
+  @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+  /* SECTION shared */
+  section{padding:96px 0;}
+  @media(max-width:640px){section{padding:64px 0;}}
+  .sec-head{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:56px; flex-wrap:wrap;}
+  .sec-num{font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--pink); letter-spacing:.1em; margin-bottom:14px; display:block;}
+  .sec-head h2{font-size:clamp(30px,4vw,44px); max-width:640px;}
+  .sec-head p{color:var(--grey); max-width:340px; font-size:15px;}
+
+  /* SERVICES */
+  .services{background:var(--charcoal); color:var(--paper);}
+  .services .sec-num{color:var(--signal);}
+  .services .sec-head p{color:#B7AFA6;}
+  .svc-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1.5px; background:var(--line-light); border:1.5px solid var(--line-light);}
+  @media(max-width:760px){.svc-grid{grid-template-columns:1fr;}}
+  .svc-card{
+    background:var(--charcoal); padding:38px 34px; position:relative;
+    transition:background .2s;
+  }
+  .svc-card:hover{background:#221D1D;}
+  .svc-card .idx{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--signal); letter-spacing:.08em; margin-bottom:22px; display:block;}
+  .svc-card h3{font-size:24px; margin-bottom:14px; color:var(--paper);}
+  .svc-card p{color:#B7AFA6; font-size:14.5px; margin-bottom:18px; max-width:420px;}
+  .svc-card .tags{display:flex; flex-wrap:wrap; gap:8px;}
+  .svc-card .tags span{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:.05em; text-transform:uppercase;
+    border:1px solid rgba(247,241,234,.28); padding:5px 10px; color:#D8D2C9;
+  }
+  .svc-card.pink{background:var(--pink);}
+  .svc-card.pink:hover{background:var(--pink-dim);}
+  .svc-card.pink h3, .svc-card.pink p, .svc-card.pink .idx{color:#fff;}
+  .svc-card.pink .tags span{border-color:rgba(255,255,255,.4); color:#fff;}
+  .svc-grid-3{grid-template-columns:repeat(3,1fr);}
+  @media(max-width:900px){.svc-grid-3{grid-template-columns:1fr;}}
+
+  .addl-services{margin-top:1.5px; border:1.5px solid var(--line-light); border-top:none; padding:26px 34px 32px; background:var(--charcoal);}
+  .addl-lbl{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--signal); display:block; margin-bottom:16px;}
+  .addl-row{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  @media(max-width:700px){.addl-row{grid-template-columns:1fr;}}
+  .addl-row-1{grid-template-columns:1fr; max-width:420px;}
+  .addl-item{border-left:2px solid var(--pink); padding-left:16px;}
+  .addl-item h4{font-family:'Archivo Black',sans-serif; font-size:15px; text-transform:uppercase; color:var(--paper); margin-bottom:6px;}
+  .addl-item p{color:#B7AFA6; font-size:13.5px;}
+
+  /* PROCESS */
+  .process-list{border-top:1.5px solid var(--ink);}
+  .p-row{
+    display:grid; grid-template-columns:90px 1fr 1.4fr; gap:24px; align-items:start;
+    padding:30px 0; border-bottom:1.5px solid var(--ink);
+  }
+  @media(max-width:760px){.p-row{grid-template-columns:50px 1fr; }
+    .p-row .p-desc{grid-column:2/3;}
+  }
+  .p-row .p-idx{font-family:'Archivo Black', sans-serif; font-size:32px; color:var(--pink);}
+  .p-row h3{font-size:19px; letter-spacing:0;}
+  .p-row .p-desc{color:var(--grey); font-size:14.5px; max-width:460px;}
+
+  /* WHY CHOOSE */
+  .why{background:var(--pink); color:#fff;}
+  .why .sec-num{color:var(--ink);}
+  .why .sec-head p{color:rgba(255,255,255,.86);}
+  .why-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:1.5px; background:rgba(255,255,255,.35); border:1.5px solid rgba(255,255,255,.35);}
+  @media(max-width:960px){.why-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.why-grid{grid-template-columns:1fr;}}
+  .why-card{background:var(--pink); padding:28px 22px;}
+  .why-card .n{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; opacity:.75; display:block; margin-bottom:14px;}
+  .why-card h4{font-family:'Archivo Black',sans-serif; font-size:16px; text-transform:uppercase; margin-bottom:10px; line-height:1.2;}
+  .why-card p{font-size:13.5px; opacity:.9;}
+
+  /* STATS STRIP */
+  .stats{border-top:1.5px solid var(--ink); border-bottom:1.5px solid var(--ink); background:var(--paper-2);}
+  .stats-grid{display:grid; grid-template-columns:repeat(4,1fr);}
+  @media(max-width:700px){.stats-grid{grid-template-columns:repeat(2,1fr);}}
+  .stat{padding:34px 28px; border-left:1.5px solid var(--ink);}
+  .stat:first-child{border-left:none;}
+  @media(max-width:700px){.stat:nth-child(2n+1){border-left:none;} .stat:nth-child(n){border-top:1.5px solid var(--ink);} .stat:nth-child(-n+2){border-top:none;}}
+  .stat .num{font-family:'Archivo Black',sans-serif; font-size:38px; color:var(--pink); display:block;}
+  .stat .lbl{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--grey); margin-top:6px; display:block;}
+
+  /* SPOTLIGHT: Ecommerce + On Tap */
+  .spot-grid{display:grid; grid-template-columns:1fr 1fr; gap:1.5px; background:var(--line); border:1.5px solid var(--line);}
+  .spot-grid-1{grid-template-columns:1fr; max-width:560px; margin:0 auto;}
+  @media(max-width:820px){.spot-grid{grid-template-columns:1fr;}}
+  .spot-card{padding:38px 36px 44px; display:flex; flex-direction:column;}
+  .spot-dark{background:var(--charcoal); color:var(--paper);}
+  .spot-pink{background:var(--pink); color:#fff;}
+  .spot-tag{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; opacity:.75; margin-bottom:12px; display:block;}
+  .spot-card h3{font-family:'Archivo Black',sans-serif; font-size:23px; text-transform:uppercase; margin-bottom:14px; line-height:1.15;}
+  .spot-card p{font-size:14.5px; margin-bottom:18px; max-width:420px; opacity:.9;}
+  .spot-dark p{color:#B7AFA6; opacity:1;}
+  .spot-card .tags{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px;}
+  .spot-card .tags span{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:.05em; text-transform:uppercase;
+    border:1px solid rgba(255,255,255,.3); padding:5px 10px;
+  }
+  .spot-dark .tags span{color:#D8D2C9;}
+  .spot-pink .tags span{color:#fff; border-color:rgba(255,255,255,.45);}
+  .spot-card .btn{align-self:flex-start;}
+  .spot-visual{margin-bottom:26px; display:flex; align-items:center; justify-content:center; min-height:180px;}
+
+  .shop-mock{width:220px; background:var(--paper); border:1.5px solid var(--paper); padding:14px; box-shadow:0 12px 0 rgba(255,0,96,.35);}
+  .shop-mock-bar{display:flex; gap:5px; margin-bottom:12px;}
+  .shop-mock-bar span{width:7px; height:7px; border-radius:50%; background:var(--ink); opacity:.25;}
+  .shop-mock-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;}
+  .shop-mock-grid div{aspect-ratio:1; background:repeating-linear-gradient(45deg, rgba(255,0,96,.16) 0 2px, transparent 2px 10px), var(--pink-dim); opacity:.85;}
+  .shop-mock-cta{background:var(--pink); color:#fff; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase; padding:9px;}
+
+  .tap-mock{position:relative; width:220px; height:180px; display:flex; align-items:center; justify-content:center;}
+  .tap-ring{position:absolute; border:1.5px solid rgba(255,255,255,.55); border-radius:50%;}
+  .tap-ring.r1{width:130px; height:130px;}
+  .tap-ring.r2{width:180px; height:180px; border-color:rgba(255,255,255,.3);}
+  .tap-card{
+    position:relative; width:118px; height:74px; background:var(--ink); border-radius:6px;
+    display:flex; flex-direction:column; justify-content:center; padding:12px 14px; box-shadow:0 10px 0 rgba(23,20,20,.3);
+  }
+  .tap-card-name{font-family:'Work Sans',sans-serif; font-weight:700; font-size:12px; color:var(--paper);}
+  .tap-card-role{font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--signal); text-transform:uppercase; letter-spacing:.05em; margin-top:2px;}
+  .tap-card-icon{position:absolute; top:10px; right:12px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--signal); transform:rotate(90deg);}
+
+  /* SHOP / ORDER ONLINE */
+  .shop{background:var(--paper-2); border-top:1.5px solid var(--ink); border-bottom:1.5px solid var(--ink);}
+  .shop-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.5px; background:var(--line); border:1.5px solid var(--line); margin-bottom:24px;}
+  @media(max-width:820px){.shop-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:540px){.shop-grid{grid-template-columns:1fr;}}
+  .product-card{background:var(--paper); padding:24px 22px 22px; display:flex; flex-direction:column;}
+  .product-thumb{
+    aspect-ratio:4/3; margin-bottom:16px; position:relative; overflow:hidden;
+    background:repeating-linear-gradient(45deg, rgba(255,0,96,.12) 0 2px, transparent 2px 12px), var(--paper-2);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .product-thumb span{font-family:'Archivo Black',sans-serif; font-size:13px; text-transform:uppercase; color:var(--pink); text-align:center; padding:0 10px;}
+  .product-card h4{font-size:16px; margin-bottom:4px;}
+  .product-price{font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--pink); font-weight:700; margin-bottom:14px;}
+  .product-actions{display:flex; align-items:center; gap:10px; margin-top:auto;}
+  .qty-control{display:flex; align-items:center; border:1.5px solid var(--ink);}
+  .qty-control button{
+    width:30px; height:30px; background:none; border:none; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:15px;
+  }
+  .qty-control input{
+    width:32px; text-align:center; border:none; border-left:1.5px solid var(--ink); border-right:1.5px solid var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:13px; height:30px;
+  }
+  .add-cart-btn{
+    flex:1; background:var(--ink); color:var(--paper); border:1.5px solid var(--ink); cursor:pointer;
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    padding:8px 10px; transition:background .18s;
+  }
+  .add-cart-btn:hover{background:var(--pink); border-color:var(--pink);}
+  .add-cart-btn.added{background:var(--pink); border-color:var(--pink);}
+  .shop-note{font-size:13px; color:var(--grey); max-width:720px;}
+  .shop-note span{display:block; margin-top:6px; color:var(--pink); font-weight:600;}
+
+  /* Cart FAB + drawer */
+  .cart-fab{
+    position:fixed; bottom:24px; right:24px; z-index:60;
+    width:56px; height:56px; border-radius:50%; background:var(--ink); border:1.5px solid var(--ink);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,.25);
+  }
+  .cart-fab-icon{font-size:22px;}
+  .cart-fab-count{
+    position:absolute; top:-4px; right:-4px; background:var(--pink); color:#fff; font-family:'JetBrains Mono',monospace;
+    font-size:11px; font-weight:700; width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  }
+  .cart-overlay, .checkout-overlay{
+    position:fixed; inset:0; background:rgba(23,20,20,.55); z-index:70; opacity:0; pointer-events:none; transition:opacity .2s;
+  }
+  .cart-overlay.open, .checkout-overlay.open{opacity:1; pointer-events:auto;}
+  .cart-drawer{
+    position:fixed; top:0; right:-380px; width:360px; max-width:88vw; height:100%; background:var(--paper);
+    z-index:80; transition:right .25s ease; display:flex; flex-direction:column; border-left:1.5px solid var(--ink);
+  }
+  .cart-drawer.open{right:0;}
+  .cart-drawer-head{display:flex; justify-content:space-between; align-items:center; padding:22px 24px; border-bottom:1.5px solid var(--ink);}
+  .cart-drawer-head .mono{font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase;}
+  .cart-close{background:none; border:none; font-size:18px; cursor:pointer; color:var(--ink);}
+  .cart-items{flex:1; overflow-y:auto; padding:10px 24px;}
+  .cart-empty{color:var(--grey); font-size:14px; padding:24px 0;}
+  .cart-item{display:flex; gap:12px; padding:16px 0; border-bottom:1px solid var(--line); align-items:center;}
+  .cart-item-thumb{width:46px; height:46px; background:var(--paper-2); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--pink); font-family:'JetBrains Mono',monospace; text-align:center;}
+  .cart-item-info{flex:1;}
+  .cart-item-info h5{font-size:13.5px; margin-bottom:2px;}
+  .cart-item-info .mono{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--grey);}
+  .cart-item-remove{background:none; border:none; color:var(--pink); font-size:11px; font-family:'JetBrains Mono',monospace; cursor:pointer; text-decoration:underline;}
+  .cart-footer{padding:20px 24px 26px; border-top:1.5px solid var(--ink);}
+  .cart-subtotal{display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:15px; font-weight:700; margin-bottom:16px;}
+
+  /* Checkout modal */
+  .checkout-modal{
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-48%); width:420px; max-width:90vw; max-height:86vh; overflow-y:auto;
+    background:var(--paper); border:1.5px solid var(--ink); z-index:90; padding:0; display:none;
+  }
+  .checkout-modal.open{display:block;}
+  .checkout-head{display:flex; justify-content:space-between; align-items:center; padding:20px 24px; border-bottom:1.5px solid var(--ink);}
+  .checkout-head .mono{font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase;}
+  #checkoutForm{padding:20px 24px 26px; display:flex; flex-direction:column; gap:14px;}
+  #checkoutForm label{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--grey); display:flex; flex-direction:column; gap:6px;}
+  #checkoutForm input, #checkoutForm select, #checkoutForm textarea{
+    font-family:'Work Sans',sans-serif; font-size:14px; padding:10px 12px; border:1.5px solid var(--ink); background:var(--paper); color:var(--ink);
+    resize:vertical;
+  }
+  .checkout-summary{border-top:1px solid var(--line); padding-top:14px; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--grey);}
+  .checkout-summary div{display:flex; justify-content:space-between; padding:4px 0;}
+  .checkout-fineprint{font-size:11.5px; color:var(--grey); margin-top:10px;}
+
+  /* ON TAP CREATIVES (legacy styles retained for compatibility) */
+  .ontap{padding:0 0 96px;}
+  @media(max-width:640px){.ontap{padding-bottom:64px;}}
+  .ontap-card{background:var(--ink); color:var(--paper); padding:48px 44px;}
+  .ontap-card .sec-num{color:var(--signal);}
+  .ontap-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:40px; align-items:center;}
+  @media(max-width:760px){.ontap-grid{grid-template-columns:1fr;}}
+  .ontap-card h2{font-size:clamp(26px,3.4vw,36px); margin:14px 0 16px;}
+  .ontap-card p{color:#B7AFA6; font-size:15px; max-width:440px; margin-bottom:26px;}
+  .ontap-tags{display:flex; flex-direction:column; gap:10px;}
+  .ontap-tags span{
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+    border:1px solid rgba(247,241,234,.28); padding:12px 16px; color:#D8D2C9;
+  }
+
+  /* LOCATION / CONTACT */
+  .loc-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px;}
+  @media(max-width:860px){.loc-grid{grid-template-columns:1fr; gap:40px;}}
+  .loc-card{border:1.5px solid var(--ink); padding:34px; position:relative;}
+  .loc-card .mono-lbl{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--pink); letter-spacing:.08em; margin-bottom:16px; display:block;}
+  .loc-card h3{font-size:24px; margin-bottom:18px;}
+  .loc-line{display:flex; gap:14px; padding:12px 0; border-top:1px solid var(--line); font-size:14.5px;}
+  .loc-line:first-of-type{border-top:none;}
+  .loc-line .k{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--grey); text-transform:uppercase; letter-spacing:.06em; width:90px; flex-shrink:0; padding-top:2px;}
+
+  /* FAQ */
+  .faq-item{border-bottom:1.5px solid var(--ink);}
+  .faq-q{
+    width:100%; text-align:left; background:none; border:none; cursor:pointer;
+    padding:24px 0; display:flex; justify-content:space-between; align-items:center; gap:20px;
+    font-family:'Work Sans',sans-serif; font-size:17px; font-weight:600; color:var(--ink);
+  }
+  .faq-q .plus{font-family:'JetBrains Mono',monospace; font-size:20px; color:var(--pink); transition:transform .2s; flex-shrink:0;}
+  .faq-item.open .faq-q .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+  .faq-a p{padding-bottom:22px; color:var(--grey); font-size:14.5px; max-width:640px;}
+
+  /* FINAL CTA */
+  .final-cta{background:var(--ink); color:var(--paper); text-align:center;}
+  .final-cta h2{font-size:clamp(34px,5.5vw,58px); margin-bottom:20px;}
+  .final-cta .accent{color:var(--pink);}
+  .final-cta p{color:#B7AFA6; max-width:480px; margin:0 auto 36px; font-size:16px;}
+  .final-actions{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+
+  footer{background:var(--charcoal); color:#B7AFA6; padding:56px 0 26px; font-size:13.5px;}
+  .foot-grid{display:grid; grid-template-columns:1.6fr repeat(4,1fr); gap:32px; margin-bottom:48px;}
+  @media(max-width:820px){.foot-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.foot-grid{grid-template-columns:1fr;}}
+  .foot-grid h5{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--paper); margin-bottom:16px;}
+  .foot-grid ul{list-style:none;}
+  .foot-grid li{margin-bottom:10px;}
+  .foot-grid a:hover{color:var(--pink);}
+  .foot-logo{font-family:'Archivo Black',sans-serif; color:var(--paper); font-size:20px; margin-bottom:14px;}
+  .foot-bottom{border-top:1px solid var(--line-light); padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:12px;}
+
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.show{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    .ticker-inner{animation:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="logo"><span class="dot"></span>BURNBOX</div>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#shop">Shop</a>
+      <a href="#process">Process</a>
+      <a href="#why">Why Burnbox</a>
+      <a href="#location">Location</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#quote" class="btn btn-pink nav-cta">Get a Quotation</a>
+    <button class="burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services">Services</a>
+    <a href="#shop">Shop</a>
+    <a href="#process">Process</a>
+    <a href="#why">Why Burnbox</a>
+    <a href="#location">Location</a>
+    <a href="#faq">FAQ</a>
+    <a href="#quote" class="btn btn-pink" style="width:fit-content;">Get a Quotation</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-single">
+      <div class="eyebrow">Offline + Online Advertising Partner</div>
+      <h1>Your brand,<br>printed, placed<br>&amp; <span class="accent">promoted.</span></h1>
+      <p class="lede">Burnbox is your one-stop advertising partner — from signage on your storefront to campaigns running on Facebook, from wall stickers to your own online store. Offline and online, under one roof.</p>
+      <div class="hero-actions">
+        <a href="#quote" class="btn btn-pink">Get a Free Quotation</a>
+        <a href="#services" class="btn btn-outline">See All Services</a>
+      </div>
+    </div>
+  </div>
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span>Large Format Printing</span><span>Custom Signage</span><span>Digital Marketing</span><span>Ecommerce</span><span>3D Printing</span><span>Fabrication</span>
+      <span>Large Format Printing</span><span>Custom Signage</span><span>Digital Marketing</span><span>Ecommerce</span><span>3D Printing</span><span>Fabrication</span>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">01 / Services</span>
+        <h2>Four service lines. One partner.</h2>
+      </div>
+      <p>Whatever channel your customers are on — a busy street, a departure gate, or their phone — Burnbox builds for it.</p>
+    </div>
+    <div class="svc-grid svc-grid-3">
+      <div class="svc-card reveal">
+        <span class="idx">A — Physical</span>
+        <h3>Large Format &amp; Signage</h3>
+        <p>Tarpaulins, wall stickers, lightboxes and 3D letters — designed, produced, and installed for storefronts, events, and promotions.</p>
+        <div class="tags"><span>Tarpaulins</span><span>Wall Stickers</span><span>Lightbox</span><span>Vehicle Wrap</span></div>
+      </div>
+      <div class="svc-card pink reveal">
+        <span class="idx">B — Digital</span>
+        <h3>Digital Marketing</h3>
+        <p>Social media management, Meta &amp; Google ads, content creation, and page optimization — built to bring your offline brand online.</p>
+        <div class="tags"><span>Social Media</span><span>Meta Ads</span><span>Content</span><span>Page Setup</span></div>
+      </div>
+      <div class="svc-card reveal">
+        <span class="idx">C — Online Store</span>
+        <h3>Ecommerce</h3>
+        <p>Online store setup and management — from product listings to checkout — so your business can sell beyond foot traffic.</p>
+        <div class="tags"><span>Store Setup</span><span>Product Listings</span><span>Order Mgmt.</span></div>
+      </div>
+      <div class="svc-card reveal">
+        <span class="idx">D — Fabrication</span>
+        <h3>3D Printing</h3>
+        <p>Custom prototypes, models, and dimensional signage letters — printed in-house with precision.</p>
+        <div class="tags"><span>Prototypes</span><span>Custom Models</span><span>3D Letters</span></div>
+      </div>
+      <div class="svc-card pink reveal">
+        <span class="idx">E — Fabrication</span>
+        <h3>Fabrication</h3>
+        <p>Gondolas, kiosks, and custom retail fixtures — built for display, storage, and selling on-site.</p>
+        <div class="tags"><span>Gondolas</span><span>Kiosks</span><span>Retail Fixtures</span></div>
+      </div>
+    </div>
+
+    <div class="addl-services reveal">
+      <span class="addl-lbl">Also available</span>
+      <div class="addl-row addl-row-1">
+        <div class="addl-item">
+          <h4>Airport Advertising</h4>
+          <p>Terminal displays and gate signage placements — an add-on for brands wanting high-traffic visibility.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="shop" id="shop">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">02 / Order Online</span>
+        <h2>Shop Burnbox products</h2>
+      </div>
+      <p>Add items to your cart and send your order straight to our team — no need to message us one by one.</p>
+    </div>
+
+    <div class="shop-grid" id="shopGrid"></div>
+
+    <p class="shop-note">Prices shown are starting rates for standard sizes — customized sizes and rush orders may vary. We'll confirm final pricing and payment details after you submit your order. <span id="xenditNote">Secure online payment via Xendit is coming soon — for now, orders are confirmed through Messenger.</span></p>
+  </div>
+</section>
+
+<button class="cart-fab" id="cartFab" aria-label="View cart">
+  <span class="cart-fab-icon">🛒</span>
+  <span class="cart-fab-count" id="cartCount">0</span>
+</button>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-head">
+    <span class="mono">Your Cart</span>
+    <button class="cart-close" id="cartClose" aria-label="Close cart">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartSubtotal">₱0</span></div>
+    <button class="btn btn-pink" id="checkoutBtn" style="width:100%; justify-content:center;">Proceed to Checkout</button>
+  </div>
+</aside>
+
+<div class="checkout-overlay" id="checkoutOverlay"></div>
+<div class="checkout-modal" id="checkoutModal">
+  <div class="checkout-head">
+    <span class="mono">Checkout</span>
+    <button class="cart-close" id="checkoutClose" aria-label="Close checkout">✕</button>
+  </div>
+  <form id="checkoutForm">
+    <label>Full Name<input type="text" name="name" required></label>
+    <label>Contact Number<input type="tel" name="phone" required></label>
+    <label>Delivery Method
+      <select name="delivery">
+        <option value="Pickup — BF Resort Branch">Pickup — BF Resort Branch</option>
+        <option value="Delivery">Delivery</option>
+      </select>
+    </label>
+    <label>Delivery Address / Notes<textarea name="notes" rows="3" placeholder="Leave blank if for pickup"></textarea></label>
+    <div class="checkout-summary" id="checkoutSummary"></div>
+    <button type="submit" class="btn btn-pink" style="width:100%; justify-content:center; margin-top:16px;">Send Order via Messenger</button>
+    <p class="checkout-fineprint">We'll confirm stock, final price, and payment instructions once we receive your order.</p>
+  </form>
+</div>
+
+<section class="spotlight" id="spotlight">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">03 / Partner Brand</span>
+        <h2>Also part of the Burnbox family</h2>
+      </div>
+      <p>A sister brand built for the digital-first professional.</p>
+    </div>
+    <div class="spot-grid spot-grid-1">
+      <div class="spot-card spot-pink crop reveal">
+        <div class="crop-marks"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
+        <div class="spot-visual">
+          <div class="tap-mock">
+            <div class="tap-ring r1"></div>
+            <div class="tap-ring r2"></div>
+            <div class="tap-card">
+              <span class="tap-card-name">Your Name</span>
+              <span class="tap-card-role">Business Owner</span>
+              <span class="tap-card-icon">))</span>
+            </div>
+          </div>
+        </div>
+        <span class="spot-tag mono">By On Tap Creatives</span>
+        <h3>Tap to share, no app needed</h3>
+        <p>Our sister brand, On Tap Creatives, makes NFC digital business cards — one tap shares your contact info, socials, and portfolio instantly.</p>
+        <div class="tags"><span>NFC Cards</span><span>Tap-to-Share</span><span>Digital Profile</span></div>
+        <a href="https://ontap.ph" class="btn" style="background:var(--ink); border-color:var(--ink); color:var(--paper);" target="_blank" rel="noopener">Visit ontap.ph →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap" style="padding:0;">
+    <div class="stats-grid">
+      <div class="stat"><span class="num">2015</span><span class="lbl">Operating Since</span></div>
+      <div class="stat"><span class="num">05</span><span class="lbl">Service Lines</span></div>
+      <div class="stat"><span class="num">100%</span><span class="lbl">Satisfaction Guarantee</span></div>
+      <div class="stat"><span class="num">1</span><span class="lbl">Partner, Every Channel</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">04 / Process</span>
+        <h2>Our seamless process</h2>
+      </div>
+      <p>From first consultation to final installation — or campaign launch — we keep every step visible to you.</p>
+    </div>
+    <div class="process-list reveal">
+      <div class="p-row">
+        <span class="p-idx">01</span>
+        <h3>Consultation &amp; Planning</h3>
+        <p class="p-desc">We listen to your goals, then recommend the right mix of offline and online solutions for your brand and budget.</p>
+      </div>
+      <div class="p-row">
+        <span class="p-idx">02</span>
+        <h3>Design</h3>
+        <p class="p-desc">Our creative team crafts bold, effective designs — from tarpaulin layouts to ad creatives — that reflect your brand and reach your audience.</p>
+      </div>
+      <div class="p-row">
+        <span class="p-idx">03</span>
+        <h3>Production</h3>
+        <p class="p-desc">Advanced equipment and quality materials produce durable prints and precise 3D models, while our team builds and schedules your digital campaigns.</p>
+      </div>
+      <div class="p-row">
+        <span class="p-idx">04</span>
+        <h3>Installation &amp; Launch</h3>
+        <p class="p-desc">Signage installed safely and on-site, ads placed at your chosen locations, and campaigns launched — with after-sales support throughout.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="why" id="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">05 / Why Burnbox</span>
+        <h2>Why business owners choose Burnbox</h2>
+      </div>
+      <p>We combine production capability with creative strategy — so your brand shows up consistently everywhere.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal"><span class="n">01</span><h4>One-Stop Partner</h4><p>From ID laces to airport ads to Meta campaigns — all under one roof.</p></div>
+      <div class="why-card reveal"><span class="n">02</span><h4>Quality Meets Affordability</h4><p>State-of-the-art machines and skilled specialists deliver premium output every time.</p></div>
+      <div class="why-card reveal"><span class="n">03</span><h4>Tailored Solutions</h4><p>We don't just print or post — we design and strategize around your exact goals.</p></div>
+      <div class="why-card reveal"><span class="n">04</span><h4>Proven Trust</h4><p>Serving SMEs, big brands, and government clients with repeat partnership since 2015.</p></div>
+      <div class="why-card reveal"><span class="n">05</span><h4>Hassle-Free Service</h4><p>Fast turnaround, expert installation, and after-sales support on every project.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="location">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">06 / Visit Us</span>
+        <h2>BF Resort Branch</h2>
+      </div>
+      <p>Drop by for a consultation, or reach out for a free site visit and quotation.</p>
+    </div>
+    <div class="loc-grid">
+      <div class="loc-card crop reveal">
+        <div class="crop-marks"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
+        <span class="mono-lbl">Studio &amp; Production</span>
+        <h3>Get in touch</h3>
+        <div class="loc-line"><span class="k">Address</span><span>17 Vatican Bldg, BF Resort Village, Las Piñas City</span></div>
+        <div class="loc-line"><span class="k">Hours</span><span>Mon – Sun, 9:00 AM – 6:00 PM</span></div>
+        <div class="loc-line"><span class="k">Mobile</span><span>+63 917 700 8364</span></div>
+        <div class="loc-line"><span class="k">Landline</span><span>(02) 7007 2412</span></div>
+        <div class="loc-line"><span class="k">Facebook</span><span>facebook.com/burnboxprinting</span></div>
+      </div>
+      <div class="loc-card crop reveal">
+        <div class="crop-marks"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
+        <span class="mono-lbl">Request A Quote</span>
+        <h3>Tell us what you're building</h3>
+        <p style="color:var(--grey); font-size:14.5px; margin-bottom:20px;">Signage, a digital campaign, an airport placement, or a 3D print — send us the details and we'll get back with a free quotation.</p>
+        <a href="#quote" class="btn btn-pink" style="width:100%; justify-content:center;">Request a Site Visit</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">07 / FAQ</span>
+        <h2>Frequently asked questions</h2>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="faq-item">
+        <button class="faq-q">How do I request a quotation?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Message us on Facebook, call our landline or mobile, or fill out the quotation form — send us your project details and we'll respond with pricing and timeline.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What areas do you serve?<span class="plus">+</span></button>
+        <div class="faq-a"><p>We're based in Las Piñas and serve clients across Metro Manila, with digital marketing and ecommerce support reaching beyond — wherever your customers are.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can you handle rush orders?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Yes — our production line is built for fast turnaround on signage and prints. Let us know your deadline when requesting a quote.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do you offer installation service?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Yes, our team handles installation for signage, lightboxes, and large format prints, ensuring a safe and flawless finish every time.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do you manage digital marketing accounts, or just design ads?<span class="plus">+</span></button>
+        <div class="faq-a"><p>We handle both — from ad creative design to running and managing your social media and Meta ad accounts.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta crop" id="quote">
+  <div class="crop-marks"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
+  <div class="wrap">
+    <h2>Ready to be <span class="accent">impossible to ignore?</span></h2>
+    <p>Get a free quotation for signage, digital marketing, airport advertising, or 3D printing — offline and online, all from one team.</p>
+    <div class="final-actions">
+      <a href="https://www.facebook.com/burnboxprinting" class="btn btn-pink">Contact Us Now</a>
+      <a href="tel:+639177008364" class="btn btn-outline" style="border-color:var(--paper); color:var(--paper);">Call +63 917 700 8364</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo">BURNBOX</div>
+        <p style="max-width:240px;">Helping business owners grow through offline and online advertising — since 2015.</p>
+      </div>
+      <div>
+        <h5>Print &amp; Signage</h5>
+        <ul>
+          <li><a href="#services">Large Format Printing</a></li>
+          <li><a href="#services">Custom Signage</a></li>
+          <li><a href="#services">Wall Stickers</a></li>
+          <li><a href="#services">Corporate Giveaways</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Digital &amp; Ecommerce</h5>
+        <ul>
+          <li><a href="#services">Social Media Mgmt.</a></li>
+          <li><a href="#services">Meta &amp; Google Ads</a></li>
+          <li><a href="#services">Online Store Setup</a></li>
+          <li><a href="#services">Graphic Design</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>3D &amp; Fabrication</h5>
+        <ul>
+          <li><a href="#services">3D Printing</a></li>
+          <li><a href="#services">Custom Prototypes</a></li>
+          <li><a href="#services">Gondolas</a></li>
+          <li><a href="#services">Kiosks</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Also Available</h5>
+        <ul>
+          <li><a href="#services">Airport Advertising</a></li>
+          <li><a href="https://ontap.ph" target="_blank" rel="noopener">On Tap Creatives</a></li>
+          <li><a href="https://ontap.ph" target="_blank" rel="noopener">ontap.ph</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="tel:+639177008364">+63 917 700 8364</a></li>
+          <li><a href="tel:+63270072412">(02) 7007 2412</a></li>
+          <li><a href="https://www.facebook.com/burnboxprinting">facebook.com/burnboxprinting</a></li>
+          <li><a href="https://burnboxadvertising.com">burnboxadvertising.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Burnbox Advertising Solution. All rights reserved.</span>
+      <span>Privacy Policy · Terms of Service</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const burger = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => { i.classList.remove('open'); i.querySelector('.faq-a').style.maxHeight = null; });
+      if(!isOpen){ item.classList.add('open'); a.style.maxHeight = a.scrollHeight + 'px'; }
+    });
+  });
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // ============================================================
+  // SHOP / CART / CHECKOUT
+  // Edit PRODUCTS below to add, remove, or reprice items.
+  // Once Xendit is approved, swap PAYMENT_MODE to 'xendit' and
+  // set XENDIT_CHECKOUT_URL — but note actual invoice creation
+  // needs a small backend to call the Xendit API securely.
+  // ============================================================
+  const PAYMENT_MODE = 'messenger'; // 'messenger' | 'xendit' (xendit requires backend)
+  const MESSENGER_PAGE = 'burnboxprinting';
+
+  const PRODUCTS = [
+    { id: 'tarp', name: 'Tarpaulin Printing', price: 150, unit: 'per sqft', tag: 'Large Format' },
+    { id: 'wallsticker', name: 'Wall Sticker', price: 250, unit: 'per sqft', tag: 'Signage' },
+    { id: 'stickers', name: 'Sticker Set (50pcs)', price: 350, unit: 'per set', tag: 'Promo' },
+    { id: 'bizcard', name: 'Business Cards (100pcs)', price: 450, unit: 'per box', tag: 'Promo' },
+    { id: 'giveaway', name: 'Corporate Giveaways', price: 60, unit: 'starts at, per pc', tag: 'Promo' },
+    { id: '3dprint', name: '3D Printed Letters / Model', price: 500, unit: 'starts at, per pc', tag: 'Fabrication' },
+  ];
+
+  let cart = {}; // { productId: qty }
+
+  const shopGrid = document.getElementById('shopGrid');
+  shopGrid.innerHTML = PRODUCTS.map(p => `
+    <div class="product-card">
+      <div class="product-thumb"><span>${p.tag}</span></div>
+      <h4>${p.name}</h4>
+      <div class="product-price">₱${p.price} <span style="color:var(--grey); font-weight:400; font-size:11px;">${p.unit}</span></div>
+      <div class="product-actions">
+        <div class="qty-control">
+          <button type="button" data-action="dec" data-id="${p.id}">−</button>
+          <input type="text" id="qty-${p.id}" value="1" readonly>
+          <button type="button" data-action="inc" data-id="${p.id}">+</button>
+        </div>
+        <button type="button" class="add-cart-btn" data-id="${p.id}">Add to Cart</button>
+      </div>
+    </div>
+  `).join('');
+
+  shopGrid.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    const id = btn.dataset.id;
+    if(btn.dataset.action === 'inc' || btn.dataset.action === 'dec'){
+      const input = document.getElementById(`qty-${id}`);
+      let val = parseInt(input.value, 10) || 1;
+      val = btn.dataset.action === 'inc' ? val + 1 : Math.max(1, val - 1);
+      input.value = val;
+    } else if(btn.classList.contains('add-cart-btn')){
+      const qty = parseInt(document.getElementById(`qty-${id}`).value, 10) || 1;
+      cart[id] = (cart[id] || 0) + qty;
+      renderCart();
+      btn.textContent = 'Added ✓';
+      btn.classList.add('added');
+      setTimeout(() => { btn.textContent = 'Add to Cart'; btn.classList.remove('added'); }, 1200);
+    }
+  });
+
+  function cartTotal(){
+    return Object.entries(cart).reduce((sum, [id, qty]) => {
+      const p = PRODUCTS.find(p => p.id === id);
+      return sum + (p ? p.price * qty : 0);
+    }, 0);
+  }
+  function cartCount(){
+    return Object.values(cart).reduce((a,b) => a+b, 0);
+  }
+
+  function renderCart(){
+    const itemsEl = document.getElementById('cartItems');
+    const entries = Object.entries(cart).filter(([,qty]) => qty > 0);
+    if(entries.length === 0){
+      itemsEl.innerHTML = '<p class="cart-empty">Your cart is empty. Add products to get started.</p>';
+    } else {
+      itemsEl.innerHTML = entries.map(([id, qty]) => {
+        const p = PRODUCTS.find(p => p.id === id);
+        return `
+          <div class="cart-item">
+            <div class="cart-item-thumb">${p.tag}</div>
+            <div class="cart-item-info">
+              <h5>${p.name}</h5>
+              <span class="mono">${qty} × ₱${p.price} = ₱${qty * p.price}</span>
+            </div>
+            <button class="cart-item-remove" data-id="${id}">Remove</button>
+          </div>
+        `;
+      }).join('');
+    }
+    document.getElementById('cartSubtotal').textContent = `₱${cartTotal()}`;
+    document.getElementById('cartCount').textContent = cartCount();
+  }
+
+  document.getElementById('cartItems').addEventListener('click', (e) => {
+    const btn = e.target.closest('.cart-item-remove');
+    if(!btn) return;
+    delete cart[btn.dataset.id];
+    renderCart();
+  });
+
+  // Cart drawer open/close
+  const cartFab = document.getElementById('cartFab');
+  const cartDrawer = document.getElementById('cartDrawer');
+  const cartOverlay = document.getElementById('cartOverlay');
+  function openCart(){ cartDrawer.classList.add('open'); cartOverlay.classList.add('open'); }
+  function closeCart(){ cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); }
+  cartFab.addEventListener('click', openCart);
+  cartOverlay.addEventListener('click', closeCart);
+  document.getElementById('cartClose').addEventListener('click', closeCart);
+
+  // Checkout modal open/close
+  const checkoutModal = document.getElementById('checkoutModal');
+  const checkoutOverlay = document.getElementById('checkoutOverlay');
+  function openCheckout(){
+    if(cartCount() === 0) return;
+    const summaryEl = document.getElementById('checkoutSummary');
+    summaryEl.innerHTML = Object.entries(cart).filter(([,q]) => q>0).map(([id, qty]) => {
+      const p = PRODUCTS.find(p => p.id === id);
+      return `<div><span>${p.name} × ${qty}</span><span>₱${qty * p.price}</span></div>`;
+    }).join('') + `<div style="border-top:1px solid var(--ink); margin-top:6px; padding-top:8px; font-weight:700; color:var(--ink);"><span>Total</span><span>₱${cartTotal()}</span></div>`;
+    closeCart();
+    checkoutModal.classList.add('open');
+    checkoutOverlay.classList.add('open');
+  }
+  function closeCheckout(){
+    checkoutModal.classList.remove('open');
+    checkoutOverlay.classList.remove('open');
+  }
+  document.getElementById('checkoutBtn').addEventListener('click', openCheckout);
+  document.getElementById('checkoutClose').addEventListener('click', closeCheckout);
+  checkoutOverlay.addEventListener('click', closeCheckout);
+
+  document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value.trim();
+    const phone = form.phone.value.trim();
+    const delivery = form.delivery.value;
+    const notes = form.notes.value.trim();
+
+    const lines = Object.entries(cart).filter(([,q]) => q>0).map(([id, qty]) => {
+      const p = PRODUCTS.find(p => p.id === id);
+      return `${p.name} x${qty} - ₱${qty * p.price}`;
+    });
+
+    const message = [
+      'Hi Burnbox! I would like to order:',
+      ...lines,
+      `Total: ₱${cartTotal()}`,
+      `Name: ${name}`,
+      `Contact: ${phone}`,
+      `Delivery: ${delivery}`,
+      notes ? `Notes: ${notes}` : null,
+    ].filter(Boolean).join('\n');
+
+    if(PAYMENT_MODE === 'messenger'){
+      const url = `https://m.me/${MESSENGER_PAGE}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+    // else: redirect to XENDIT_CHECKOUT_URL once backend/invoice API is wired up
+
+    cart = {};
+    renderCart();
+    closeCheckout();
+    form.reset();
+  });
+
+  renderCart();
+</script>
+
+</body>
+</html>

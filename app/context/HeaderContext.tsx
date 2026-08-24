@@ -61,6 +61,7 @@ export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({
             description: service.description || ""
           }));
           setProducts(transformedProducts);
+      
         } else {
           const errorText = await response.text().catch(() => 'Unknown error');
           console.error('Failed to fetch services:', response.status, response.statusText, errorText);
@@ -141,7 +142,6 @@ export const HeaderProvider: React.FC<{ children: React.ReactNode }> = ({
     </HeaderContext.Provider>
   );
 };
-
 
 
 export const useHeaderContext = () => {

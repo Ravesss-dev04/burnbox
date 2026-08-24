@@ -44,13 +44,13 @@ const TooltipServices: React.FC<TooltipServicesProps> = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3 }}
-      className="absolute top-full left-0 mt-2 w-48 bg-black border border-gray-700 rounded-md shadow-lg z-50"
+      className="absolute top-full left-0 mt-2 w-52 bg-[#F7F1EA] border-[1.5px] border-[#231F20] rounded-sm shadow-[3px_3px_0_0_#231F20] z-50"
     >
-      <ul className="text-sm text-white relative">
+      <ul className="text-sm text-[#231F20] relative">
         {services.map((service, index) => (
           <li
             key={service.id}
-            className="px-4 py-2 hover:bg-pink-600 hover:text-white cursor-pointer transition-colors duration-200 relative"
+            className="px-4 py-2.5 hover:bg-[#FF0060] hover:text-white cursor-pointer transition-colors duration-200 relative"
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
             onClick={() => handleServiceClick(service.name)}
@@ -63,13 +63,13 @@ const TooltipServices: React.FC<TooltipServicesProps> = ({
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.2 }}
-                className="absolute top-0 right-full w-40 bg-gray-900 border border-gray-600 rounded-md shadow-lg p-2 z-50 text-xs"
+                className="absolute top-0 right-full mr-1.5 w-44 bg-[#F7F1EA] border-[1.5px] border-[#231F20] rounded-sm shadow-[3px_3px_0_0_#231F20] p-2 z-50 text-xs text-[#231F20]"
               >
                 <ul>
                   {service.nestedTooltip.map((nestedItem, i) => (
                     <li
                       key={i}
-                      className="py-2 hover:text-pink-500 cursor-default text-based"
+                      className="py-2 px-2 rounded-sm text-[#7A736D] hover:text-[#FF0060] hover:bg-[#EFE6DB] cursor-default"
                     >
                       {nestedItem}
                     </li>
